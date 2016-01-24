@@ -10,6 +10,7 @@ public class UserEntity {
 	private String user_Date;
 	private String user_Address;
 	private String user_Mail;
+	private String user_Phone;
 	private int user_Qr;
 	private int user_In;
 	private int user_Up;
