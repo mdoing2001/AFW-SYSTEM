@@ -1,21 +1,65 @@
 package entity;
 
-public class UserEntity {
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "user")
+public class UserEntity implements java.io.Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@Column(name = "user_id")
 	private int user_Id;
+	
+	@Column(name = "user_count")
 	private String user_Count;
+	
+	@Column(name = "user_password")
 	private String user_Password;
+	
+	@Column(name = "user_name")
 	private String user_Name;
+	
+	@Column(name = "user_cid")
 	private String user_Cid;
-	private String user_Date;
+	
+	@Column(name = "user_date")
+	private Date user_Date;
+	
+	@Column(name = "user_address")
 	private String user_Address;
+	
+	@Column(name = "user_mail")
 	private String user_Mail;
+	
+	@Column(name = "user_phone")
 	private String user_Phone;
+	
+	@Column(name = "user_qr")
 	private int user_Qr;
+	
+	@Column(name = "user_in")
 	private int user_In;
+	
+	@Column(name = "user_up")
 	private int user_Up;
+	
+	@Column(name = "user_de")
 	private int user_De;
+	
+	@Column(name = "user_max")
 	private int user_Max;
+	
+	@Column(name = "user_min")
 	private int user_Min;
 
 
@@ -64,15 +108,13 @@ public class UserEntity {
 		this.user_Cid = user_Cid;
 	}
 
-	public String getUser_Date() {
+	public Date getUser_Date() {
 		return user_Date;
 	}
 
-
-	public void setUser_Date(String user_Date) {
+	public void setUser_Date(Date user_Date) {
 		this.user_Date = user_Date;
 	}
-
 
 	public String getUser_Address() {
 		return user_Address;

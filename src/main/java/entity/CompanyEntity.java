@@ -1,20 +1,62 @@
 package entity;
 
-public class CompanyEntity {
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "company")
+public class CompanyEntity implements java.io.Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@Column(name = "company_id")
 	private int company_Id;
+	
+	@Column(name = "company_type")
 	private String company_Type;
+	
+	@Column(name = "company_status")
 	private String company_Status;
+	
+	@Column(name = "company_name")
 	private String company_Name;
+	
+	@Column(name = "company_name")
 	private String company_Executive;
-	private String company_Bitrhday;
+	
+	@Column(name = "company_bitrhday")
+	private Date company_Bitrhday;
+	
+	@Column(name = "company_ein")
 	private String company_Ein;
+	
+	@Column(name = "company_address")
 	private String company_Address;
+	
+	@Column(name = "company_address2")
 	private String company_Address2;
+	
+	@Column(name = "company_number")
 	private String company_Number;
+	
+	@Column(name = "company_fax")
 	private String company_Fax;
+	
+	@Column(name = "company_mail")
 	private String company_Mail;
+	
+	@Column(name = "acc_id")
 	private int acc_Id;
+	
+	@Column(name = "company_remark")
 	private String company_Remark;
 	
 	
@@ -49,10 +91,10 @@ public class CompanyEntity {
 	public void setCompany_Executive(String company_Executive) {
 		this.company_Executive = company_Executive;
 	}
-	public String getCompany_Bitrhday() {
+	public Date getCompany_Bitrhday() {
 		return company_Bitrhday;
 	}
-	public void setCompany_Bitrhday(String company_Bitrhday) {
+	public void setCompany_Bitrhday(Date company_Bitrhday) {
 		this.company_Bitrhday = company_Bitrhday;
 	}
 	public String getCompany_Ein() {
