@@ -4,8 +4,14 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "company")
@@ -17,13 +23,14 @@ public class CompanyEntity implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "company_id")
+	@Column(name = "company_id", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int company_Id;
 	
-	@Column(name = "company_type")
+	@Column(name = "company_type",nullable = false)
 	private String company_Type;
 	
-	@Column(name = "company_status")
+	@Column(name = "company_status", nullable = false)
 	private String company_Status;
 	
 	@Column(name = "company_name")
@@ -53,7 +60,8 @@ public class CompanyEntity implements java.io.Serializable{
 	@Column(name = "company_mail")
 	private String company_Mail;
 	
-	@Column(name = "acc_id")
+	@ManyToOne	
+	@JoinColumn(name="acc_id", nullable = false)
 	private int acc_Id;
 	
 	@Column(name = "company_remark")
@@ -146,7 +154,13 @@ public class CompanyEntity implements java.io.Serializable{
 		this.company_Remark = company_Remark;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "UserEntity [id="+ company_Id +"company_Type="+company_Type+" company_Status="+company_Status+
+				" company_Name="+company_Name+" company_Executive="+company_Executive+ "company_Bitrhday="+company_Bitrhday+" company_Ein="+company_Ein+
+				"company_Address="+company_Address+" company_Address2="+company_Address2+" company_Number="+company_Number+" company_Fax="+company_Fax+" company_Mail="+company_Mail+
+				" acc_Id"+acc_Id+" company_Remark"+company_Remark;
+	}
 	
 
 }
