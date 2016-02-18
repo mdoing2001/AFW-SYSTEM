@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -65,7 +67,9 @@ public class UserEntity implements java.io.Serializable{
 	@Column(name = "user_min")
 	private int user_Min;
 
-
+	@ManyToOne	
+	@JoinColumn(name="branch_id", nullable = false)
+	private BrancEntity branch_id;
 
 	public int getUser_Id() {
 		return user_Id;
@@ -206,6 +210,13 @@ public class UserEntity implements java.io.Serializable{
 		this.user_Min = user_Min;
 	}
 
+	public BrancEntity getBranch_id() {
+		return branch_id;
+	}
+
+	public void setBranch_id(BrancEntity branch_id) {
+		this.branch_id = branch_id;
+	}
 
 	@Override
 	public String toString() {

@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,7 +22,7 @@ public class CompanyEntity implements java.io.Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "company_id")
+	@Column(name = "company_id",nullable = false)
 	private int company_Id;
 	
 	@Column(name = "company_type")
@@ -56,8 +58,9 @@ public class CompanyEntity implements java.io.Serializable{
 	@Column(name = "company_mail")
 	private String company_Mail;
 	
-	@Column(name = "acc_id")
-	private int acc_Id;
+	@ManyToOne	
+	@JoinColumn(name="acc_id", nullable = false)
+	private AccountancyEntity acc_Id;
 	
 	@Column(name = "company_remark")
 	private String company_Remark;
@@ -134,10 +137,11 @@ public class CompanyEntity implements java.io.Serializable{
 	public void setCompany_Mail(String company_Mail) {
 		this.company_Mail = company_Mail;
 	}
-	public int getAcc_Id() {
+
+	public AccountancyEntity getAcc_Id() {
 		return acc_Id;
 	}
-	public void setAcc_Id(int acc_Id) {
+	public void setAcc_Id(AccountancyEntity acc_Id) {
 		this.acc_Id = acc_Id;
 	}
 	public String getCompany_Remark() {
