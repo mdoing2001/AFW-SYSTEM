@@ -1,9 +1,11 @@
-package entity;
+package tw.com.afw.entity;
 
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -17,6 +19,7 @@ public class CompanyEntity implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "company_id")
 	private int company_Id;
 	
@@ -29,7 +32,7 @@ public class CompanyEntity implements java.io.Serializable{
 	@Column(name = "company_name")
 	private String company_Name;
 	
-	@Column(name = "company_name")
+	@Column(name = "company_Executive")
 	private String company_Executive;
 	
 	@Column(name = "company_bitrhday")
@@ -58,8 +61,6 @@ public class CompanyEntity implements java.io.Serializable{
 	
 	@Column(name = "company_remark")
 	private String company_Remark;
-	
-	
 	
 	public int getCompany_Id() {
 		return company_Id;

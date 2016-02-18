@@ -1,4 +1,4 @@
-package utility;
+package tw.com.afw.utility;
 
 
 import java.security.MessageDigest;
