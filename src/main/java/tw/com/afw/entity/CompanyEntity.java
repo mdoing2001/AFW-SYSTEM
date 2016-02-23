@@ -59,7 +59,7 @@ public class CompanyEntity implements java.io.Serializable{
 	private String company_Mail;
 	
 	@ManyToOne	
-	@JoinColumn(name="acc_id", nullable = false)
+	@JoinColumn(name="acc_id")
 	private AccountancyEntity acc_Id;
 	
 	@Column(name = "company_remark")

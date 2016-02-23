@@ -24,7 +24,7 @@ public class OfficeEntity implements java.io.Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "office_id")
+	@Column(name = "office_id" ,nullable = false)
 	private int office_id;
 
 	@Column(name = "office_type")
@@ -39,12 +39,12 @@ public class OfficeEntity implements java.io.Serializable{
 	
 	
 	@ManyToOne	
-	@JoinColumn(name="branch_id", nullable = false)
+	@JoinColumn(name="branch_id")
 	private BrancEntity branch_id;
 	
 	
 	@ManyToOne	
-	@JoinColumn(name="contract_id", nullable = false)
+	@JoinColumn(name="contract_id")
 	private ContractEntity contract_id;
 
 

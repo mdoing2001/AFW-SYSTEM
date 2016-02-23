@@ -22,7 +22,7 @@ public class UserEntity implements java.io.Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "user_id")
+	@Column(name = "user_id" , nullable = false)
 	private int user_Id;
 	
 	@Column(name = "user_count")
@@ -68,7 +68,7 @@ public class UserEntity implements java.io.Serializable{
 	private int user_Min;
 
 	@ManyToOne	
-	@JoinColumn(name="branch_id", nullable = false)
+	@JoinColumn(name="branch_id")
 	private BrancEntity branch_id;
 
 	public int getUser_Id() {

@@ -19,7 +19,7 @@ public class BrancEntity implements java.io.Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "branch_id")
+	@Column(name = "branch_id",nullable = false)
 	private int branch_id;
 	
 	@Column(name = "branch_name")
