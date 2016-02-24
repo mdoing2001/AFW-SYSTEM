@@ -41,6 +41,11 @@
           <script src="js/respond.min.js"></script>
         <![endif]-->
 
+	<style>
+	.contract_link:hover {
+    	text-decoration: underline;
+	}
+	</style>
     </head>
 
 
@@ -461,26 +466,69 @@
                                 
                                 <!-- contract -->
                                 <div id="edit-contract" class="tab-pane">
+                                	<div class="row m-t-10">
+                                		<div class="col-md-12">
+											<button class="btn btn-primary pull-right" data-toggle="modal" data-target="#con-close-modal">新增合約</button>
+										</div>
+                                        <div class="col-md-12">
+                                            <div class="portlet"><!-- /primary heading -->
+                                                <div id="portlet2" class="panel-collapse collapse in">
+                                                    <div class="portlet-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>起始日期</th>
+                                                                        <th>到期日期</th>
+                                                                        <th>合約狀態</th>
+                                                                        <th>簽約人</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td><a class="contract_link" href="#">1</a></td>
+                                                                        <td>01/01/2015</td>
+                                                                        <td>01/01/2016</td>
+                                                                        <td><span class="label label-info">到期</span></td>
+                                                                        <td>謝欣育</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><a class="contract_link" href="#">2</a></td>
+                                                                        <td>01/01/2016</td>
+                                                                        <td>01/01/2017</td>
+                                                                        <td><span class="label label-success">進行中</span></td>
+                                                                        <td>謝欣育</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- /Portlet -->
+                                        </div>
+                                    </div>
+                                    <h3>合約資料</h3>
                                 	<div class="user-profile-content">
 										<form role="form" id="contractForm">
 	                                		<div class="form-group">
-			                                    <label for="pcuser" class="col-lg-2">簽約人(不能修改)</label>
+			                                    <label for="pcuser" class="col-lg-2">簽約人(ps:不能修改)</label>
 			                                    <input class=" form-control" id="pcuser" name="pcuser" type="text" value="謝欣育">
 			                                </div>
 			                                <div class="form-group">
-			                                    <label for="pcuserc" class="col-lg-2">介紹人(不能修改)</label>
+			                                    <label for="pcuserc" class="col-lg-2">介紹人(ps:不能修改)</label>
 			                                    <input class=" form-control" id="pcuserc" name="pcuserc" type="text">
 			                                </div>
 			                                <div class="form-group">
-		                                	<label for="pctype" class="col-lg-2">類型 *</label>
-		                                	<select class="form-control" id="pctype" name="pctype">
-		                                		<option value="">請選擇</option>
-		                                		<option selected>租辦公室</option>
-		                                		<option>登記</option>
-		                                		<option>聯絡處</option>
-		                                		<option>其他</option>
-		                                	</select>
-		                                </div>
+			                                	<label for="pctype" class="col-lg-2">類型 *</label>
+			                                	<select class="form-control" id="pctype" name="pctype">
+			                                		<option value="">請選擇</option>
+			                                		<option selected>租辦公室</option>
+			                                		<option>登記</option>
+			                                		<option>聯絡處</option>
+			                                		<option>其他</option>
+			                                	</select>
+		                                	</div>
 	                                        <div class="form-group">
 	                                            <label class="col-lg-2" for="pcdates">合約日期(起) *</label>
                                           		<div class="col-lg-12">
@@ -522,30 +570,129 @@
 			                                <button class="btn btn-primary" id="contractUpdate" type="button">Save</button>
 		                        		</form>
 		                        	</div>
-							</div>
-
-
-							<!-- File upload -->
-							<div id="projects" class="tab-pane">
-								<div class="row">
-				                    <div class="col-md-12 portlets">
-				                        <!-- Your awesome content goes here -->
-				                        <div class="m-b-30">
-				                            <form action="#" class="dropzone" id="dropzone">
-				                              <div class="fallback">
-				                                <input name="file" type="file" multiple />
-				                              </div>
-				                            </form>
-				                        </div>
-				                    </div>
-				                </div>
-                           	</div>
-                        </div> 
-                    </div>
-                </div>
-            </div>
-        </div>
-
+		                        	<div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	                                    <div class="modal-dialog"> 
+	                                        <div class="modal-content"> 
+	                                            <div class="modal-header"> 
+	                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+	                                                <h4 class="modal-title">New Contract</h4> 
+	                                            </div> 
+	                                            <div class="modal-body"> 
+	                                                <div class="row"> 
+	                                                    <div class="col-md-6"> 
+	                                                        <div class="form-group"> 
+	                                                           <label for="pcNUser" class="control-label">簽約人*</label>
+			                                    				<input class=" form-control" id="pcNUser" name="pcNUser" type="text" value=""> 
+	                                                        </div> 
+	                                                    </div> 
+	                                                    <div class="col-md-6"> 
+	                                                        <div class="form-group">
+	                                                            <label for="pcNUserc" class="control-label">介紹人</label>
+			                                    				<input class=" form-control" id="pcNUserc" name="pcNUserc" type="text">
+	                                                        </div> 
+	                                                    </div> 
+	                                                </div> 
+	                                                <div class="row"> 
+	                                                    <div class="col-md-12"> 
+	                                                        <div class="form-group">
+	                                                            <label for="pcNType" class="control-label">類型 *</label>
+							                                	<select class="form-control" id="pcNType" name="pcNType">
+							                                		<option>請選擇</option>
+							                                		<option>租辦公室</option>
+							                                		<option>登記</option>
+							                                		<option>聯絡處</option>
+							                                		<option>其他</option>
+							                                	</select> 
+	                                                        </div> 
+	                                                    </div> 
+	                                                </div> 
+	                                                <div class="row"> 
+	                                                    <div class="col-md-6"> 
+	                                                        <div class="form-group"> 
+	                                                            <label class="control-label" for="pcNDates">合約日期(起) *</label>
+				                                          		<div class="col-lg-12">
+				                                           			<div class="input-group">
+				                                           				<input type="text" id="pcNDates" name="pcNDates" class="form-control col-lg-2" placeholder="yyyy/mm/dd" value="">
+																		<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+																	</div>
+																</div>
+	                                                        </div> 
+	                                                    </div> 
+	                                                    <div class="col-md-6"> 
+	                                                        <div class="form-group"> 
+	                                                            <label class="control-label" for="pcNDatee">合約日期(終) *</label>
+				                                            	<div class="col-lg-12">
+				                                           			<div class="input-group">
+					                                            		<input type="text" id="pcNDatee" name="pcNDatee" class="form-control" placeholder="yyyy/mm/dd" value="">
+																		<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+																	</div>
+				                                            	</div>
+	                                                        </div> 
+	                                                    </div> 
+	                                                    <div class="col-md-6"> 
+	                                                        <div class="form-group"> 
+	                                                            <label for="pNRent" class="control-label">租金 *</label>
+			                                    				<input class="form-control " id="pNRent" name="pNRent" type="text" value="">
+	                                                        </div> 
+	                                                    </div> 
+	                                                    <div class="col-md-6">
+	                                                    	<div class="form-group">
+							                                	<label for="pNDeposit" class="control-label">押金 *</label>
+							                                    <input class="form-control " id="pNDeposit" name="pNDeposit" type="text" value="">
+							                                </div>
+	                                                    </div>
+	                                                    <div class="col-md-6">
+	                                                    	<div class="form-group">
+							                                	<label for="pNRented" class="control-label">已收租金</label>
+							                                    <input class="form-control " id="pNRented" name="pNRented" type="text">
+						                                    </div>
+	                                                    </div>
+		                                                <div class="col-md-6">
+		                                                	<div class="form-group">
+							                                	<label for="pNDeposited" class="control-label">已收押金</label>
+							                                    <input class="form-control " id="pNDeposited" name="pNDeposited" type="text">
+						                                    </div>
+	                                                    </div>
+	                                                </div> 
+	                                                <div class="row"> 
+	                                                    <div class="col-md-12"> 
+	                                                        <div class="form-group no-margin"> 
+	                                                            <label for="pcommentc" class="control-label">附註</label>
+			                                    				<textarea class="form-control " id="pcommentc" name="pcommentc"></textarea>
+	                                                        </div> 
+	                                                    </div>
+	                                                </div> 
+	                                            </div> 
+	                                            <div class="modal-footer"> 
+	                                                <button type="button" class="btn btn-info">Save changes</button>
+	                                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+	                                            </div> 
+	                                        </div> 
+	                                    </div>
+	                                </div><!-- /.modal -->
+								</div>
+								
+								<!-- File upload -->
+								<div id="projects" class="tab-pane">
+									<div class="row">
+					                    <div class="col-md-12 portlets">
+					                        <!-- Your awesome content goes here -->
+					                        <div class="m-b-30">
+					                            <form action="#" class="dropzone" id="dropzone">
+					                              <div class="fallback">
+					                                <input name="file" type="file" multiple />
+					                              </div>
+					                            </form>
+					                        </div>
+					                    </div>
+					                </div>
+	                           	</div>
+	                        </div> 
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+		</div>
         <!-- Page Content Ends -->
         <!-- ================== -->
 
