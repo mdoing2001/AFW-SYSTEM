@@ -88,8 +88,8 @@
 	            <li class="has-submenu active"><a href="#"><i class="ion-compose"></i> <span class="nav-label">客戶資料</span></a>
 	                <ul class="list-unstyled">
 	                    <li class="active"><a href="addCompany.html">新增客戶合約</a></li>
-	                    <li><a href="company.html">客戶資料</a></li>
-	                    <li><a href="404.html">客戶檔案</a></li>
+	                    <li><a href="company.html">全部客戶</a></li>
+	                    <li><a href="companyProfile.html">客戶檔案</a></li>
 	                </ul>
 	            </li>
 <!-- 	            <li class="has-submenu"><a href="#"><i class="ion-grid"></i> <span class="nav-label">Data Tables</span></a> -->
@@ -212,7 +212,7 @@
 		                                	</div>
 		                                </div>
 		                                <div class="form-group">
-		                                	<label for="cOfficeNumber" class="control-label col-lg-2">辦公室號碼 *</label>
+		                                	<label for="cOfficeNumber" class="control-label col-lg-2">辦公室號碼</label>
 		                                	<div class="col-lg-10">
 		                                        <input class="form-control " id="cOfficeNumber" name="cOfficeNumber" type="text">
 		                                    </div>
@@ -268,11 +268,29 @@
 	                                   	</section>
 	                                    <h3>合約</h3>
 	                                    <section>
-	                                    <div class="form-group ">
-		                                    <label for="ccuser" class="control-label col-lg-2">簽約人 *(需要確認)</label>
+	                                    <div class="form-group">
+		                                    <label for="ccuser" class="control-label col-lg-2">簽約人 *(由帳號判斷)</label>
 		                                    <div class="col-lg-10">
 		                                        <input class=" form-control" id="ccuser" name="ccuser" type="text">
 		                                    </div>
+		                                </div>
+		                                <div class="form-group">
+		                                    <label for="ccuserc" class="control-label col-lg-2">介紹人(使用下拉式選單)</label>
+		                                    <div class="col-lg-10">
+		                                        <input class=" form-control" id="ccuserc" name="ccuserc" type="text">
+		                                    </div>
+		                                </div>
+		                                <div class="form-group">
+		                                	<label for="cctype" class="control-label col-lg-2">類型 *</label>
+		                                	<div class="col-lg-10">
+			                                	<select class="form-control" id="cctype" name="cctype">
+			                                		<option value="">請選擇</option>
+			                                		<option>租辦公室</option>
+			                                		<option>登記</option>
+			                                		<option>聯絡處</option>
+			                                		<option>其他</option>
+			                                	</select>
+		                                	</div>
 		                                </div>
                                         <div class="form-group">
                                             <label class="col-lg-2 control-label " for="ccdates">合約日期(起) *</label>
@@ -316,6 +334,12 @@
 		                                        <input class="form-control " id="cdeposited" name="cdeposited" type="text">
 		                                    </div>
 		                                </div>
+		                                <div class="form-group">
+		                                    <label for="ccommentc" class="control-label col-lg-2">附註</label>
+		                                    <div class="col-lg-10">
+		                                    	<textarea class="form-control " id="ccommentc" name="ccommentc"></textarea>
+		                                    </div>
+			                           	</div>
 	
 	                                    </section>
 	                                    <h3>會計師資料</h3>
@@ -432,7 +456,6 @@
 //             cbranch: "required",
 //             cAddress: "required",
 //             cOfficeNumber: {
-//             	required: true,
 //             	digits: true
 //             },
 //             ceim: {
@@ -470,10 +493,11 @@
 //             	//required: true,
 //             	digits: true
 //             },
-				caPhoneNumber: {
-					minlength: 9,
-					digits: true
-				}
+// 				caPhoneNumber: {
+// 					minlength: 9,
+// 					digits: true
+// 				},
+//				cctype: "required"
 //            cAddress2 : "required"
         },
         messages: {
@@ -497,7 +521,6 @@
             cbranch: "請選擇簽約分店",
             cAddress: "請輸入地址",
             cOfficeNumber: {
-            	required: "請輸入辦公室號碼",
             	digits: "格式錯誤"
             },
             ceim: {
@@ -538,7 +561,8 @@
             caPhoneNumber: {
             	minlength: "長度錯誤",
             	digits: "格式錯誤"
-            }
+            },
+            cctype: "請選擇簽約類型"
 //            cAddress2: "請輸入轉寄地址"
         }
 	});
