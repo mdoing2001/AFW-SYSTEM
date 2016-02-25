@@ -70,6 +70,16 @@ public class CompanyDao {
 	}
 		
 		
+    public void insert(CompanyEntity company) {
+		try {
+			em.getTransaction().begin();
+			em.persist(company);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void update(CompanyEntity company) {
 		try {
 			em.getTransaction().begin();
@@ -101,6 +111,7 @@ public class CompanyDao {
 		}
 	}
 	
-	
+	//@Query("SELECT u FROM User u WHERE u.userName=:userName")
+	//  public User findUserByName(@Param("userName") String userName);
 	
 }
