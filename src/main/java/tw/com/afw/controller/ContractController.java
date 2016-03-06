@@ -18,26 +18,19 @@ public class ContractController {
 
 	
 	
-	 @Autowired
-	 private ContractService ContractService;
+	@Autowired
+	private ContractService ContractService;
 	 
 	 
-	    
-    //取回全部客戶(company.html) 這個頁面的資料 不同分店取的分店資料不一樣 管理員取回全部資料
-    @RequestMapping(value = "/retrive/company/{id}", method = RequestMethod.GET, produces = "application/json")
-    public String retriveDataFromCompany(@PathVariable("id") long id) {
-    	
-    	
-    	
-    	return "";
-    }
-    
-    //取回不同contract type(租辦公室 個人座位....)的資料 一樣不同分店取的分店資料不一樣 管理員取回全部資料
-    @RequestMapping(value = "/retrive/company/{id}/{type}", method = RequestMethod.GET, produces = "application/json")
-    public String retriveDataFromCompanyByType(@PathVariable("id") long id, @PathVariable("type") String type) {
-    	
-    	return "";
-    }
+	
+	@RequestMapping(value = "/new/contract/add/{id}", method = RequestMethod.POST, produces = "application/json")
+	public String createContract(@PathVariable("id") long id, @RequestBody String newContractStr) {
+		
+		
+		
+		return "";
+	}
+
 	 
 	 
 	 

@@ -72,12 +72,13 @@ public class CompanyController {
 				if(checkein == 1){
 					//新增
 					CompanyService.conins(companyEntity, contractEntity, accountancyEntity);
+					result.put("status", "success");
+			    	result.put("message", "success");
 				}else{
-					return "";
+					result.put("status", "error");
+			    	result.put("message", "新增失敗");
 				}
-			
-				result.put("status", "success");
-		    	result.put("message", "success");
+					
 		    	
 			} catch (JsonSyntaxException e) {
 				e.printStackTrace();
