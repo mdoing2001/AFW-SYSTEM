@@ -7,20 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+import tw.com.afw.dao.AccountancyDao;
 import tw.com.afw.dao.CompanyDao;
+import tw.com.afw.dao.ContractDao;
+import tw.com.afw.dao.UserDao;
+import tw.com.afw.entity.AccountancyEntity;
 import tw.com.afw.entity.CompanyEntity;
+import tw.com.afw.entity.ContractEntity;
+import tw.com.afw.entity.UserEntity;
 
 
 
@@ -33,7 +27,9 @@ public class CompanyService {
 	
 	@Autowired
 	private CompanyDao dao;
-	
+	private ContractDao condao;
+	private AccountancyDao accdao;
+	private UserDao userdao;
 	
 	@Transactional
 	public  List<CompanyEntity>comAll(){
@@ -80,6 +76,37 @@ public class CompanyService {
 		dao.deleteById(del_id);
 	}
 	
-
+	@Transactional
+	public void conins (CompanyEntity company,ContractEntity contract,AccountancyEntity accountancy){
+		dao.insert(company);
+		condao.insert(contract);
+		accdao.ins(accountancy);
+		
+		
+	}
+	
+	@Transactional
+	public int userId (String usercount){
+		
+		UserEntity user  = userdao.findUserByCount(usercount);
+		int userid= user.getUser_Id();		
+		return userid;	
+		
+	}
+	
+	@Transactional
+	public int checkEin(String ein){
+		
+		CompanyEntity entity  = dao.findCompanyByEin(ein);
+		
+		if(entity == null){
+			return 1;
+		}else{
+			return 0;
+		}
+		
+		
+	}
+	
 
 }

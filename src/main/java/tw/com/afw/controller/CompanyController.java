@@ -27,6 +27,7 @@ public class CompanyController {
 	 @Autowired
 	 private CompanyService CompanyService;
 	 
+
 	 
 	 
 	    //-------------------Create a User--------------------------------------------------------
@@ -39,8 +40,10 @@ public class CompanyController {
 
 	        //CompanyService.ins(companyj);
 	    	try {
+	    		//抓取前端全部資料json格式
 				JSONObject obj = (JSONObject) new JSONParser().parse(newCompanyJson);
 				
+				//有三個table (key :value) 轉字串
 				String companyStr = obj.get("company").toString();
 				String contractStr = obj.get("contract").toString();
 				String accStr = obj.get("acc").toString();
@@ -49,10 +52,12 @@ public class CompanyController {
 				System.out.println(contractStr);
 				System.out.println(accStr);
 				
+				//用FromJson將字串塞入entity
 				CompanyEntity companyEntity = new Gson().fromJson(companyStr, CompanyEntity.class);
 				ContractEntity contractEntity = new Gson().fromJson(contractStr, ContractEntity.class);
 				AccountancyEntity accountancyEntity = new Gson().fromJson(accStr, AccountancyEntity.class);
-				
+
+				//在entity 裡有FK必須要有對應的連結
 				companyEntity.setAcc_Id(accountancyEntity);
 				contractEntity.setCompany_id(companyEntity);
 				
@@ -60,6 +65,16 @@ public class CompanyController {
 				//contractEntity.setUser_id2(UserEntity);
 				
 				//companyEntity.getAcc_Id().getAcc_name();
+				
+				//company 統編驗證
+				String ein =companyEntity.getCompany_Ein();
+				int checkein=CompanyService.checkEin(ein);
+				if(checkein == 1){
+					//新增
+					CompanyService.conins(companyEntity, contractEntity, accountancyEntity);
+				}else{
+					return "";
+				}
 			
 				result.put("status", "success");
 		    	result.put("message", "success");

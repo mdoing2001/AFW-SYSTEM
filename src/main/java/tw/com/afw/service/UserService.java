@@ -13,10 +13,23 @@ import tw.com.afw.entity.UserEntity;
 public class UserService {
 
 	@Autowired
-	private UserDao dao;
+	private UserDao userdao;
 	
 	@Transactional
 	public List<UserEntity> findAll(){
-		return dao.findAll();
+		return userdao.findAll();
+	}
+	
+	@Transactional
+	public UserEntity checkAccount(String account){
+	  UserEntity entityaccount=userdao.findUserByCount(account);
+	    return entityaccount;
+	 }
+	  
+	@Transactional
+	public UserEntity checkpassword(String account , String password){
+		 UserEntity entitypassword=userdao.findUserByCount(account);
+         return entitypassword;
+	
 	}
 }

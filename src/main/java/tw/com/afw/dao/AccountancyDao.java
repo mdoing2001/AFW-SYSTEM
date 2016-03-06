@@ -36,7 +36,7 @@ public class AccountancyDao {
 	}
 	
 	
-	public void persist(AccountancyEntity accountancy) {
+	public void ins(AccountancyEntity accountancy) {
 		try {
 			em.getTransaction().begin();
 			em.persist(accountancy);
