@@ -22,8 +22,9 @@
   <context:component-scan base-package="tw.com.afw"/>
  
   <!-- Use @Controller annotations for MVC controller definitions -->
-  <mvc:annotation-driven />
   <mvc:resources mapping="/**" location="/" />
+  <context:component-scan base-package="tw.com.afw" />
+  <mvc:annotation-driven />
   
   <!-- Add JPA support -->
   <bean id="emf" class=
@@ -47,6 +48,7 @@
  <bean class=
      "org.springframework.web.servlet.view.InternalResourceViewResolver">
    <property name="prefix" value="/"/>
+   <property name="suffix" value=".html" />
  </bean>
  
 </beans>

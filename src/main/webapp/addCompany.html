@@ -195,19 +195,24 @@
 		                                    </div>
 		                                </div>
 		                                <div class="form-group ">
-		                                    <label for="cemail" class="control-label col-lg-2">E-Mail *</label>
+		                                    <label for="cemail" class="control-label col-lg-2">E-Mail</label>
 		                                    <div class="col-lg-10">
 		                                        <input class="form-control " id="cemail" type="email" name="email">
 		                                    </div>
 		                                </div>
 		                                <div class="form-group">
+		                                	<!-- TODO Hard Code -->
 		                                	<label for="cbranch" class="control-label col-lg-2">登記地 *</label>
 		                                	<div class="col-lg-10">
 			                                	<select class="form-control" id="cbranch" name="cbranch">
-			                                		<option value="">請選擇</option>
-			                                		<option>微風店</option>
-			                                		<option>南京店</option>
-			                                		<option>中正店</option>
+			                                		<option value="-1">請選擇</option>
+			                                		<option value="1">微風店</option>
+			                                		<option value="2">敦化店</option>
+			                                		<option value="3">大安店</option>
+			                                		<option value="4">忠孝店</option>
+			                                		<option value="5">復興店</option>
+			                                		<option value="6">南京店</option>
+			                                		<option value="7">許昌店</option>
 			                                	</select>
 		                                	</div>
 		                                </div>
@@ -269,26 +274,31 @@
 	                                    <h3>合約</h3>
 	                                    <section>
 	                                    <div class="form-group">
+	                                    	<!-- TODO 抓取session的user 名稱 -->
 		                                    <label for="ccuser" class="control-label col-lg-2">簽約人 *(由登入帳號判斷 如果是管理員 會出現下拉式選單)</label>
 		                                    <div class="col-lg-10">
 		                                        <input class=" form-control" id="ccuser" name="ccuser" type="text">
 		                                    </div>
 		                                </div>
 		                                <div class="form-group">
+		                                	<!-- TODO ajax from ContractController -->
 		                                    <label for="ccuserc" class="control-label col-lg-2">介紹人(使用下拉式選單)</label>
 		                                    <div class="col-lg-10">
 		                                        <input class=" form-control" id="ccuserc" name="ccuserc" type="text">
 		                                    </div>
 		                                </div>
 		                                <div class="form-group">
+		                                	<!-- TODO Hard Code -->
 		                                	<label for="cctype" class="control-label col-lg-2">類型 *</label>
 		                                	<div class="col-lg-10">
 			                                	<select class="form-control" id="cctype" name="cctype">
-			                                		<option value="">請選擇</option>
-			                                		<option>租辦公室</option>
-			                                		<option>登記</option>
-			                                		<option>聯絡處</option>
-			                                		<option>其他</option>
+			                                		<option value="-1">請選擇</option>
+			                                		<option value="1">租辦公室</option>
+			                                		<option value="2">個人座位</option>
+			                                		<option value="3">登記</option>
+			                                		<option value="4">聯絡處</option>
+			                                		<option value="5">停業</option>
+			                                		<option value="6">其他</option>
 			                                	</select>
 		                                	</div>
 		                                </div>
@@ -445,7 +455,6 @@
 //                 equalTo: "#password"
 //             },
 //             email: {
-//                 required: true,
 //                 email: true
 //             },
 //             topic: {
@@ -516,7 +525,9 @@
                 minlength: "Your password must be at least 5 characters long",
                 equalTo: "Please enter the same password as above"
             },
-            email: "請輸入正確格式的Email",
+            email: {
+            	email: "格式錯誤"
+            },
             agree: "Please accept our policy",
             cbranch: "請選擇簽約分店",
             cAddress: "請輸入地址",
@@ -583,7 +594,8 @@
 	    onFinished: function (event, currentIndex)
 	    {
 	        //alert("Submitted!");
-	        window.location.href="company.html";
+	        //window.location.href="company.html";
+	    	addAjax();
 	    }
 	});
 	
@@ -611,10 +623,37 @@
         }
     });
 	
+ 	// Date Picker
     $('#ccdatee').datepicker({
         format: 'yyyy/mm/dd',
     });
- 	// Date Picker
+ 	
+    var root = location.protocol + '//' + location.host;
+ 	
+    var addAjax = function() {
+    	var newData = {}
+    	newData["test"] = "test";
+    	console.log(JSON.stringify(newData));
+		$.ajax({
+			url:root + "/AFW-I-System/new/company/add",
+			type:'post',
+			data : JSON.stringify(newData),
+			dataType : 'json',
+			contentType: 'application/json',
+			success : function(data) {
+				alert("success");
+				console.log(data);
+			},
+			error : function(e) {
+				alert("error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+    }
+ 	
 	
 })(jQuery);
 </script>

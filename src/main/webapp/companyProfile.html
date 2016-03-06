@@ -737,7 +737,6 @@
 	    rules: {
 	    	pname: "required",
             pemail: {
-                required: true,
                 email: true
             },
             pbranch: "required",
@@ -789,7 +788,9 @@
         },
         messages: {
         	pname: "請輸入公司名稱",
-            pmail: "請輸入正確格式的Email",
+            pmail: {
+            	email: "格式錯誤"
+            },
             pbranch: "請選擇簽約分店",
             pAddress: "請輸入地址",
             pOfficeNumber: {
