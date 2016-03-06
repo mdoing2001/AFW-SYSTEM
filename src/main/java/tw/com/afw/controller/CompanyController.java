@@ -46,12 +46,19 @@ public class CompanyController {
 				String contractStr = obj.get("contract").toString();
 				String accStr = obj.get("acc").toString();
 				
+				System.out.println(companyStr);
+				System.out.println(contractStr);
+				System.out.println(accStr);
+				
 				CompanyEntity companyEntity = new Gson().fromJson(companyStr, CompanyEntity.class);
 				ContractEntity contractEntity = new Gson().fromJson(contractStr, ContractEntity.class);
 				AccountancyEntity accountancyEntity = new Gson().fromJson(accStr, AccountancyEntity.class);
 				
 				companyEntity.setAcc_Id(accountancyEntity);
 				contractEntity.setCompany_id(companyEntity);
+				
+				//contractEntity.setUser_id(UserEntity);
+				//contractEntity.setUser_id2(UserEntity);
 				
 				//companyEntity.getAcc_Id().getAcc_name();
 				
@@ -69,6 +76,7 @@ public class CompanyController {
 	    	
 	       // HttpHeaders headers = new HttpHeaders();
 	        //headers.setLocation(ucBuilder.path("/xxx").buildAndExpand(company.getCompany_Id()).toUri());
+	    	//
 	        return "/xxxx";
 	    }
 	 
