@@ -65,6 +65,12 @@ public class CompanyEntity implements java.io.Serializable{
 	@Column(name = "company_remark")
 	private String company_Remark;
 	
+	@Column(name = "company_pay_status")
+	private String company_pay_status;
+	
+	@Column(name = "company_letter_status")
+	private String company_letter_status;
+	
 	public int getCompany_Id() {
 		return company_Id;
 	}
@@ -149,6 +155,18 @@ public class CompanyEntity implements java.io.Serializable{
 	}
 	public void setCompany_Remark(String company_Remark) {
 		this.company_Remark = company_Remark;
+	}
+	public String getCompany_pay_status() {
+		return company_pay_status;
+	}
+	public void setCompany_pay_status(String company_pay_status) {
+		this.company_pay_status = company_pay_status;
+	}
+	public String getCompany_letter_status() {
+		return company_letter_status;
+	}
+	public void setCompany_letter_status(String company_letter_status) {
+		this.company_letter_status = company_letter_status;
 	}
 	
 	

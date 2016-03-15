@@ -93,6 +93,8 @@ public class CompanyController {
 	        return result.toJSONString();
 	    }
 	    
+	    //up companyProfile. /update/company/{id}
+	    
 	    //取回全部客戶(company.html) 這個頁面的資料 不同分店取的分店資料不一樣 管理員取回全部資料, id:使用者id
 	    @RequestMapping(value = "/retrive/company/{id}", method = RequestMethod.GET, produces = "application/json")
 	    public String retriveDataFromCompany(@PathVariable("id") long id) {
