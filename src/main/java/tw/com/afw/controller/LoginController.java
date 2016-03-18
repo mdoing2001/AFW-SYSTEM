@@ -40,7 +40,9 @@ public class LoginController {
 				results.put("message", "帳號輸入錯誤");
 			}else{
 				
-				if(useraccount.getUser_Password().equals(password) && userid.equals(branch)){
+				//if(useraccount.getUser_Password().equals(password) && userid.equals(branch)){
+				if(useraccount.getUser_Password().equals(password)){
+				
 					//登入成功將userentity存在session
 					request.getSession().setAttribute("account", account);
 					request.getSession().setAttribute("branch", branch);
