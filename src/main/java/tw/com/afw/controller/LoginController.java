@@ -1,7 +1,7 @@
 package tw.com.afw.controller;
 
-
 import javax.servlet.http.HttpServletRequest;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -16,16 +16,16 @@ import tw.com.afw.service.UserService;
 
 
 @Controller
-public class UserController {
+public class LoginController {
 	
 	 @Autowired
 	 private UserService UserService;
 
 	
-	 @RequestMapping(value = "/new/user/usercc", method = RequestMethod.POST)
+	 @RequestMapping(value = "/new/user/login", method = RequestMethod.POST)
 	 public String checkLogin(@RequestBody String newUserJson , HttpServletRequest request)  {
 		 JSONObject results = new JSONObject();
-		 //HttpSession session= HttpServletRequest.getSession();
+		
 		 try {
 			//抓取前端帳密
 			JSONObject obj = (JSONObject) new JSONParser().parse(newUserJson);
@@ -34,15 +34,17 @@ public class UserController {
 			String branch   = obj.get("branch").toString();
 			//驗證帳密
 			UserEntity useraccount=UserService.checkAccount(account);
+			String userid = Integer.toString(useraccount.getUser_Id());
 			if(useraccount != null){
 				results.put("status", "error");
 				results.put("message", "帳號輸入錯誤");
 			}else{
 				
-				if(useraccount.getUser_Password().equals(password)){
+				if(useraccount.getUser_Password().equals(password) && userid.equals(branch)){
 					//登入成功將userentity存在session
 					request.getSession().setAttribute("account", account);
 					request.getSession().setAttribute("branch", branch);
+					request.getSession().setAttribute("userid", userid);
 					results.put("status", "success");
 					results.put("message", "success");
 				}else{
@@ -61,8 +63,5 @@ public class UserController {
 		 return results.toJSONString();
 	 }
 	 
-	 
-	 
-
 
 }

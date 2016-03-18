@@ -93,11 +93,41 @@ public class CompanyController {
 	        return result.toJSONString();
 	    }
 	    
-	    //up companyProfile. /update/company/{id}
+	    //更新客戶資料
+	    @SuppressWarnings("unchecked")
+		@RequestMapping(value = "/retrive/company/{update}", method = RequestMethod.GET, produces = "application/json")
+	    public String retriveDataUpdateCompany(@PathVariable("update") String update)  {
+	    	
+	    	JSONObject result = new JSONObject();
+	    	try {
+				JSONObject obj = (JSONObject) new JSONParser().parse(update);
+				String companyStr = obj.get("company").toString();
+				CompanyEntity companyEntity = new Gson().fromJson(companyStr, CompanyEntity.class);
+				CompanyService.upd(companyEntity);
+				
+				result.put("status", "success");
+		    	result.put("message", "更新成功");
+				
+			} catch (ParseException e) {
+				
+				e.printStackTrace();
+				result.put("status", "error");
+		    	result.put("message", e);
+			}
+	    	
+	    	return result.toJSONString();
+	    }
+	    
+	    
+	    
 	    
 	    //取回全部客戶(company.html) 這個頁面的資料 不同分店取的分店資料不一樣 管理員取回全部資料, id:使用者id
+	    @SuppressWarnings("unchecked")
 	    @RequestMapping(value = "/retrive/company/{id}", method = RequestMethod.GET, produces = "application/json")
 	    public String retriveDataFromCompany(@PathVariable("id") long id) {
+	    	
+	   	 //String contextPath = getServletContext().getContextPath();
+		 //String target = (String)session.getAttribute("target");
 	    	
 	    	return "";
 	    }
