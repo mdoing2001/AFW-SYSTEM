@@ -1,5 +1,7 @@
 package tw.com.afw.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -27,7 +29,7 @@ public class CompanyController {
 	 @Autowired
 	 private CompanyService CompanyService;
 	 
-
+	 public HttpServletRequest request;
 	 
 	 
 	    //-------------------Create a User--------------------------------------------------------
@@ -103,6 +105,7 @@ public class CompanyController {
 				JSONObject obj = (JSONObject) new JSONParser().parse(update);
 				String companyStr = obj.get("company").toString();
 				CompanyEntity companyEntity = new Gson().fromJson(companyStr, CompanyEntity.class);
+		
 				CompanyService.upd(companyEntity);
 				
 				result.put("status", "success");
@@ -125,10 +128,19 @@ public class CompanyController {
 	    @SuppressWarnings("unchecked")
 	    @RequestMapping(value = "/retrive/company/{id}", method = RequestMethod.GET, produces = "application/json")
 	    public String retriveDataFromCompany(@PathVariable("id") long id) {
-	    	
-	   	 //String contextPath = getServletContext().getContextPath();
-		 //String target = (String)session.getAttribute("target");
-	    	
+	    	Gson gson = new Gson();
+	    	String account = (String) request.getSession().getAttribute("account");
+	    	String usercode = (String) request.getSession().getAttribute("usercode");
+	    	if(usercode.equals("AA")){
+	    	//	List<companyEntity> companyEntity11= CompanyService.comAll(); 
+	    	//	Json t	= gson.fromJson(CompanyService.comAll());
+	    	//	 Gson gson = new Gson();
+	    	//	 String json = gson.toJson(target, listType);
+	    	//	 List<String> target2 = gson.fromJson(json, listType);
+	    	  	CompanyService.comAll();
+	    	}else{
+	    		
+	    	}
 	    	return "";
 	    }
 	    

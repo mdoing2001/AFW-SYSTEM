@@ -35,23 +35,22 @@ public class LoginController {
 			//驗證帳密
 			UserEntity useraccount=UserService.checkAccount(account);
 			String userid = Integer.toString(useraccount.getUser_Id());
+			String code =useraccount.getBranch_id().getBranch_code();
 			if(useraccount != null){
 				results.put("status", "error");
 				results.put("message", "帳號輸入錯誤");
 			}else{
-				
-				//if(useraccount.getUser_Password().equals(password) && userid.equals(branch)){
-				if(useraccount.getUser_Password().equals(password)){
-				
+				if(useraccount.getUser_Password().equals(password) && branch.equals(code)){				
 					//登入成功將userentity存在session
 					request.getSession().setAttribute("account", account);
 					request.getSession().setAttribute("branch", branch);
 					request.getSession().setAttribute("userid", userid);
+					request.getSession().setAttribute("usercode", code);
 					results.put("status", "success");
 					results.put("message", "success");
 				}else{
 					results.put("status", "error");
-					results.put("message", "密碼輸入錯誤");
+					results.put("message", "密碼輸入錯誤或分店代號錯誤");
 				}
 			}
 			
