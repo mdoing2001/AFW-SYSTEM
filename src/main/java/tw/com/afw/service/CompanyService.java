@@ -32,8 +32,13 @@ public class CompanyService {
 	private UserDao userdao;
 	
 	@Transactional
-	public  List<CompanyEntity>comAll(){
+	public  List<CompanyEntity>findAll(){
 		return dao.findAll();
+	}
+	
+	@Transactional
+	public  List<CompanyEntity>findCompanyByCode(String code){
+		return dao.findCompanyByCode(code);
 	}
 	
 	

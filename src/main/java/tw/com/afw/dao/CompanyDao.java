@@ -24,7 +24,7 @@ public class CompanyDao {
 
 	
 	public List<CompanyEntity> findAll() {
-		return (List<CompanyEntity>) em.createQuery("SELECT * FROM company ", CompanyEntity.class).getResultList();
+		return (List<CompanyEntity>) em.createQuery("select c from company c ", CompanyEntity.class).getResultList();
 	}
 	
 	
@@ -37,6 +37,12 @@ public class CompanyDao {
             e.printStackTrace();
         }
 		return entity;
+	}
+	
+
+	public List<CompanyEntity> findCompanyByCode(String code) {
+		return em.createQuery("select e from company e where e.company_code:code",CompanyEntity.class).setParameter("code", code).getResultList();
+	
 	}
 	
 	public CompanyEntity findCompanyByEin(String ein) {

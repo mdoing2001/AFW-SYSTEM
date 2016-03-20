@@ -1,5 +1,7 @@
 package tw.com.afw.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONObject;
@@ -31,12 +33,10 @@ public class CompanyController {
 	 
 	 public HttpServletRequest request;
 	 
-	 
-	    //-------------------Create a User--------------------------------------------------------
      
 	    @SuppressWarnings("unchecked")
 		@RequestMapping(value = "/new/company/add", method = RequestMethod.POST, produces = "application/json")
-	    public String createUser(@RequestBody String newCompanyJson) {
+	    public String createCompany(@RequestBody String newCompanyJson) {
 	    	JSONObject result = new JSONObject();
 	        //System.out.println("Creating Company " + company.getCompany_Name());
 
@@ -98,7 +98,7 @@ public class CompanyController {
 	    //更新客戶資料
 	    @SuppressWarnings("unchecked")
 		@RequestMapping(value = "/retrive/company/{update}", method = RequestMethod.GET, produces = "application/json")
-	    public String retriveDataUpdateCompany(@PathVariable("update") String update)  {
+	    public String UpdateCompany(@PathVariable("update") String update)  {
 	    	
 	    	JSONObject result = new JSONObject();
 	    	try {
@@ -127,33 +127,34 @@ public class CompanyController {
 	    //取回全部客戶(company.html) 這個頁面的資料 不同分店取的分店資料不一樣 管理員取回全部資料, id:使用者id
 	    @SuppressWarnings("unchecked")
 	    @RequestMapping(value = "/retrive/company/{id}", method = RequestMethod.GET, produces = "application/json")
-	    public String retriveDataFromCompany(@PathVariable("id") long id) {
+	    public String selectCompany(@PathVariable("id") long id) {
 	    	Gson gson = new Gson();
 	    	String account = (String) request.getSession().getAttribute("account");
 	    	String usercode = (String) request.getSession().getAttribute("usercode");
 	    	if(usercode.equals("AA")){
-	    	//	List<companyEntity> companyEntity11= CompanyService.comAll(); 
-	    	//	Json t	= gson.fromJson(CompanyService.comAll());
-	    	//	 Gson gson = new Gson();
-	    	//	 String json = gson.toJson(target, listType);
-	    	//	 List<String> target2 = gson.fromJson(json, listType);
-	    	  	CompanyService.comAll();
+	    		//總公司抓取全部顧客資料
+	    		List<CompanyEntity> companyAll= CompanyService.findAll(); 
+	    		//list to json
+	    		String companyjson = gson.toJson(companyAll);	    		
+	    		return companyjson;	
 	    	}else{
-	    		
+	    		List<CompanyEntity> companycode = CompanyService.findCompanyByCode(usercode);
+	    		String companyjson = gson.toJson(companycode);	
+	    	 	return companyjson;
 	    	}
-	    	return "";
+	   
 	    }
 	    
 	    //取回不同contract type(租辦公室 個人座位....)的資料 一樣不同分店取的分店資料不一樣 管理員取回全部資料, id:使用者id
 	    @RequestMapping(value = "/retrive/company/{id}/{type}", method = RequestMethod.GET, produces = "application/json")
-	    public String retriveDataFromCompanyByType(@PathVariable("id") long id, @PathVariable("type") String type) {
+	    public String selectCompanyByType(@PathVariable("id") long id, @PathVariable("type") String type) {
 	    	
 	    	return "";
 	    }
 	    
 	    //取回每間公司(客戶)的資料(companyProfile) ex:合約也要全部給我, id:公司id
 	    @RequestMapping(value = "/retrive/companyProfile/{id}", method = RequestMethod.GET, produces = "application/json")
-	    public String retriveDataForCompanyProfile(@PathVariable("id") long id) {
+	    public String selectCompanyProfile(@PathVariable("id") long id) {
 	    	
 	    	return "";
 	    }

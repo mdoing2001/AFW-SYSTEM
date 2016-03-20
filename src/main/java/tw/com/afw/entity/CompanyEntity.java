@@ -71,6 +71,9 @@ public class CompanyEntity implements java.io.Serializable{
 	@Column(name = "company_letter_status")
 	private String company_letter_status;
 	
+	@Column(name = "company_code")
+	private String company_code;
+	
 	public int getCompany_Id() {
 		return company_Id;
 	}
@@ -167,6 +170,12 @@ public class CompanyEntity implements java.io.Serializable{
 	}
 	public void setCompany_letter_status(String company_letter_status) {
 		this.company_letter_status = company_letter_status;
+	}
+	public String getCompany_code() {
+		return company_code;
+	}
+	public void setCompany_code(String company_code) {
+		this.company_code = company_code;
 	}
 	
 	
