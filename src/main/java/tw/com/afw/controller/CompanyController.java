@@ -56,8 +56,8 @@ public class CompanyController {
 				AccountancyEntity accountancyEntity = new Gson().fromJson(accStr, AccountancyEntity.class);
 
 				//在entity 裡有FK必須要有對應的連結
-				companyEntity.setAcc_Id(accountancyEntity);
-				contractEntity.setCompany_id(companyEntity);
+				companyEntity.setAccId(accountancyEntity);
+				contractEntity.setCompanyId(companyEntity);
 				
 				//contractEntity.setUser_id(UserEntity);
 				//contractEntity.setUser_id2(UserEntity);
@@ -65,7 +65,7 @@ public class CompanyController {
 				//companyEntity.getAcc_Id().getAcc_name();
 				
 				//company 統編驗證
-				String ein =companyEntity.getCompany_Ein();
+				String ein =companyEntity.getCompanyEin();
 				int checkein=CompanyService.checkEin(ein);
 				if(checkein == 1){
 					//新增

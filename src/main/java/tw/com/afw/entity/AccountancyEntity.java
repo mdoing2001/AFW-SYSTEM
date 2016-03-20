@@ -22,59 +22,61 @@ public class AccountancyEntity implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "accc_id" , nullable = false)
-	private int accc_id;
+	private int acccId;
 	
 	@Column(name = "acc_name")
-	private String acc_name;
+	private String accName;
 	
 	@Column(name = "acc_contact")
-	private String acc_contact;
+	private String accContact;
 	
 	@Column(name = "acc_phone")
-	private String acc_phone;
+	private String accPhone;
 	
 	@Column(name = "acc_address")
-	private String acc_address;
+	private String accAddress;
 
-	public int getAccc_id() {
-		return accc_id;
+	public int getAcccId() {
+		return acccId;
 	}
 
-	public void setAccc_id(int accc_id) {
-		this.accc_id = accc_id;
+	public void setAcccId(int acccId) {
+		this.acccId = acccId;
 	}
 
-	public String getAcc_name() {
-		return acc_name;
+	public String getAccName() {
+		return accName;
 	}
 
-	public void setAcc_name(String acc_name) {
-		this.acc_name = acc_name;
+	public void setAccName(String accName) {
+		this.accName = accName;
 	}
 
-	public String getAcc_contact() {
-		return acc_contact;
+	public String getAccContact() {
+		return accContact;
 	}
 
-	public void setAcc_contact(String acc_contact) {
-		this.acc_contact = acc_contact;
+	public void setAccContact(String accContact) {
+		this.accContact = accContact;
 	}
 
-	public String getAcc_phone() {
-		return acc_phone;
+	public String getAccPhone() {
+		return accPhone;
 	}
 
-	public void setAcc_phone(String acc_phone) {
-		this.acc_phone = acc_phone;
+	public void setAccPhone(String accPhone) {
+		this.accPhone = accPhone;
 	}
 
-	public String getAcc_address() {
-		return acc_address;
+	public String getAccAddress() {
+		return accAddress;
 	}
 
-	public void setAcc_address(String acc_address) {
-		this.acc_address = acc_address;
+	public void setAccAddress(String accAddress) {
+		this.accAddress = accAddress;
 	}
+
+	
 	
 	
 	

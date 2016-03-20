@@ -41,9 +41,9 @@ public class LoginController {
 				results.put("status", "error");
 				results.put("message", "account error");
 			}else{
-				String userid = Integer.toString(useraccount.getUser_Id());
-				String code =useraccount.getBranch_id().getBranch_code();
-				if(useraccount.getUser_Password().equals(password) && branch.equals(code)){				
+				String userid = Integer.toString(useraccount.getUserId());
+				String code =useraccount.getBranchId().getBranchCode();
+				if(useraccount.getUserPassword().equals(password) && branch.equals(code)){				
 					//登入成功將userentity存在session
 					request.getSession().setAttribute("account", account);
 					request.getSession().setAttribute("branch", branch);

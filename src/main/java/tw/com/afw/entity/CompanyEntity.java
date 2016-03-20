@@ -23,160 +23,194 @@ public class CompanyEntity implements java.io.Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "company_id",nullable = false)
-	private int company_Id;
+	private int companyId;
 	
 	@Column(name = "company_type")
-	private String company_Type;
+	private String companyType;
 	
 	@Column(name = "company_status")
-	private String company_Status;
+	private String companyStatus;
 	
 	@Column(name = "company_name")
-	private String company_Name;
+	private String companyName;
 	
 	@Column(name = "company_Executive")
-	private String company_Executive;
+	private String companyExecutive;
 	
 	@Column(name = "company_bitrhday")
-	private Date company_Bitrhday;
+	private Date companyBitrhday;
 	
 	@Column(name = "company_ein")
-	private String company_Ein;
+	private String companyEin;
 	
 	@Column(name = "company_address")
-	private String company_Address;
+	private String companyAddress;
 	
 	@Column(name = "company_address2")
-	private String company_Address2;
+	private String companyAddress2;
 	
 	@Column(name = "company_number")
-	private String company_Number;
+	private String companyNumber;
 	
 	@Column(name = "company_fax")
-	private String company_Fax;
+	private String companyFax;
 	
 	@Column(name = "company_mail")
-	private String company_Mail;
+	private String companyMail;
 	
 	@ManyToOne	
 	@JoinColumn(name="acc_id")
-	private AccountancyEntity acc_Id;
+	private AccountancyEntity accId;
 	
 	@Column(name = "company_remark")
-	private String company_Remark;
+	private String companyRemark;
 	
 	@Column(name = "company_pay_status")
-	private String company_pay_status;
+	private String companyPayStatus;
 	
 	@Column(name = "company_letter_status")
-	private String company_letter_status;
+	private String companyLetterStatus;
 	
 	@Column(name = "company_code")
-	private String company_code;
-	
-	public int getCompany_Id() {
-		return company_Id;
-	}
-	public void setCompany_Id(int company_Id) {
-		this.company_Id = company_Id;
-	}
-	public String getCompany_Type() {
-		return company_Type;
-	}
-	public void setCompany_Type(String company_Type) {
-		this.company_Type = company_Type;
-	}
-	public String getCompany_Status() {
-		return company_Status;
-	}
-	public void setCompany_Status(String company_Status) {
-		this.company_Status = company_Status;
-	}
-	public String getCompany_Name() {
-		return company_Name;
-	}
-	public void setCompany_Name(String company_Name) {
-		this.company_Name = company_Name;
-	}
-	public String getCompany_Executive() {
-		return company_Executive;
-	}
-	public void setCompany_Executive(String company_Executive) {
-		this.company_Executive = company_Executive;
-	}
-	public Date getCompany_Bitrhday() {
-		return company_Bitrhday;
-	}
-	public void setCompany_Bitrhday(Date company_Bitrhday) {
-		this.company_Bitrhday = company_Bitrhday;
-	}
-	public String getCompany_Ein() {
-		return company_Ein;
-	}
-	public void setCompany_Ein(String company_Ein) {
-		this.company_Ein = company_Ein;
-	}
-	public String getCompany_Address() {
-		return company_Address;
-	}
-	public void setCompany_Address(String company_Address) {
-		this.company_Address = company_Address;
-	}
-	public String getCompany_Address2() {
-		return company_Address2;
-	}
-	public void setCompany_Address2(String company_Address2) {
-		this.company_Address2 = company_Address2;
-	}
-	public String getCompany_Number() {
-		return company_Number;
-	}
-	public void setCompany_Number(String company_Number) {
-		this.company_Number = company_Number;
-	}
-	public String getCompany_Fax() {
-		return company_Fax;
-	}
-	public void setCompany_Fax(String company_Fax) {
-		this.company_Fax = company_Fax;
-	}
-	public String getCompany_Mail() {
-		return company_Mail;
-	}
-	public void setCompany_Mail(String company_Mail) {
-		this.company_Mail = company_Mail;
+	private String companyCode;
+
+	public int getCompanyId() {
+		return companyId;
 	}
 
-	public AccountancyEntity getAcc_Id() {
-		return acc_Id;
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
 	}
-	public void setAcc_Id(AccountancyEntity acc_Id) {
-		this.acc_Id = acc_Id;
+
+	public String getCompanyType() {
+		return companyType;
 	}
-	public String getCompany_Remark() {
-		return company_Remark;
+
+	public void setCompanyType(String companyType) {
+		this.companyType = companyType;
 	}
-	public void setCompany_Remark(String company_Remark) {
-		this.company_Remark = company_Remark;
+
+	public String getCompanyStatus() {
+		return companyStatus;
 	}
-	public String getCompany_pay_status() {
-		return company_pay_status;
+
+	public void setCompanyStatus(String companyStatus) {
+		this.companyStatus = companyStatus;
 	}
-	public void setCompany_pay_status(String company_pay_status) {
-		this.company_pay_status = company_pay_status;
+
+	public String getCompanyName() {
+		return companyName;
 	}
-	public String getCompany_letter_status() {
-		return company_letter_status;
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
-	public void setCompany_letter_status(String company_letter_status) {
-		this.company_letter_status = company_letter_status;
+
+	public String getCompanyExecutive() {
+		return companyExecutive;
 	}
-	public String getCompany_code() {
-		return company_code;
+
+	public void setCompanyExecutive(String companyExecutive) {
+		this.companyExecutive = companyExecutive;
 	}
-	public void setCompany_code(String company_code) {
-		this.company_code = company_code;
+
+	public Date getCompanyBitrhday() {
+		return companyBitrhday;
 	}
+
+	public void setCompanyBitrhday(Date companyBitrhday) {
+		this.companyBitrhday = companyBitrhday;
+	}
+
+	public String getCompanyEin() {
+		return companyEin;
+	}
+
+	public void setCompanyEin(String companyEin) {
+		this.companyEin = companyEin;
+	}
+
+	public String getCompanyAddress() {
+		return companyAddress;
+	}
+
+	public void setCompanyAddress(String companyAddress) {
+		this.companyAddress = companyAddress;
+	}
+
+	public String getCompanyAddress2() {
+		return companyAddress2;
+	}
+
+	public void setCompanyAddress2(String companyAddress2) {
+		this.companyAddress2 = companyAddress2;
+	}
+
+	public String getCompanyNumber() {
+		return companyNumber;
+	}
+
+	public void setCompanyNumber(String companyNumber) {
+		this.companyNumber = companyNumber;
+	}
+
+	public String getCompanyFax() {
+		return companyFax;
+	}
+
+	public void setCompanyFax(String companyFax) {
+		this.companyFax = companyFax;
+	}
+
+	public String getCompanyMail() {
+		return companyMail;
+	}
+
+	public void setCompanyMail(String companyMail) {
+		this.companyMail = companyMail;
+	}
+
+	public AccountancyEntity getAccId() {
+		return accId;
+	}
+
+	public void setAccId(AccountancyEntity accId) {
+		this.accId = accId;
+	}
+
+	public String getCompanyRemark() {
+		return companyRemark;
+	}
+
+	public void setCompanyRemark(String companyRemark) {
+		this.companyRemark = companyRemark;
+	}
+
+	public String getCompanyPayStatus() {
+		return companyPayStatus;
+	}
+
+	public void setCompanyPayStatus(String companyPayStatus) {
+		this.companyPayStatus = companyPayStatus;
+	}
+
+	public String getCompanyLetterStatus() {
+		return companyLetterStatus;
+	}
+
+	public void setCompanyLetterStatus(String companyLetterStatus) {
+		this.companyLetterStatus = companyLetterStatus;
+	}
+
+	public String getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
+	}
+	
+	
 	
 	
 	

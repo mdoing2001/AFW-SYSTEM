@@ -94,7 +94,7 @@ public class CompanyService {
 	public int userId (String usercount){
 		
 		UserEntity user  = userdao.findUserByCount(usercount);
-		int userid= user.getUser_Id();		
+		int userid= user.getUserId();		
 		return userid;	
 		
 	}

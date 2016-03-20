@@ -103,8 +103,8 @@ public class UserDao {
 		
 		try {
 			entity = (UserEntity) em.createQuery("select * from user where user_count =:user_count and user_password=:user_password",User.class);
-			entity.setUser_Count(account);
-			entity.setUser_Password(password);
+			entity.setUserCount(account);
+			entity.setUserPassword(password);
 		} catch (Exception e) {
 			
 			e.printStackTrace();

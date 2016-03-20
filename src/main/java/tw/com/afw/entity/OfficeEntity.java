@@ -25,87 +25,90 @@ public class OfficeEntity implements java.io.Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "office_id" ,nullable = false)
-	private int office_id;
+	private int officeId;
 
 	@Column(name = "office_type")
-	private String office_type;
+	private String officeType;
 	
 
 	@Column(name = "office_number")
-	private String office_number;
+	private String officeNumber;
 	
 	@Column(name = "office_rent")
-	private String office_rent;
+	private String officeRent;
 	
 	
 	@ManyToOne	
 	@JoinColumn(name="branch_id")
-	private BrancEntity branch_id;
+	private BrancEntity branchId;
 	
 	
 	@ManyToOne	
 	@JoinColumn(name="contract_id")
-	private ContractEntity contract_id;
+	private ContractEntity contractId;
 
 
-	public int getOffice_id() {
-		return office_id;
+	public int getOfficeId() {
+		return officeId;
 	}
 
 
-	public void setOffice_id(int office_id) {
-		this.office_id = office_id;
+	public void setOfficeId(int officeId) {
+		this.officeId = officeId;
 	}
 
 
-	public String getOffice_type() {
-		return office_type;
+	public String getOfficeType() {
+		return officeType;
 	}
 
 
-	public void setOffice_type(String office_type) {
-		this.office_type = office_type;
+	public void setOfficeType(String officeType) {
+		this.officeType = officeType;
 	}
 
 
-	public String getOffice_number() {
-		return office_number;
+	public String getOfficeNumber() {
+		return officeNumber;
 	}
 
 
-	public void setOffice_number(String office_number) {
-		this.office_number = office_number;
+	public void setOfficeNumber(String officeNumber) {
+		this.officeNumber = officeNumber;
 	}
 
 
-	public String getOffice_rent() {
-		return office_rent;
+	public String getOfficeRent() {
+		return officeRent;
 	}
 
 
-	public void setOffice_rent(String office_rent) {
-		this.office_rent = office_rent;
+	public void setOfficeRent(String officeRent) {
+		this.officeRent = officeRent;
 	}
 
 
-	public BrancEntity getBranch_id() {
-		return branch_id;
+	public BrancEntity getBranchId() {
+		return branchId;
 	}
 
 
-	public void setBranch_id(BrancEntity branch_id) {
-		this.branch_id = branch_id;
+	public void setBranchId(BrancEntity branchId) {
+		this.branchId = branchId;
 	}
 
 
-	public ContractEntity getContract_id() {
-		return contract_id;
+	public ContractEntity getContractId() {
+		return contractId;
 	}
 
 
-	public void setContract_id(ContractEntity contract_id) {
-		this.contract_id = contract_id;
+	public void setContractId(ContractEntity contractId) {
+		this.contractId = contractId;
 	}
+
+
+	
 	
 	
 }

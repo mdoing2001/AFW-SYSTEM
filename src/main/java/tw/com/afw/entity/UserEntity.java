@@ -23,188 +23,254 @@ public class UserEntity implements java.io.Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "user_id" , nullable = false)
-	private int user_Id;
+	private int userId;
 	
 	@Column(name = "user_count")
-	private String user_Count;
+	private String userCount;
 	
 	@Column(name = "user_password")
-	private String user_Password;
+	private String userPassword;
 	
 	@Column(name = "user_name")
-	private String user_Name;
+	private String userName;
 	
 	@Column(name = "user_cid")
-	private String user_Cid;
+	private String userCid;
 	
 	@Column(name = "user_date")
-	private Date user_Date;
+	private Date userDate;
 	
 	@Column(name = "user_address")
-	private String user_Address;
+	private String userAddress;
 	
 	@Column(name = "user_mail")
-	private String user_Mail;
+	private String userMail;
 	
 	@Column(name = "user_phone")
-	private String user_Phone;
+	private String userPhone;
 	
 	@Column(name = "user_qr")
-	private Integer user_Qr;
+	private Integer userQr;
 	
 	@Column(name = "user_in")
-	private Integer user_In;
+	private Integer userIn;
 	
 	@Column(name = "user_up")
-	private Integer user_Up;
+	private Integer userUp;
 	
 	@Column(name = "user_de", nullable = true)
-	private Integer user_De;
+	private Integer userDe;
 	
 	@Column(name = "user_max")
-	private Integer user_Max;
+	private Integer userMax;
 	
 	@Column(name = "user_min")
-	private Integer user_Min;
+	private Integer userMin;
 
 	@ManyToOne	
 	@JoinColumn(name="branch_id")
-	private BrancEntity branch_id;
+	private BrancEntity branchId;
 
-	public int getUser_Id() {
-		return user_Id;
-	}
-
-	public void setUser_Id(int user_Id) {
-		this.user_Id = user_Id;
-	}
 	
-	public String getUser_Count() {
-		return user_Count;
+
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setUser_Count(String user_Count) {
-		this.user_Count = user_Count;
+
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
-	public String getUser_Password() {
-		return user_Password;
+
+
+	public String getUserCount() {
+		return userCount;
 	}
 
-	public void setUser_Password(String user_Password) {
-		this.user_Password = user_Password;
-	}
-	
-	public String getUser_Name() {
-		return user_Name;
-	}
-	
-	public void setUser_Name(String user_Name) {
-		this.user_Name = user_Name;
-	}
-	
-	public String getUser_Cid() {
-		return user_Cid;
+
+
+	public void setUserCount(String userCount) {
+		this.userCount = userCount;
 	}
 
-	public void setUser_Cid(String user_Cid) {
-		this.user_Cid = user_Cid;
+
+
+	public String getUserPassword() {
+		return userPassword;
 	}
 
-	public Date getUser_Date() {
-		return user_Date;
+
+
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
 
-	public void setUser_Date(Date user_Date) {
-		this.user_Date = user_Date;
+
+
+	public String getUserName() {
+		return userName;
 	}
 
-	public String getUser_Address() {
-		return user_Address;
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public void setUser_Address(String user_Address) {
-		this.user_Address = user_Address;
-	}
-	
-	public String getUser_Mail() {
-		return user_Mail;
-	}
-	
-	public void setUser_Mail(String user_Mail) {
-		this.user_Mail = user_Mail;
+
+
+	public String getUserCid() {
+		return userCid;
 	}
 
-	public String getUser_Phone() {
-		return user_Phone;
-	}
-	
-	public void setUser_Phone(String user_Phone) {
-		this.user_Phone = user_Phone;
+
+
+	public void setUserCid(String userCid) {
+		this.userCid = userCid;
 	}
 
-	public Integer getUser_Qr() {
-		return user_Qr;
-	}
-	
-	public void setUser_Qr(Integer user_Qr) {
-		this.user_Qr = user_Qr;
+
+
+	public Date getUserDate() {
+		return userDate;
 	}
 
-	public Integer getUser_In() {
-		return user_In;
-	}
-	
-	public void setUser_In(Integer user_In) {
-		this.user_In = user_In;
+
+
+	public void setUserDate(Date userDate) {
+		this.userDate = userDate;
 	}
 
-	public Integer getUser_Up() {
-		return user_Up;
+
+
+	public String getUserAddress() {
+		return userAddress;
 	}
 
-	public void setUser_Up(Integer user_Up) {
-		this.user_Up = user_Up;
-	}
-	
-	public Integer getUser_De() {
-		return user_De;
+
+
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
 	}
 
-	public void setUser_De(Integer user_De) {
-		this.user_De = user_De;
-	}
-	
-	public Integer getUser_Max() {
-		return user_Max;
-	}
-	
-	public void setUser_Max(Integer user_Max) {
-		this.user_Max = user_Max;
-	}
-	
-	public Integer getUser_Min() {
-		return user_Min;
-	}
-	
-	public void setUser_Min(Integer user_Min) {
-		this.user_Min = user_Min;
+
+
+	public String getUserMail() {
+		return userMail;
 	}
 
-	public BrancEntity getBranch_id() {
-		return branch_id;
+
+
+	public void setUserMail(String userMail) {
+		this.userMail = userMail;
 	}
 
-	public void setBranch_id(BrancEntity branch_id) {
-		this.branch_id = branch_id;
+
+
+	public String getUserPhone() {
+		return userPhone;
 	}
+
+
+
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
+
+
+
+	public Integer getUserQr() {
+		return userQr;
+	}
+
+
+
+	public void setUserQr(Integer userQr) {
+		this.userQr = userQr;
+	}
+
+
+
+	public Integer getUserIn() {
+		return userIn;
+	}
+
+
+
+	public void setUserIn(Integer userIn) {
+		this.userIn = userIn;
+	}
+
+
+
+	public Integer getUserUp() {
+		return userUp;
+	}
+
+
+
+	public void setUserUp(Integer userUp) {
+		this.userUp = userUp;
+	}
+
+
+
+	public Integer getUserDe() {
+		return userDe;
+	}
+
+
+
+	public void setUserDe(Integer userDe) {
+		this.userDe = userDe;
+	}
+
+
+
+	public Integer getUserMax() {
+		return userMax;
+	}
+
+
+
+	public void setUserMax(Integer userMax) {
+		this.userMax = userMax;
+	}
+
+
+
+	public Integer getUserMin() {
+		return userMin;
+	}
+
+
+
+	public void setUserMin(Integer userMin) {
+		this.userMin = userMin;
+	}
+
+
+
+	public BrancEntity getBranchId() {
+		return branchId;
+	}
+
+
+
+	public void setBranchId(BrancEntity branchId) {
+		this.branchId = branchId;
+	}
+
+
 
 	@Override
 	public String toString() {
-		return "UserEntity [id="+ user_Id +"user_Count="+user_Count+" user_Password="+user_Password+
-				" user_Name="+user_Name+" user_Cid="+user_Cid+ "user_Date="+user_Date+" user_Address="+user_Address+
-				"user_Mail="+user_Mail+" user_Phone="+user_Phone+" user_Qr="+user_Qr+" user_In="+user_In+" user_Up="+user_Up+
-				" user_De"+user_De+" user_Max"+user_Max+"user_Min"+user_Min;
+		return "UserEntity [id="+ userId +"user_Count="+userCount+" user_Password="+userPassword+
+				" user_Name="+userName+" user_Cid="+userCid+ "user_Date="+userDate+" user_Address="+userAddress+
+				"user_Mail="+userMail+" user_Phone="+userPhone+" user_Qr="+userQr+" user_In="+userIn+" user_Up="+userUp+
+				" user_De"+userDe+" user_Max"+userMax+"user_Min"+userMin;
 	}
 
 }

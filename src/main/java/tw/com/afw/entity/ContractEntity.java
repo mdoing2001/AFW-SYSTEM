@@ -26,152 +26,153 @@ public class ContractEntity implements java.io.Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "contract_id" ,nullable = false)
-	private int contract_id;
+	private int contractId;
 	
 	@Column(name = "contract_start")
-	private Date contract_start;
+	private Date contractStart;
 	
 	@Column(name = "contract_end")
-	private Date contract_end;
+	private Date contractEnd;
 	
 	@Column(name = "contract_deposit")
-	private double contract_deposit;
+	private double contractDeposit;
 	
 	@Column(name = "contract_rent")
-	private double contract_rent;
+	private double contractRent;
 	
 	@ManyToOne	
 	@JoinColumn(name="branch_id")
-	private BrancEntity branch_id;
+	private BrancEntity branchId;
 	
 	@Column(name = "contract_date")
-	private Date contract_date;
+	private Date contractDate;
 	
 	@Column(name = "contract_type")
-	private String contract_type;
+	private String contractType;
 	
 	@ManyToOne	
 	@JoinColumn(name="user_id")
-	private UserEntity user_id;
+	private UserEntity userId;
 	
 	@ManyToOne	
 	@JoinColumn(name="user_id2")
-	private UserEntity user_id2;
+	private UserEntity userId2;
 	
 	@ManyToOne	
 	@JoinColumn(name="company_id")
-	private CompanyEntity company_id;
+	private CompanyEntity companyId;
 	
 	
 	@Column(name = "contract_remarks")
-	private String contract_remarks;
+	private String contractRemarks;
 	
 	@Column(name = "contract_del")
-	private String contract_del;
+	private String contractDel;
 
-	public int getContract_id() {
-		return contract_id;
+	public int getContractId() {
+		return contractId;
 	}
 
-	public void setContract_id(int contract_id) {
-		this.contract_id = contract_id;
+	public void setContractId(int contractId) {
+		this.contractId = contractId;
 	}
 
-	public Date getContract_start() {
-		return contract_start;
+	public Date getContractStart() {
+		return contractStart;
 	}
 
-	public void setContract_start(Date contract_start) {
-		this.contract_start = contract_start;
+	public void setContractStart(Date contractStart) {
+		this.contractStart = contractStart;
 	}
 
-	public Date getContract_end() {
-		return contract_end;
+	public Date getContractEnd() {
+		return contractEnd;
 	}
 
-	public void setContract_end(Date contract_end) {
-		this.contract_end = contract_end;
+	public void setContractEnd(Date contractEnd) {
+		this.contractEnd = contractEnd;
 	}
 
-	public double getContract_deposit() {
-		return contract_deposit;
+	public double getContractDeposit() {
+		return contractDeposit;
 	}
 
-	public void setContract_deposit(double contract_deposit) {
-		this.contract_deposit = contract_deposit;
+	public void setContractDeposit(double contractDeposit) {
+		this.contractDeposit = contractDeposit;
 	}
 
-	public double getContract_rent() {
-		return contract_rent;
+	public double getContractRent() {
+		return contractRent;
 	}
 
-	public void setContract_rent(double contract_rent) {
-		this.contract_rent = contract_rent;
+	public void setContractRent(double contractRent) {
+		this.contractRent = contractRent;
 	}
 
-	public BrancEntity getBranch_id() {
-		return branch_id;
+	public BrancEntity getBranchId() {
+		return branchId;
 	}
 
-	public void setBranch_id(BrancEntity branch_id) {
-		this.branch_id = branch_id;
+	public void setBranchId(BrancEntity branchId) {
+		this.branchId = branchId;
 	}
 
-	public Date getContract_date() {
-		return contract_date;
+	public Date getContractDate() {
+		return contractDate;
 	}
 
-	public void setContract_date(Date contract_date) {
-		this.contract_date = contract_date;
+	public void setContractDate(Date contractDate) {
+		this.contractDate = contractDate;
 	}
 
-	public String getContract_type() {
-		return contract_type;
+	public String getContractType() {
+		return contractType;
 	}
 
-	public void setContract_type(String contract_type) {
-		this.contract_type = contract_type;
+	public void setContractType(String contractType) {
+		this.contractType = contractType;
 	}
 
-	public UserEntity getUser_id() {
-		return user_id;
+	public UserEntity getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(UserEntity user_id) {
-		this.user_id = user_id;
+	public void setUserId(UserEntity userId) {
+		this.userId = userId;
 	}
 
-	public UserEntity getUser_id2() {
-		return user_id2;
+	public UserEntity getUserId2() {
+		return userId2;
 	}
 
-	public void setUser_id2(UserEntity user_id2) {
-		this.user_id2 = user_id2;
+	public void setUserId2(UserEntity userId2) {
+		this.userId2 = userId2;
 	}
 
-	public CompanyEntity getCompany_id() {
-		return company_id;
+	public CompanyEntity getCompanyId() {
+		return companyId;
 	}
 
-	public void setCompany_id(CompanyEntity company_id) {
-		this.company_id = company_id;
+	public void setCompanyId(CompanyEntity companyId) {
+		this.companyId = companyId;
 	}
 
-	public String getContract_remarks() {
-		return contract_remarks;
+	public String getContractRemarks() {
+		return contractRemarks;
 	}
 
-	public void setContract_remarks(String contract_remarks) {
-		this.contract_remarks = contract_remarks;
+	public void setContractRemarks(String contractRemarks) {
+		this.contractRemarks = contractRemarks;
 	}
 
-	public String getContract_del() {
-		return contract_del;
+	public String getContractDel() {
+		return contractDel;
 	}
 
-	public void setContract_del(String contract_del) {
-		this.contract_del = contract_del;
+	public void setContractDel(String contractDel) {
+		this.contractDel = contractDel;
 	}
+
 	
 	
 	

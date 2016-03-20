@@ -23,42 +23,11 @@ public class UserController {
 
 	
 	 @RequestMapping(value = "/new/user/usercc", method = RequestMethod.POST)
-	 public String checkLogin(@RequestBody String newUserJson , HttpServletRequest request)  {
-		 JSONObject results = new JSONObject();
-		 //HttpSession session= HttpServletRequest.getSession();
-		 try {
-			//抓取前端帳密
-			JSONObject obj = (JSONObject) new JSONParser().parse(newUserJson);
-			String account  = obj.get("account").toString();
-			String password = obj.get("password").toString();
-			String branch   = obj.get("branch").toString();
-			//驗證帳密
-			UserEntity useraccount=UserService.checkAccount(account);
-			if(useraccount != null){
-				results.put("status", "error");
-				results.put("message", "帳號輸入錯誤");
-			}else{
-				
-				if(useraccount.getUser_Password().equals(password)){
-					//登入成功將userentity存在session
-					request.getSession().setAttribute("account", account);
-					request.getSession().setAttribute("branch", branch);
-					results.put("status", "success");
-					results.put("message", "success");
-				}else{
-					results.put("status", "error");
-					results.put("message", "密碼輸入錯誤");
-				}
-			}
-			
-	
-		} catch (ParseException e) {
-			e.printStackTrace();
-			results.put("status", "error");
-			results.put("message", e);
-		}
+	 public String userAdd(@RequestBody String newUserJson , HttpServletRequest request)  {
+		
+
 		 	
-		 return results.toJSONString();
+		 return "";
 	 }
 	 
 	 

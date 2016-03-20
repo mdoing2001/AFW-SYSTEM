@@ -20,59 +20,60 @@ public class BrancEntity implements java.io.Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "branch_id",nullable = false)
-	private int branch_id;
+	private int branchId;
 	
 	@Column(name = "branch_name")
-	private String branch_name;
+	private String branchName;
 	
 	@Column(name = "branch_address")
-	private String branch_address;
+	private String branchAddress;
 	
 	@Column(name = "branch_phone")
-	private String branch_phone;
+	private String branchPhone;
 	
 	@Column(name = "branch_code")
-	private String branch_code;
+	private String branchCode;
 
-	public int getBranch_id() {
-		return branch_id;
+	public int getBranchId() {
+		return branchId;
 	}
 
-	public void setBranch_id(int branch_id) {
-		this.branch_id = branch_id;
+	public void setBranchId(int branchId) {
+		this.branchId = branchId;
 	}
 
-	public String getBranch_name() {
-		return branch_name;
+	public String getBranchName() {
+		return branchName;
 	}
 
-	public void setBranch_name(String branch_name) {
-		this.branch_name = branch_name;
+	public void setBranchName(String branchName) {
+		this.branchName = branchName;
 	}
 
-	public String getBranch_address() {
-		return branch_address;
+	public String getBranchAddress() {
+		return branchAddress;
 	}
 
-	public void setBranch_address(String branch_address) {
-		this.branch_address = branch_address;
+	public void setBranchAddress(String branchAddress) {
+		this.branchAddress = branchAddress;
 	}
 
-	public String getBranch_phone() {
-		return branch_phone;
+	public String getBranchPhone() {
+		return branchPhone;
 	}
 
-	public void setBranch_phone(String branch_phone) {
-		this.branch_phone = branch_phone;
+	public void setBranchPhone(String branchPhone) {
+		this.branchPhone = branchPhone;
 	}
 
-	public String getBranch_code() {
-		return branch_code;
+	public String getBranchCode() {
+		return branchCode;
 	}
 
-	public void setBranch_code(String branch_code) {
-		this.branch_code = branch_code;
+	public void setBranchCode(String branchCode) {
+		this.branchCode = branchCode;
 	}
+
 	
 	
 	

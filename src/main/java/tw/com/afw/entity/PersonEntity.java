@@ -24,50 +24,51 @@ public class PersonEntity implements java.io.Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "person_id" ,nullable = false)
-	private int person_id;
+	private int personId;
 	
+	public int getPersonId() {
+		return personId;
+	}
+
+	public void setPersonId(int personId) {
+		this.personId = personId;
+	}
+
+	public CompanyEntity getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(CompanyEntity companyId) {
+		this.companyId = companyId;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getCompanyPhone() {
+		return companyPhone;
+	}
+
+	public void setCompanyPhone(String companyPhone) {
+		this.companyPhone = companyPhone;
+	}
+
 	@ManyToOne	
 	@JoinColumn(name="company_id")
-	private CompanyEntity company_id;
+	private CompanyEntity companyId;
 	
 	@Column(name = "company_name")
-	private String company_name;
+	private String companyName;
 	
 	@Column(name = "company_phone")
-	private String company_phone;
+	private String companyPhone;
 
-	public int getPerson_id() {
-		return person_id;
-	}
 
-	public void setPerson_id(int person_id) {
-		this.person_id = person_id;
-	}
-
-	public CompanyEntity getCompany_id() {
-		return company_id;
-	}
-
-	public void setCompany_id(CompanyEntity company_id) {
-		this.company_id = company_id;
-	}
-
-	public String getCompany_name() {
-		return company_name;
-	}
-
-	public void setCompany_name(String company_name) {
-		this.company_name = company_name;
-	}
-
-	public String getCompany_phone() {
-		return company_phone;
-	}
-
-	public void setCompany_phone(String company_phone) {
-		this.company_phone = company_phone;
-	}
-	
 	
 	
 	
