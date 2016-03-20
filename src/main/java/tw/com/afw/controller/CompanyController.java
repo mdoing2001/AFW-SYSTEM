@@ -1,9 +1,7 @@
 package tw.com.afw.controller;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -13,12 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import tw.com.afw.entity.AccountancyEntity;
 import tw.com.afw.entity.CompanyEntity;
 import tw.com.afw.entity.ContractEntity;
 import tw.com.afw.service.CompanyService;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -125,11 +121,11 @@ public class CompanyController {
 	    
 	    
 	    //取回全部客戶(company.html) 這個頁面的資料 不同分店取的分店資料不一樣 管理員取回全部資料, id:使用者id
-	    @SuppressWarnings("unchecked")
+
 	    @RequestMapping(value = "/retrive/company/{id}", method = RequestMethod.GET, produces = "application/json")
 	    public String selectCompany(@PathVariable("id") long id) {
 	    	Gson gson = new Gson();
-	    	String account = (String) request.getSession().getAttribute("account");
+
 	    	String usercode = (String) request.getSession().getAttribute("usercode");
 	    	if(usercode.equals("AA")){
 	    		//總公司抓取全部顧客資料
