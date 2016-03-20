@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "branc")
+@Table(name = "branch")
 public class BrancEntity implements java.io.Serializable{
 	
 	/**

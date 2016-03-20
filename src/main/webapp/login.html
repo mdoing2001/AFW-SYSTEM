@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <link rel="shortcut icon" href="img/logo.png">
+	
+		<title>Log In Page</title>
+		
+        <!-- Bootstrap core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap-reset.css" rel="stylesheet">
+
+        <!--Animation css-->
+        <link href="css/animate.css" rel="stylesheet">
+
+        <!--Icon-fonts css-->
+        <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        <link href="assets/ionicon/css/ionicons.min.css" rel="stylesheet" />
+
+        <!--Morris Chart CSS -->
+        <link rel="stylesheet" href="assets/morris/morris.css">
+
+
+        <!-- Custom styles for this template -->
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/helper.css" rel="stylesheet">
+        
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+        <!--[if lt IE 9]>
+          <script src="js/html5shiv.js"></script>
+          <script src="js/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+
+
+    <body>
+
+        <div class="wrapper-page animated fadeInDown">
+            <div class="panel panel-color panel-primary">
+                <div class="panel-heading"> 
+                   <h3 class="text-center m-t-10"> Sign In to <strong>AFW-SYSTEM</strong> </h3>
+                </div> 
+
+                <form class="form-horizontal m-t-40" action="index.html">
+                                            
+                    <div class="form-group ">
+                        <div class="col-xs-12">
+                            <input class="form-control" type="text" id="loginId" placeholder="Username">
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-xs-12">
+                            <input class="form-control" type="password" id="loginPassword" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                       	<div class="col-xs-12">
+                          	<select class="form-control" id="loginBranch" name="loginBranch">
+                        		<option value="-1">請選擇</option>
+                        		<option value="221">微風店</option>
+                        		<option value="169">敦化店</option>
+                        		<option value="222">大安店</option>
+                        		<option value="295">忠孝店</option>
+                        		<option value="201">復興店</option>
+                        		<option value="189">南京店</option>
+                        		<option value="AA">管理員</option>
+                          	</select>
+                       	</div>
+                    </div>
+                    
+                    <div class="form-group text-right">
+                        <div class="col-xs-12">
+                            <button class="btn btn-purple w-md" type="button" id="login">Log In</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    
+
+
+<!-- js placed at the end of the document so the pages load faster -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/pace.min.js"></script>
+<script src="js/wow.min.js"></script>
+<script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+    
+
+<!--common script for all pages-->
+<script src="js/jquery.app.js"></script>
+
+<script type="text/javascript">
+(function($){
+	$("#login").on('click', function() {
+		//window.location.href="company.html";
+		loginAjax();
+	});
+	
+	var root = location.protocol + '//' + location.host;
+	var loginAjax = function() {
+    	var data = {
+			'account' : $('#loginId').val(),
+			'password' : $('#loginPassword').val(),
+			'branch' : $('#loginBranch').val()
+    	}
+    	
+		$.ajax({
+			url:root + "/AFW-I-System/new/user/login",
+			type:'post',
+			data : JSON.stringify(data),
+			dataType : 'json',
+			contentType: 'application/json',
+			success : function(data) {
+				alert(data.message);
+				console.log(data);
+			},
+			error : function(e) {
+				alert("error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+    }
+})(jQuery)
+</script>
+    
+    </body>
+</html>

@@ -3,7 +3,9 @@ package tw.com.afw.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
@@ -26,8 +28,9 @@ public class UserDao {
 		}
     }
 	
+	//user > userEntity 這是jpql的語法 所以不能用table的名稱 要用entity
 	public List<UserEntity> findAll() {
-		return (List<UserEntity>) em.createQuery("SELECT e FROM User e", UserEntity.class).getResultList();
+		return (List<UserEntity>) em.createQuery("SELECT e FROM UserEntity e", UserEntity.class).getResultList();
 	}
 	 
 	public UserEntity findUserById(Integer userId) {
@@ -41,12 +44,24 @@ public class UserDao {
 		return entity;
 	}
 	
+	// 下面是有問題的code 這個寫法只能適用在findBy primary key
+//	public UserEntity findUserByCount(String userCount) {
+//		UserEntity entity = null;
+//		try{
+//			entity = (UserEntity) em.find(UserEntity.class, userCount);
+//			 
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//		return entity;
+//	}
 	public UserEntity findUserByCount(String userCount) {
 		UserEntity entity = null;
 		try{
-			entity = (UserEntity) em.find(UserEntity.class, userCount);
-			 
-        } catch (Exception e) {
+			Query query = em.createQuery("select u from UserEntity u where u.user_Count =:user_count", UserEntity.class);
+			query.setParameter("user_count", userCount);
+			entity = (UserEntity) query.getSingleResult();
+        } catch (NoResultException e) {
             e.printStackTrace();
         }
 		return entity;
@@ -82,7 +97,7 @@ public class UserDao {
 			e.printStackTrace();
 		}
 	}
-	
+	//TODO need to fix the code
 	public UserEntity findUserByCoun_password(String account , String password){
 		UserEntity entity = null;
 		

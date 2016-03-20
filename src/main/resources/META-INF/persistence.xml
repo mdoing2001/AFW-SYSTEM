@@ -10,7 +10,7 @@
             <property name="javax.persistence.jdbc.password" value="000999" />
 	        <property name="show_sql" value="true" />
 	        <property name="dialect" value="org.hibernate.dialect.MySQLDialect" />
-	        <property name="hibernate.hbm2ddl.auto" value="create" />
+	        <property name="hibernate.hbm2ddl.auto" value="update" />
 		</properties>
 	</persistence-unit>
 </persistence>

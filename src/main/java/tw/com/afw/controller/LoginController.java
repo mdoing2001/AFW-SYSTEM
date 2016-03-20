@@ -6,23 +6,24 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import tw.com.afw.entity.UserEntity;
 import tw.com.afw.service.UserService;
 
-
-@Controller
+//Controller > RestController
+@RestController
 public class LoginController {
 	
 	 @Autowired
 	 private UserService UserService;
 
 	
-	 @RequestMapping(value = "/new/user/login", method = RequestMethod.POST)
+	 @SuppressWarnings("unchecked")
+	 @RequestMapping(value = "/new/user/login", method = RequestMethod.POST, produces = "application/json")
 	 public String checkLogin(@RequestBody String newUserJson , HttpServletRequest request)  {
 		 JSONObject results = new JSONObject();
 		
@@ -33,13 +34,15 @@ public class LoginController {
 			String password = obj.get("password").toString();
 			String branch   = obj.get("branch").toString();
 			//驗證帳密
-			UserEntity useraccount=UserService.checkAccount(account);
-			String userid = Integer.toString(useraccount.getUser_Id());
-			String code =useraccount.getBranch_id().getBranch_code();
-			if(useraccount != null){
+			UserEntity useraccount = UserService.checkAccount(account);
+			
+			//!= null > == null
+			if(useraccount == null){
 				results.put("status", "error");
-				results.put("message", "帳號輸入錯誤");
+				results.put("message", "account error");
 			}else{
+				String userid = Integer.toString(useraccount.getUser_Id());
+				String code =useraccount.getBranch_id().getBranch_code();
 				if(useraccount.getUser_Password().equals(password) && branch.equals(code)){				
 					//登入成功將userentity存在session
 					request.getSession().setAttribute("account", account);
@@ -50,11 +53,9 @@ public class LoginController {
 					results.put("message", "success");
 				}else{
 					results.put("status", "error");
-					results.put("message", "密碼輸入錯誤或分店代號錯誤");
+					results.put("message", "password or branch error");
 				}
 			}
-			
-	
 		} catch (ParseException e) {
 			e.printStackTrace();
 			results.put("status", "error");

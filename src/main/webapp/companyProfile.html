@@ -35,6 +35,10 @@
         <!-- Dropzone css -->
         <link href="assets/dropzone/dropzone.css" rel="stylesheet" type="text/css" />
 
+		<!-- DataTables -->
+		<link rel="stylesheet" href="assets/magnific-popup/magnific-popup.css" />
+		<link rel="stylesheet" href="assets/jquery-datatables-editable/datatables.css" />
+		
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
         <!--[if lt IE 9]>
           <script src="js/html5shiv.js"></script>
@@ -96,17 +100,19 @@
 	                <ul class="list-unstyled">
 	                    <li><a href="addCompany.html">新增客戶合約</a></li>
 	                    <li><a href="company.html">全部客戶</a></li>
+	                    <li><a href="companyOffice.html">辦公室</a></li>
+	                    <li><a href="companyPersonal.html">個人座位</a></li>
+	                    <li><a href="companyRegister.html">登記</a></li>
+	                    <li><a href="companyCC.html">聯絡處 & 停業</a></li>
+	                    <li><a href="companyClose.html">退租</a></li>
 	                    <li class="active"><a href="companyProfile.html">客戶檔案</a></li>
 	                </ul>
 	            </li>
-<!-- 	            <li class="has-submenu"><a href="#"><i class="ion-grid"></i> <span class="nav-label">Data Tables</span></a> -->
-<!-- 	                <ul class="list-unstyled"> -->
-<!-- 	                    <li><a href="tables.html">Basic Tables</a></li> -->
-<!-- 	                    <li><a href="table-datatable.html">Data Table</a></li> -->
-<!-- 	                    <li><a href="tables-editable.html">Editable Table</a></li> -->
-<!-- 	                    <li><a href="responsive-table.html">Responsive Table</a></li> -->
-<!-- 	                </ul> -->
-<!-- 	            </li> -->
+				<li class="has-submenu"><a href="#"><i class="ion-grid"></i> <span class="nav-label">收租</span></a>
+	                <ul class="list-unstyled">
+	                    <li><a href="rentTable.html">收租表</a></li>
+	                </ul>
+	            </li>
 <!-- 	            <li class="has-submenu"><a href="#"><i class="ion-stats-bars"></i> <span class="nav-label">Charts</span><span class="badge bg-purple">1</span></a> -->
 <!-- 	                <ul class="list-unstyled"> -->
 <!-- 	                    <li><a href="morris-chart.html">Morris Chart</a></li> -->
@@ -331,6 +337,8 @@
                                 <ul class="nav nav-tabs profile-tabs">
                                     <li class="active"><a data-toggle="tab" href="#aboutme">關於客戶</a></li>
                                     <li class=""><a data-toggle="tab" href="#edit-companyProfile">基本資料</a></li>
+                                    <li class=""><a data-toggle="tab" href="#edit-remit">匯款資料</a></li>
+                                    <li class=""><a data-toggle="tab" href="#edit-accountancy">會計師資料</a></li>
                                     <li class=""><a data-toggle="tab" href="#edit-contract">合約資料</a></li>
                                     <li class=""><a data-toggle="tab" href="#projects">紙本檔案</a></li>
                                 </ul>
@@ -442,7 +450,56 @@
 			                                    <label for="pcomment" class="col-lg-2">附註</label>
 			                                    <textarea class="form-control " id="pcomment" name="pcomment"></textarea>
 			                                </div>
-			                                <h3>會計師事務所</h3>
+			                                
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- TODO 末五碼須隨著帳號變動 -->
+                                <!-- remit -->
+                                <div id="edit-remit" class="tab-pane">
+                                    <div class="user-profile-content table-responsive">
+                                        <table class="table table-bordered table-hover" id="datatable-editable">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>帳號</th>
+                                                    <th>帳號末五碼</th>
+                                                    <th>編輯</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="accountReadable">1</td>
+                                                    <td>111111111111</td>
+                                                    <td class="accountReadable">12345</td>
+                                                    <td class="actions">
+				                                        <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
+				                                        <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
+				                                        <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+				                                        <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                                    				</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>222222222222</td>
+                                                    <td>12345</td>
+                                                    <td class="actions">
+				                                        <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
+				                                        <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
+				                                        <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+				                                        <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                                    				</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                              	</div>
+                              	
+                              	<!-- accountancy -->
+                                <div id="edit-accountancy" class="tab-pane">
+                                    <div class="user-profile-content">
+                                    	<form id="accountancyForm">
+                                    		<h3>會計師事務所</h3>
 			                                <div class="form-group ">
 			                                    <label for="paName" class="control-label col-lg-2">事務所名稱</label>
 			                                    <input class=" form-control" id="paName" name="paName" type="text">
@@ -460,9 +517,9 @@
 			                                    <input class=" form-control" id="paAddress" name="paAddress" type="text">
 		                                	</div>
                                             <button class="btn btn-primary" id="profileUpdate" type="button">Save</button>
-                                        </form>
+                                    	</form>
                                     </div>
-                                </div>
+                              	</div>
                                 
                                 <!-- contract -->
                                 <div id="edit-contract" class="tab-pane">
@@ -727,6 +784,11 @@
 
 <!-- Page Specific JS Libraries -->
 <script src="assets/dropzone/dropzone.min.js"></script>
+
+<script src="assets/magnific-popup/magnific-popup.js"></script>
+<script src="assets/jquery-datatables-editable/jquery.dataTables.js"></script> 
+<script src="assets/datatables/dataTables.bootstrap.js"></script>
+<script src="assets/jquery-datatables-editable/datatables.editable.init.js"></script>
 
 <script type="text/javascript">
 (function($){
