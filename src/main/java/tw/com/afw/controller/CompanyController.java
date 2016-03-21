@@ -143,15 +143,30 @@ public class CompanyController {
 	    
 	    //取回不同contract type(租辦公室 個人座位....)的資料 一樣不同分店取的分店資料不一樣 管理員取回全部資料, id:使用者id
 	    @RequestMapping(value = "/retrive/company/{id}/{type}", method = RequestMethod.GET, produces = "application/json")
-	    public String selectCompanyByType(@PathVariable("id") long id, @PathVariable("type") String type) {
+	    public String selectCompanyByType(@PathVariable("id") int companyId,@PathVariable("type") String type) {
+	    	Gson gson = new Gson();
+	     	String usercode = (String) request.getSession().getAttribute("usercode");
+	    	if(usercode.equals("AA")){
+	    		List<ContractEntity> contracttype = CompanyService.findContractByType(type);
+	    	    String typejson=gson.toJson(contracttype);
+	    		return typejson;
+	    		
+	    	}else{
+	    		
+	    		List<ContractEntity> contracttype =CompanyService.findContractByTypeId(type, companyId);
+	    		String typejson=gson.toJson(contracttype);
+		    	return typejson;
+	    	}
 	    	
-	    	return "";
 	    }
 	    
 	    //取回每間公司(客戶)的資料(companyProfile) ex:合約也要全部給我, id:公司id
 	    @RequestMapping(value = "/retrive/companyProfile/{id}", method = RequestMethod.GET, produces = "application/json")
-	    public String selectCompanyProfile(@PathVariable("id") long id) {
+	    public String selectCompanyProfile(@PathVariable("id") int companyId) {
 	    	
-	    	return "";
+	    	Gson gson = new Gson();
+	    	List<ContractEntity>contract=CompanyService.findContractByCompany(companyId);
+	    	String contractjson = gson.toJson(contract);
+	    	return contractjson;
 	    }
 }

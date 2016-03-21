@@ -7,8 +7,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
-
-
 import tw.com.afw.entity.ContractEntity;
 
 @Repository
@@ -19,9 +17,24 @@ public class ContractDao {
 	
 	
 	public List<ContractEntity> findAll() {
-		return (List<ContractEntity>) em.createQuery("SELECT * FROM contract where contract is not null ", ContractEntity.class).getResultList();
+		return (List<ContractEntity>) em.createQuery("SELECT e FROM contract e ", ContractEntity.class).getResultList();
 	}
 	
+	
+	public List<ContractEntity> findContractByCompany(int companyId) {
+		return em.createQuery("select e from contract e where e.company_id:companyId",ContractEntity.class).setParameter("companyId", companyId).getResultList();
+	
+	}
+	
+	public List<ContractEntity> findContractByType(String contractType) {
+		return em.createQuery("select e from contract e where e.contract_type:contractType",ContractEntity.class).setParameter("contractType", contractType).getResultList();
+	
+	}
+	
+	public List<ContractEntity> findContractByTypeId(String contractType,int id) {
+		return em.createQuery("select e from contract e where e.contract_type:contractType and e.company_id:id",ContractEntity.class).setParameter("contractType", contractType).setParameter("id", id).getResultList();
+	
+	}
 	
 	public ContractEntity findCompanyById(Integer companyId) {
 		ContractEntity entity = null;

@@ -37,10 +37,24 @@ public class CompanyService {
 	}
 	
 	@Transactional
+	public  List<ContractEntity>findContractByCompany(int companyId){
+		return condao.findContractByCompany(companyId);
+	}
+	
+	@Transactional
+	public  List<ContractEntity>findContractByType(String companyType){
+		return condao.findContractByType(companyType);
+	}
+
+	@Transactional
+	public  List<ContractEntity>findContractByTypeId(String companyType,int id){
+		return condao.findContractByTypeId(companyType,id);
+	}
+	
+	@Transactional
 	public  List<CompanyEntity>findCompanyByCode(String code){
 		return dao.findCompanyByCode(code);
 	}
-	
 	
 	@Transactional
 	public  CompanyEntity comById(Integer id){
