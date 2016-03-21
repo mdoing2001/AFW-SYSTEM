@@ -69,7 +69,7 @@ public class UserEntity implements java.io.Serializable{
 
 	@ManyToOne	
 	@JoinColumn(name="branch_id")
-	private BrancEntity branchId;
+	private BranchEntity branchId;
 
 	
 
@@ -253,13 +253,13 @@ public class UserEntity implements java.io.Serializable{
 
 
 
-	public BrancEntity getBranchId() {
+	public BranchEntity getBranchId() {
 		return branchId;
 	}
 
 
 
-	public void setBranchId(BrancEntity branchId) {
+	public void setBranchId(BranchEntity branchId) {
 		this.branchId = branchId;
 	}
 

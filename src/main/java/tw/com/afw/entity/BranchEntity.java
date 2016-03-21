@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "branch")
-public class BrancEntity implements java.io.Serializable{
+public class BranchEntity implements java.io.Serializable{
 	
 	/**
 	 * 

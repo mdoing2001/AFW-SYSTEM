@@ -42,7 +42,7 @@ public class ContractEntity implements java.io.Serializable{
 	
 	@ManyToOne	
 	@JoinColumn(name="branch_id")
-	private BrancEntity branchId;
+	private BranchEntity branchId;
 	
 	@Column(name = "contract_date")
 	private Date contractDate;
@@ -109,11 +109,11 @@ public class ContractEntity implements java.io.Serializable{
 		this.contractRent = contractRent;
 	}
 
-	public BrancEntity getBranchId() {
+	public BranchEntity getBranchId() {
 		return branchId;
 	}
 
-	public void setBranchId(BrancEntity branchId) {
+	public void setBranchId(BranchEntity branchId) {
 		this.branchId = branchId;
 	}
 
