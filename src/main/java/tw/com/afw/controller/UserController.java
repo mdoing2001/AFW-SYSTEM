@@ -22,14 +22,13 @@ public class UserController {
 	 private UserService UserService;
 	 
 	 @SuppressWarnings("unchecked")
-	 @RequestMapping(value = "/new/user/getAllUser", method = RequestMethod.GET, produces = "application/json")
+	 @RequestMapping(value = "/new/user/getAllUser", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
 	 public String findAllUser()  {
 		 JSONObject result = new JSONObject();
 		 String userjson = null;
 		 Gson gson = new Gson();
 		 try {
 			 List<UserEntity> user = UserService.findAll();
-			 System.err.println(user.size());
 			 userjson = gson.toJson(user);
 		 } catch (Exception e) {
 			e.printStackTrace();
@@ -40,7 +39,7 @@ public class UserController {
 		 result.put("status", "success");
 		 result.put("message", userjson);
 		 
-		 return userjson;
+		 return result.toJSONString();
 	 }
 	 
 	 

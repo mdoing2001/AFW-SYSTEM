@@ -1,7 +1,9 @@
 package tw.com.afw.controller;
 
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -11,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import tw.com.afw.entity.AccountancyEntity;
 import tw.com.afw.entity.CompanyEntity;
 import tw.com.afw.entity.ContractEntity;
+import tw.com.afw.entity.OfficeEntity;
 import tw.com.afw.service.CompanyService;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -31,7 +36,7 @@ public class CompanyController {
 	 
      
 	    @SuppressWarnings("unchecked")
-		@RequestMapping(value = "/new/company/add", method = RequestMethod.POST, produces = "application/json")
+		@RequestMapping(value = "/new/company/add", method = RequestMethod.POST, produces = {"application/json; charset=UTF-8"})
 	    public String createCompany(@RequestBody String newCompanyJson) {
 	    	JSONObject result = new JSONObject();
 	        //System.out.println("Creating Company " + company.getCompany_Name());
@@ -41,23 +46,46 @@ public class CompanyController {
 	    		//抓取前端全部資料json格式
 				JSONObject obj = (JSONObject) new JSONParser().parse(newCompanyJson);
 				
-				//有三個table (key :value) 轉字串
-				String companyStr = obj.get("company").toString();
-				String contractStr = obj.get("contract").toString();
-				String accStr = obj.get("acc").toString();
+				//四個table 分別取出來
+				JSONObject companyObj = (JSONObject) obj.get("company");
+				JSONObject contractObj = (JSONObject) obj.get("contract");
+				JSONObject accountancyObj = (JSONObject) obj.get("acc");
+				JSONObject officeObj = (JSONObject) obj.get("office");
 				
-				System.out.println(companyStr);
-				System.out.println(contractStr);
-				System.out.println(accStr);
+				//TODO:塞company("company":{"companyName":"","companyType":"","companyMail":"","companyCode":"-1","companyEin":"","companyExecutive":"","companyBitrhday":"","companyNumber":"","companyFax":"","companyAddress2":"","companyRemark":""})
+				CompanyEntity companyEntity = new CompanyEntity();
 				
-				//用FromJson將字串塞入entity
-				CompanyEntity companyEntity = new Gson().fromJson(companyStr, CompanyEntity.class);
-				ContractEntity contractEntity = new Gson().fromJson(contractStr, ContractEntity.class);
-				AccountancyEntity accountancyEntity = new Gson().fromJson(accStr, AccountancyEntity.class);
-
-				//在entity 裡有FK必須要有對應的連結
-				companyEntity.setAccId(accountancyEntity);
-				contractEntity.setCompanyId(companyEntity);
+				
+				
+				
+				//TODO:塞contract("contract":{"userId":"","userId2":"-1","contractType":"-1","contractStart":"","contractEnd":"","contractRent":"","contractDeposit":"","contractRented":"","contractDeposited":"","contractRemarks":""})
+				ContractEntity contractEntity = new ContractEntity();
+				
+				
+				
+				
+				//TODO:塞office(辦公室號碼 不一定每張合約都有)("office":{"officeNumber":""})
+				OfficeEntity officeEntity = new OfficeEntity();
+				
+				
+				
+				
+				//塞accountancy("acc":{"accName":"","accContact":"","accPhone":"","accAddress":""})
+				AccountancyEntity accountancyEntity = new AccountancyEntity();
+				accountancyEntity.setAccAddress(null != accountancyObj.get("accAdress") ? accountancyObj.get("accAdress").toString() : null);
+				accountancyEntity.setAccContact(null != accountancyObj.get("accContact") ? accountancyObj.get("accContact").toString() : null);
+				accountancyEntity.setAccName(null != accountancyObj.get("accName") ? accountancyObj.get("accName").toString() : null);
+				accountancyEntity.setAccPhone(null != accountancyObj.get("accPhone") ? accountancyObj.get("accPhone").toString() : null);
+				
+				//(辦公室號碼 不一定每張合約都有)
+				if(null != officeObj.get("officeNumber")) {
+					companyEntity.setAccId(accountancyEntity);
+					contractEntity.setCompanyId(companyEntity);
+					officeEntity.setContractId(contractEntity);
+				} else {
+					companyEntity.setAccId(accountancyEntity);
+					contractEntity.setCompanyId(companyEntity);
+				}
 				
 				//contractEntity.setUser_id(UserEntity);
 				//contractEntity.setUser_id2(UserEntity);
@@ -68,8 +96,14 @@ public class CompanyController {
 				String ein =companyEntity.getCompanyEin();
 				int checkein=CompanyService.checkEin(ein);
 				if(checkein == 1){
-					//新增
-					CompanyService.conins(companyEntity, contractEntity, accountancyEntity);
+					//新增(下面那行有錯 不用三個都insert 74行開始已經把entity塞進去了 只要insert最後那個就可)
+					//CompanyService.conins(companyEntity, contractEntity, accountancyEntity);
+					if(null != officeObj.get("officeNumber")) {
+						//TODO:需要officeService的insert(新增OfficeEntity)
+					} else {
+						//TODO:需要contractService的insert(新增ContractEntity)
+					}
+					
 					result.put("status", "success");
 			    	result.put("message", "success");
 				}else{
@@ -89,32 +123,6 @@ public class CompanyController {
 			}
 	    	
 	        return result.toJSONString();
-	    }
-	    
-	    //更新客戶資料
-	    @SuppressWarnings("unchecked")
-		@RequestMapping(value = "/retrive/company/{update}", method = RequestMethod.GET, produces = "application/json")
-	    public String UpdateCompany(@PathVariable("update") String update)  {
-	    	
-	    	JSONObject result = new JSONObject();
-	    	try {
-				JSONObject obj = (JSONObject) new JSONParser().parse(update);
-				String companyStr = obj.get("company").toString();
-				CompanyEntity companyEntity = new Gson().fromJson(companyStr, CompanyEntity.class);
-		
-				CompanyService.upd(companyEntity);
-				
-				result.put("status", "success");
-		    	result.put("message", "更新成功");
-				
-			} catch (ParseException e) {
-				
-				e.printStackTrace();
-				result.put("status", "error");
-		    	result.put("message", e);
-			}
-	    	
-	    	return result.toJSONString();
 	    }
 	    
 	    

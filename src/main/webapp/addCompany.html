@@ -89,17 +89,19 @@
 	                <ul class="list-unstyled">
 	                    <li class="active"><a href="addCompany.html">新增客戶合約</a></li>
 	                    <li><a href="company.html">全部客戶</a></li>
+	                    <li><a href="companyOffice.html">辦公室</a></li>
+	                    <li><a href="companyPersonal.html">個人座位</a></li>
+	                    <li><a href="companyRegister.html">登記</a></li>
+	                    <li><a href="companyCC.html">聯絡處 & 停業</a></li>
+	                    <li><a href="companyClose.html">退租</a></li>
 	                    <li><a href="companyProfile.html">客戶檔案</a></li>
 	                </ul>
 	            </li>
-<!-- 	            <li class="has-submenu"><a href="#"><i class="ion-grid"></i> <span class="nav-label">Data Tables</span></a> -->
-<!-- 	                <ul class="list-unstyled"> -->
-<!-- 	                    <li><a href="tables.html">Basic Tables</a></li> -->
-<!-- 	                    <li><a href="table-datatable.html">Data Table</a></li> -->
-<!-- 	                    <li><a href="tables-editable.html">Editable Table</a></li> -->
-<!-- 	                    <li><a href="responsive-table.html">Responsive Table</a></li> -->
-<!-- 	                </ul> -->
-<!-- 	            </li> -->
+				<li class="has-submenu"><a href="#"><i class="ion-grid"></i> <span class="nav-label">收租</span></a>
+	                <ul class="list-unstyled">
+	                    <li><a href="rentTable.html">收租表</a></li>
+	                </ul>
+	            </li>
 <!-- 	            <li class="has-submenu"><a href="#"><i class="ion-stats-bars"></i> <span class="nav-label">Charts</span><span class="badge bg-purple">1</span></a> -->
 <!-- 	                <ul class="list-unstyled"> -->
 <!-- 	                    <li><a href="morris-chart.html">Morris Chart</a></li> -->
@@ -206,26 +208,19 @@
 		                                	<div class="col-lg-10">
 			                                	<select class="form-control" id="cbranch" name="cbranch">
 			                                		<option value="-1">請選擇</option>
-			                                		<option value="1">微風店</option>
-			                                		<option value="2">敦化店</option>
-			                                		<option value="3">大安店</option>
-			                                		<option value="4">忠孝店</option>
-			                                		<option value="5">復興店</option>
-			                                		<option value="6">南京店</option>
-			                                		<option value="7">許昌店</option>
+					                          		<option value="221">微風店</option>
+					                          		<option value="169">敦化店</option>
+					                          		<option value="222">大安店</option>
+					                          		<option value="295">忠孝店</option>
+					                          		<option value="201">復興店</option>
+					                          		<option value="189">南京店</option>
 			                                	</select>
 		                                	</div>
 		                                </div>
 		                                <div class="form-group">
-		                                	<label for="cOfficeNumber" class="control-label col-lg-2">辦公室號碼</label>
+		                                	<label for="cein" class="control-label col-lg-2">統編 *</label>
 		                                	<div class="col-lg-10">
-		                                        <input class="form-control " id="cOfficeNumber" name="cOfficeNumber" type="text">
-		                                    </div>
-		                                </div>
-		                                <div class="form-group">
-		                                	<label for="ceim" class="control-label col-lg-2">統編 *</label>
-		                                	<div class="col-lg-10">
-		                                        <input class="form-control " id="ceim" name="ceim" type="text">
+		                                        <input class="form-control " id="cein" name="cein" type="text">
 		                                    </div>
 		                                </div>
 		                                <div class="form-group ">
@@ -277,14 +272,18 @@
 	                                    	<!-- TODO 抓取session的user 名稱 -->
 		                                    <label for="ccuser" class="control-label col-lg-2">簽約人 *(由登入帳號判斷 如果是管理員 會出現下拉式選單)</label>
 		                                    <div class="col-lg-10">
-		                                        <input class=" form-control" id="ccuser" name="ccuser" type="text">
+		                                        <input style="display:block" class="form-control" id="ccuser" name="ccuser" type="text">
+		                                        <input style="display:none" id="ccuserId">
+		                                        <select style="display:none" class="form-control" id="ccuserDropDown" name="ccuserDropDown"></select>
 		                                    </div>
 		                                </div>
 		                                <div class="form-group">
 		                                	<!-- TODO ajax from ContractController -->
-		                                    <label for="ccuserc" class="control-label col-lg-2">介紹人(使用下拉式選單)</label>
+		                                    <label for="ccuserc" class="control-label col-lg-2">介紹人</label>
 		                                    <div class="col-lg-10">
-		                                        <input class=" form-control" id="ccuserc" name="ccuserc" type="text">
+		                                    	<select class="form-control" id="ccuserc" name="ccuserc">
+		                                    		<option value="-1">請選擇</option>
+		                                    	</select>
 		                                    </div>
 		                                </div>
 		                                <div class="form-group">
@@ -293,14 +292,20 @@
 		                                	<div class="col-lg-10">
 			                                	<select class="form-control" id="cctype" name="cctype">
 			                                		<option value="-1">請選擇</option>
-			                                		<option value="1">租辦公室</option>
-			                                		<option value="2">個人座位</option>
-			                                		<option value="3">登記</option>
-			                                		<option value="4">聯絡處</option>
-			                                		<option value="5">停業</option>
-			                                		<option value="6">其他</option>
+			                                		<option value="o">租辦公室</option>
+			                                		<option value="p">個人座位</option>
+			                                		<option value="r">登記</option>
+			                                		<option value="c">聯絡處</option>
+			                                		<option value="s">停業</option>
+			                                		<option value="other">其他</option>
 			                                	</select>
 		                                	</div>
+		                                </div>
+		                                <div class="form-group">
+		                                	<label for="ccOfficeNumber" class="control-label col-lg-2">辦公室號碼</label>
+		                                	<div class="col-lg-10">
+		                                        <input class="form-control " id="ccOfficeNumber" name="ccOfficeNumber" type="text">
+		                                    </div>
 		                                </div>
                                         <div class="form-group">
                                             <label class="col-lg-2 control-label " for="ccdates">合約日期(起) *</label>
@@ -333,13 +338,13 @@
 		                                    </div>
 		                                </div>
 		                                <div class="form-group">
-		                                	<label for="crented" class="control-label col-lg-2">已收租金</label>
+		                                	<label for="crented" class="control-label col-lg-2">已收租金 *</label>
 		                                	<div class="col-lg-10">
 		                                        <input class="form-control " id="crented" name="crented" type="text">
 		                                    </div>
 		                                </div>
 		                                <div class="form-group">
-		                                	<label for="cdeposited" class="control-label col-lg-2">已收押金</label>
+		                                	<label for="cdeposited" class="control-label col-lg-2">已收押金 *</label>
 		                                	<div class="col-lg-10">
 		                                        <input class="form-control " id="cdeposited" name="cdeposited" type="text">
 		                                    </div>
@@ -467,7 +472,7 @@
 //             cOfficeNumber: {
 //             	digits: true
 //             },
-//             ceim: {
+//             cein: {
 //             	required: true,
 //             	digits: true
 //             },
@@ -495,11 +500,11 @@
 //             	digits: true
 //             },
 //             crented: {
-//             	//required: true,
+//             	required: true,
 //             	digits: true
 //             },
 //             cdeposited: {
-//             	//required: true,
+//             	required: true,
 //             	digits: true
 //             },
 // 				caPhoneNumber: {
@@ -534,7 +539,7 @@
             cOfficeNumber: {
             	digits: "格式錯誤"
             },
-            ceim: {
+            cein: {
             	required: "請輸入統編",
             	digits: "格式錯誤"
             },
@@ -599,6 +604,8 @@
 	    }
 	});
 	
+	
+	
 	//validate endDate > startDate
 	var isAfterStartDate = function(startDateStr, endDateStr) {
 	    var sDate = new Date(startDateStr);
@@ -628,11 +635,58 @@
         format: 'yyyy/mm/dd',
     });
  	
+ 	
+ 	
+    
+ 	
     var root = location.protocol + '//' + location.host;
  	
     var addAjax = function() {
-    	var newData = {}
-    	newData["test"] = "test";
+    	var company = {
+   	   		companyName : $('#cname').val(),
+   	   		companyType : $('#ctype').val(),
+   	   		companyAddress : $('#cadress').val(),
+   	   		companyMail : $('#cemail').val(),
+   	   		companyCode : $('#cbranch').val(),
+   	   		companyEin : $('#cein').val(),
+   	   		companyExecutive : $('#cceo').val(),
+   	   		companyBitrhday : $('#cbirthday').val(),
+   	   		companyNumber : $('#cphoneNumber').val(),
+   	   		companyFax : $('#cfaxNumber').val(),
+   	   		companyAddress2 : $('#cAddress2').val(),
+   	   		companyRemark : $('#ccomment').val()
+   		}
+   	        
+   		var contract = {
+   	   		userId : $('#ccuser').val(),
+   	   		userId2 : $('#ccuserc').val(),
+   	   		contractType : $('#cctype').val(),
+   	   		contractStart : $('#ccdates').val(),
+   	   		contractEnd : $('#ccdatee').val(),
+   	   		contractRent : $('#crent').val(),
+   	   		contractDeposit : $('#cdeposit').val(),
+   	   		contractRented : $('#crented').val(),
+   	   		contractDeposited : $('#cdeposited').val(),
+   	   		contractRemarks : $('#ccommentc').val()
+   		}
+   	    
+   	    var officeNumber = {
+   			officeNumber : $('#ccOfficeNumber').val()
+   	    };
+   	        
+   	    var accountancy = {
+   	   		accName : $('#caName').val(),
+   	   		accContact : $('#caContact').val(),
+   	   		accPhone : $('#caPhoneNumber').val(),
+   	   		accAddress : $('#caAddress').val()
+   	    }
+   	    
+    	var newData = {
+			'company' : company,
+			'contract' : contract,
+   			'office' : officeNumber,
+  			'acc' :accountancy
+    	}
     	console.log(JSON.stringify(newData));
 		$.ajax({
 			url:root + "/AFW-I-System/new/company/add",
@@ -653,8 +707,42 @@
 			}
 		});
     }
- 	
-	
+    
+    var getAllUserAjax = function() {
+    	$.ajax({
+			url:root + "/AFW-I-System/new/user/getAllUser",
+			type:'get',
+			dataType : 'json',
+			contentType: 'application/json',
+			success : function(response) {
+				//alert("success");
+				console.log("getAllUserAjax:" + response.message);
+				if(response.status == 'success') {
+					setUserToDropDown(response.message);
+				}
+			},
+			error : function(e) {
+				alert("error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+    }
+    
+    var setUserToDropDown = function(data) {
+    	var obj = jQuery.parseJSON(data);
+    	for(var i=0; i<obj.length; i++) {
+    		$("#ccuserc").append($("<option></option>")
+    				.attr("value", obj[i].userId).text(obj[i].userName));
+    	}
+    }
+    
+    //page load
+    window.onload = function() {
+		getAllUserAjax();
+	};
 })(jQuery);
 </script>
 </body>
