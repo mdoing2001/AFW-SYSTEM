@@ -30,7 +30,7 @@ public class UserDao {
 	
 	//user > userEntity 這是jpql的語法 所以不能用table的名稱 要用entity
 	public List<UserEntity> findAll() {
-		return (List<UserEntity>) em.createQuery("SELECT e FROM User e", UserEntity.class).getResultList();
+		return (List<UserEntity>) em.createQuery("SELECT e FROM UserEntity e", UserEntity.class).getResultList();
 	}
 	 
 	public UserEntity findUserById(Integer userId) {

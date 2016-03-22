@@ -3,10 +3,8 @@ package tw.com.afw.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,14 +20,26 @@ public class UserController {
 	
 	 @Autowired
 	 private UserService UserService;
-
-	
-	 @RequestMapping(value = "/new/user/getAllUser", method = RequestMethod.POST, produces = "application/json")
-	 public String userAdd(@RequestBody String newUserJson , HttpServletRequest request)  {
+	 
+	 @SuppressWarnings("unchecked")
+	 @RequestMapping(value = "/new/user/getAllUser", method = RequestMethod.GET, produces = "application/json")
+	 public String findAllUser()  {
+		 JSONObject result = new JSONObject();
+		 String userjson = null;
 		 Gson gson = new Gson();
-		 List<UserEntity> user = UserService.findAll();
-		 String userjson   = gson.toJson(user);
-		 	
+		 try {
+			 List<UserEntity> user = UserService.findAll();
+			 System.err.println(user.size());
+			 userjson = gson.toJson(user);
+		 } catch (Exception e) {
+			e.printStackTrace();
+			result.put("status", "error");
+			result.put("message", e);
+		 }
+		 
+		 result.put("status", "success");
+		 result.put("message", userjson);
+		 
 		 return userjson;
 	 }
 	 
