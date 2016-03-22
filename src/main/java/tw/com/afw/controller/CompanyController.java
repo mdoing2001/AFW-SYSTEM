@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import tw.com.afw.entity.AccountancyEntity;
+import tw.com.afw.entity.BranchEntity;
 import tw.com.afw.entity.CompanyEntity;
 import tw.com.afw.entity.ContractEntity;
 import tw.com.afw.entity.OfficeEntity;
+import tw.com.afw.entity.UserEntity;
+import tw.com.afw.service.BranchService;
 import tw.com.afw.service.CompanyService;
+import tw.com.afw.service.UserService;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -31,6 +35,8 @@ public class CompanyController {
 	
 	 @Autowired
 	 private CompanyService CompanyService;
+	 private BranchService branchService;
+	 private UserService userService;
 	 
 	 public HttpServletRequest request;
 	 
@@ -130,7 +136,7 @@ public class CompanyController {
 	    
 	    //取回全部客戶(company.html) 這個頁面的資料 不同分店取的分店資料不一樣 管理員取回全部資料, id:使用者id
 
-	    @RequestMapping(value = "/retrive/company/{id}", method = RequestMethod.GET, produces = "application/json")
+	    @RequestMapping(value = "/retrive/company/{id}", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
 	    public String selectCompany(@PathVariable("id") long id) {
 	    	Gson gson = new Gson();
 
@@ -150,7 +156,7 @@ public class CompanyController {
 	    }
 	    
 	    //取回不同contract type(租辦公室 個人座位....)的資料 一樣不同分店取的分店資料不一樣 管理員取回全部資料, id:使用者id
-	    @RequestMapping(value = "/retrive/company/{id}/{type}", method = RequestMethod.GET, produces = "application/json")
+	    @RequestMapping(value = "/retrive/company/{id}/{type}", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
 	    public String selectCompanyByType(@PathVariable("id") int companyId,@PathVariable("type") String type) {
 	    	Gson gson = new Gson();
 	     	String usercode = (String) request.getSession().getAttribute("usercode");
@@ -169,12 +175,35 @@ public class CompanyController {
 	    }
 	    
 	    //取回每間公司(客戶)的資料(companyProfile) ex:合約也要全部給我, id:公司id
-	    @RequestMapping(value = "/retrive/companyProfile/{id}", method = RequestMethod.GET, produces = "application/json")
+	    @RequestMapping(value = "/retrive/companyProfile/{id}", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
 	    public String selectCompanyProfile(@PathVariable("id") int companyId) {
-	    	
+	    	int ContractEntity = 0;
 	    	Gson gson = new Gson();
-	    	List<ContractEntity>contract=CompanyService.findContractByCompany(companyId);
-	    	String contractjson = gson.toJson(contract);
-	    	return contractjson;
+	    	JSONObject result = new JSONObject();
+	    	 String profilejson = null;
+	    	try {
+				List<ContractEntity>contract=CompanyService.findContractByCompany(companyId);
+				
+				 int  bid=  contract.get(ContractEntity).getBranchId().getBranchId();
+				 int  cid=  contract.get(ContractEntity).getCompanyId().getCompanyId();
+				 int   uid1=contract.get(ContractEntity).getUserId().getUserId();
+				 int   uid2=contract.get(ContractEntity).getUserId2().getUserId();
+				 BranchEntity branchEntity= branchService.findBranchById(bid);
+				 CompanyEntity companyEntity =CompanyService.comById(cid);
+				 UserEntity user1= userService.findUserById(uid1);
+				 UserEntity user2= userService.findUserById(uid2);
+				 
+			     //怎麼組起來
+				 
+			} catch (Exception e) {
+				e.printStackTrace();
+				result.put("status", "error");
+				result.put("message", e);
+			}
+	        	 result.put("status", "success");
+		         result.put("message", profilejson);
+		         
+		         
+	    	return result.toJSONString();
 	    }
 }

@@ -102,7 +102,7 @@ public class UserDao {
 		UserEntity entity = null;
 		
 		try {
-			entity = (UserEntity) em.createQuery("select * from user where user_count =:user_count and user_password=:user_password",User.class);
+			entity = (UserEntity) em.createQuery("select u from user u where u.user_count =:user_count and u.user_password=:user_password",User.class);
 			entity.setUserCount(account);
 			entity.setUserPassword(password);
 		} catch (Exception e) {
