@@ -136,11 +136,12 @@ public class CompanyController {
 	    
 	    //取回全部客戶(company.html) 這個頁面的資料 不同分店取的分店資料不一樣 管理員取回全部資料, id:使用者id
 
-	    @RequestMapping(value = "/retrive/company/{id}", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
-	    public String selectCompany(@PathVariable("id") long id) {
+	    @RequestMapping(value = "/retrive/company", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
+	    public String selectCompany() {
 	    	Gson gson = new Gson();
 
 	    	String usercode = (String) request.getSession().getAttribute("usercode");
+	    	System.err.println(usercode);
 	    	if(usercode.equals("AA")){
 	    		//總公司抓取全部顧客資料
 	    		List<CompanyEntity> companyAll= CompanyService.findAll(); 
@@ -175,35 +176,46 @@ public class CompanyController {
 	    }
 	    
 	    //取回每間公司(客戶)的資料(companyProfile) ex:合約也要全部給我, id:公司id
-	    @RequestMapping(value = "/retrive/companyProfile/{id}", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
+	    @SuppressWarnings("unchecked")
+		@RequestMapping(value = "/retrive/companyProfile/{id}", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
 	    public String selectCompanyProfile(@PathVariable("id") int companyId) {
 	    	int ContractEntity = 0;
-	    	Gson gson = new Gson();
 	    	JSONObject result = new JSONObject();
-	    	 String profilejson = null;
+	    	JSONObject obj = null;
 	    	try {
-				List<ContractEntity>contract=CompanyService.findContractByCompany(companyId);
+	    		List<ContractEntity> contract = CompanyService.findContractByCompany(companyId);
 				
-				 int  bid=  contract.get(ContractEntity).getBranchId().getBranchId();
-				 int  cid=  contract.get(ContractEntity).getCompanyId().getCompanyId();
-				 int   uid1=contract.get(ContractEntity).getUserId().getUserId();
-				 int   uid2=contract.get(ContractEntity).getUserId2().getUserId();
-				 BranchEntity branchEntity= branchService.findBranchById(bid);
-				 CompanyEntity companyEntity =CompanyService.comById(cid);
-				 UserEntity user1= userService.findUserById(uid1);
-				 UserEntity user2= userService.findUserById(uid2);
+	    		//TODO mark 起來的都有問題 看一下profile需要哪些資料
+//	    		int bid = contract.get(ContractEntity).getBranchId().getBranchId();
+//	    		int cid = contract.get(ContractEntity).getCompanyId().getCompanyId();
+//	    		int uid1 = contract.get(ContractEntity).getUserId().getUserId();
+//	    		int uid2 = contract.get(ContractEntity).getUserId2().getUserId();
+//				BranchEntity branchEntity= branchService.findBranchById(bid);
+//				CompanyEntity companyEntity =CompanyService.comById(cid);
+//				UserEntity user1= userService.findUserById(uid1);
+//				UserEntity user2= userService.findUserById(uid2);
 				 
-			     //怎麼組起來
+				 
+				 
+				//怎麼組起來 
+	    		//下面是範例 上面改好後用下面方式組起來
+				obj = new JSONObject();
+//				obj.put("company", companyEntity);
+				obj.put("contract", contract);
+//				obj.put("branchEntity", branchEntity);
+//				obj.put("user1", user1);
+//				obj.put("user2", user2);
+				 
+				result.put("status", "success");
+				result.put("message", obj.toJSONString());
 				 
 			} catch (Exception e) {
 				e.printStackTrace();
 				result.put("status", "error");
 				result.put("message", e);
 			}
-	        	 result.put("status", "success");
-		         result.put("message", profilejson);
-		         
-		         
+	    	
 	    	return result.toJSONString();
 	    }
+	    
 }
