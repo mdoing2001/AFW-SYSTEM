@@ -68,6 +68,14 @@ public class ContractEntity implements java.io.Serializable{
 	
 	@Column(name = "contract_del")
 	private String contractDel;
+	
+	@Column(name = "contract_deposited")
+	private double contract_deposited;
+	
+	@Column(name = "contract_rented")
+	private double contract_rented;
+	
+	
 
 	public int getContractId() {
 		return contractId;
@@ -171,6 +179,22 @@ public class ContractEntity implements java.io.Serializable{
 
 	public void setContractDel(String contractDel) {
 		this.contractDel = contractDel;
+	}
+
+	public double getContract_deposited() {
+		return contract_deposited;
+	}
+
+	public void setContract_deposited(double contract_deposited) {
+		this.contract_deposited = contract_deposited;
+	}
+
+	public double getContract_rented() {
+		return contract_rented;
+	}
+
+	public void setContract_rented(double contract_rented) {
+		this.contract_rented = contract_rented;
 	}
 
 	

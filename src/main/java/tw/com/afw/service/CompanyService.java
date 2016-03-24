@@ -95,14 +95,7 @@ public class CompanyService {
 		dao.deleteById(del_id);
 	}
 	
-	@Transactional
-	public void conins (CompanyEntity company,ContractEntity contract,AccountancyEntity accountancy){
-		dao.insert(company);
-		condao.insert(contract);
-		accdao.ins(accountancy);
-		
-		
-	}
+
 	
 	@Transactional
 	public int userId (String usercount){

@@ -1,5 +1,6 @@
 package tw.com.afw.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,13 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import tw.com.afw.entity.AccountancyEntity;
-import tw.com.afw.entity.BranchEntity;
 import tw.com.afw.entity.CompanyEntity;
 import tw.com.afw.entity.ContractEntity;
 import tw.com.afw.entity.OfficeEntity;
-import tw.com.afw.entity.UserEntity;
-import tw.com.afw.service.BranchService;
 import tw.com.afw.service.CompanyService;
+import tw.com.afw.service.ContractService;
+import tw.com.afw.service.OfficeService;
 import tw.com.afw.service.UserService;
 
 import com.google.gson.Gson;
@@ -35,7 +35,8 @@ public class CompanyController {
 	
 	 @Autowired
 	 private CompanyService CompanyService;
-	 private BranchService branchService;
+	 private OfficeService officeService;
+	 private ContractService contractService;
 	 private UserService userService;
 	 
 	 public HttpServletRequest request;
@@ -46,7 +47,7 @@ public class CompanyController {
 	    public String createCompany(@RequestBody String newCompanyJson) {
 	    	JSONObject result = new JSONObject();
 	        //System.out.println("Creating Company " + company.getCompany_Name());
-
+	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	        //CompanyService.ins(companyj);
 	    	try {
 	    		//抓取前端全部資料json格式
@@ -60,20 +61,35 @@ public class CompanyController {
 				
 				//TODO:塞company("company":{"companyName":"","companyType":"","companyMail":"","companyCode":"-1","companyEin":"","companyExecutive":"","companyBitrhday":"","companyNumber":"","companyFax":"","companyAddress2":"","companyRemark":""})
 				CompanyEntity companyEntity = new CompanyEntity();
-				
-				
-				
+				companyEntity.setCompanyName(null != companyObj.get("companyName") ? companyObj.get("companyName").toString() : null);
+				companyEntity.setCompanyType(null != companyObj.get("companyType") ? companyObj.get("companyType").toString() : null);
+				companyEntity.setCompanyMail(null != companyObj.get("companyMail") ? companyObj.get("companyMail").toString() : null);
+				companyEntity.setCompanyCode(null != companyObj.get("companyCode") ? companyObj.get("companyCode").toString() : null);
+				companyEntity.setCompanyEin(null != companyObj.get("companyEin") ? companyObj.get("companyEin").toString() : null);
+				companyEntity.setCompanyExecutive(null != companyObj.get("companyExecutive") ? companyObj.get("companyExecutive").toString() : null);
+				companyEntity.setCompanyBitrhday(null != companyObj.get("companyBitrhday") ? sdf.parse(companyObj.get("companyBitrhday").toString()) : null);
+				companyEntity.setCompanyNumber(null != companyObj.get("companyNumber") ? companyObj.get("companyNumber").toString() : null);
+				companyEntity.setCompanyFax(null != companyObj.get("companyFax") ? companyObj.get("companyFax").toString() : null);
+				companyEntity.setCompanyAddress2(null != companyObj.get("companyAddress2") ? companyObj.get("companyAddress2").toString() : null);
+				companyEntity.setCompanyRemark(null != companyObj.get("companyRemark") ? companyObj.get("companyRemark").toString() : null);
 				
 				//TODO:塞contract("contract":{"userId":"","userId2":"-1","contractType":"-1","contractStart":"","contractEnd":"","contractRent":"","contractDeposit":"","contractRented":"","contractDeposited":"","contractRemarks":""})
 				ContractEntity contractEntity = new ContractEntity();
-				
-				
-				
+				contractEntity.setUserId(null != companyObj.get("userId") ? userService.findUserById(Integer.parseInt(companyObj.get("userId").toString())) : null);
+				contractEntity.setUserId2(null != companyObj.get("userId2") ? userService.findUserById(Integer.parseInt(companyObj.get("userId").toString())) : null);
+				contractEntity.setContractType(null != contractObj.get("contractType") ? contractObj.get("contractType").toString() : null);
+				contractEntity.setContractStart(null != contractObj.get("contractStart") ? sdf.parse(contractObj.get("contractStart").toString()) : null);
+				contractEntity.setContractEnd(null != contractObj.get("contractEnd") ? sdf.parse(contractObj.get("contractEnd").toString()) : null);
+				contractEntity.setContractRent(null != contractObj.get("contractRent") ? Double.parseDouble(contractObj.get("contractRent").toString()): null);
+				contractEntity.setContractType(null != contractObj.get("contractDeposit") ? contractObj.get("contractDeposit").toString() : null);
+				contractEntity.setContractType(null != contractObj.get("contractRented") ? contractObj.get("contractRented").toString() : null);
+				contractEntity.setContractType(null != contractObj.get("contractDeposited") ? contractObj.get("contractDeposited").toString() : null);
+				contractEntity.setContractType(null != contractObj.get("contractRemarks") ? contractObj.get("contractRemarks").toString() : null);
+							
 				
 				//TODO:塞office(辦公室號碼 不一定每張合約都有)("office":{"officeNumber":""})
 				OfficeEntity officeEntity = new OfficeEntity();
-				
-				
+				officeEntity.setOfficeNumber(null != officeObj.get("officeNumber") ? officeObj.get("officeNumber").toString() :null );				
 				
 				
 				//塞accountancy("acc":{"accName":"","accContact":"","accPhone":"","accAddress":""})
@@ -93,28 +109,27 @@ public class CompanyController {
 					contractEntity.setCompanyId(companyEntity);
 				}
 				
-				//contractEntity.setUser_id(UserEntity);
-				//contractEntity.setUser_id2(UserEntity);
-				
-				//companyEntity.getAcc_Id().getAcc_name();
-				
 				//company 統編驗證
 				String ein =companyEntity.getCompanyEin();
 				int checkein=CompanyService.checkEin(ein);
 				if(checkein == 1){
 					//新增(下面那行有錯 不用三個都insert 74行開始已經把entity塞進去了 只要insert最後那個就可)
 					//CompanyService.conins(companyEntity, contractEntity, accountancyEntity);
+					CompanyService.ins(companyEntity);
+					
 					if(null != officeObj.get("officeNumber")) {
 						//TODO:需要officeService的insert(新增OfficeEntity)
+						officeService.ins(officeEntity);
 					} else {
 						//TODO:需要contractService的insert(新增ContractEntity)
+						contractService.ins(contractEntity);
 					}
 					
 					result.put("status", "success");
 			    	result.put("message", "success");
 				}else{
 					result.put("status", "error");
-			    	result.put("message", "新增失敗");
+			    	result.put("message", "insert error");
 				}
 					
 		    	
@@ -123,6 +138,10 @@ public class CompanyController {
 				result.put("status", "error");
 		    	result.put("message", e);
 			} catch (ParseException e) {
+				e.printStackTrace();
+				result.put("status", "error");
+		    	result.put("message", e);
+			} catch (java.text.ParseException e) {			
 				e.printStackTrace();
 				result.put("status", "error");
 		    	result.put("message", e);

@@ -17,7 +17,7 @@ public class ContractDao {
 	
 	
 	public List<ContractEntity> findAll() {
-		return (List<ContractEntity>) em.createQuery("SELECT e FROM contract e ", ContractEntity.class).getResultList();
+		return (List<ContractEntity>) em.createQuery("SELECT e FROM contract e where e.contract_del !='*' ", ContractEntity.class).getResultList();
 	}
 	
 	
@@ -36,7 +36,7 @@ public class ContractDao {
 	
 	}
 	
-	public ContractEntity findCompanyById(Integer companyId) {
+	public ContractEntity findContractById(Integer companyId) {
 		ContractEntity entity = null;
 		try{
 			entity = (ContractEntity) em.find(ContractEntity.class, companyId);
@@ -48,7 +48,7 @@ public class ContractDao {
 	}
 	
 	
-    public void insert(ContractEntity contract) {
+    public void ins(ContractEntity contract) {
 		try {
 			em.getTransaction().begin();
 			em.persist(contract);
