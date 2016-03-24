@@ -154,44 +154,63 @@ public class CompanyController {
 	    
 	    
 	    //取回全部客戶(company.html) 這個頁面的資料 不同分店取的分店資料不一樣 管理員取回全部資料, id:使用者id
-
-	    @RequestMapping(value = "/retrive/company", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
+	    @SuppressWarnings("unchecked")
+		@RequestMapping(value = "/retrive/company", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
 	    public String selectCompany() {
 	    	Gson gson = new Gson();
-
-	    	String usercode = (String) request.getSession().getAttribute("usercode");
-	    	System.err.println(usercode);
-	    	if(usercode.equals("AA")){
-	    		//總公司抓取全部顧客資料
-	    		List<CompanyEntity> companyAll= CompanyService.findAll(); 
-	    		//list to json
-	    		String companyjson = gson.toJson(companyAll);	    		
-	    		return companyjson;	
-	    	}else{
-	    		List<CompanyEntity> companycode = CompanyService.findCompanyByCode(usercode);
-	    		String companyjson = gson.toJson(companycode);	
-	    	 	return companyjson;
-	    	}
-	   
+	    	JSONObject result = new JSONObject();
+	    	String companyjson = null;
+	    	try {
+				String usercode = (String) request.getSession().getAttribute("usercode");
+				System.err.println(usercode);
+				
+				if(usercode.equals("AA")){
+					//總公司抓取全部顧客資料
+					List<CompanyEntity> companyAll= CompanyService.findAll(); 
+					//list to json
+					companyjson = gson.toJson(companyAll);
+				}else{
+					List<CompanyEntity> companycode = CompanyService.findCompanyByCode(usercode);
+					companyjson = gson.toJson(companycode);
+				}
+				
+				result.put("status", "success");
+				result.put("message", companyjson);
+			} catch (Exception e) {
+				e.printStackTrace();
+				result.put("status", "error");
+				result.put("message", e);
+			}
+	    	
+	    	return result.toJSONString();
 	    }
 	    
 	    //取回不同contract type(租辦公室 個人座位....)的資料 一樣不同分店取的分店資料不一樣 管理員取回全部資料, id:使用者id
-	    @RequestMapping(value = "/retrive/company/{id}/{type}", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
+	    @SuppressWarnings("unchecked")
+		@RequestMapping(value = "/retrive/company/{id}/{type}", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
 	    public String selectCompanyByType(@PathVariable("id") int companyId,@PathVariable("type") String type) {
 	    	Gson gson = new Gson();
-	     	String usercode = (String) request.getSession().getAttribute("usercode");
-	    	if(usercode.equals("AA")){
-	    		List<ContractEntity> contracttype = CompanyService.findContractByType(type);
-	    	    String typejson=gson.toJson(contracttype);
-	    		return typejson;
-	    		
-	    	}else{
-	    		
-	    		List<ContractEntity> contracttype =CompanyService.findContractByTypeId(type, companyId);
-	    		String typejson=gson.toJson(contracttype);
-		    	return typejson;
-	    	}
-	    	
+	    	JSONObject result = new JSONObject();
+	     	try {
+				String usercode = (String) request.getSession().getAttribute("usercode");
+				String typejson = null;
+				if(usercode.equals("AA")){
+					List<ContractEntity> contracttype = CompanyService.findContractByType(type);
+				    typejson = gson.toJson(contracttype);
+					
+				}else{
+					List<ContractEntity> contracttype =CompanyService.findContractByTypeId(type, companyId);
+					typejson = gson.toJson(contracttype);
+				}
+				
+				result.put("status", "success");
+		    	result.put("message", typejson);
+			} catch (Exception e) {
+				e.printStackTrace();
+				result.put("status", "error");
+				result.put("message", e);
+			}
+	    	return result.toJSONString();
 	    }
 	    
 	    //取回每間公司(客戶)的資料(companyProfile) ex:合約也要全部給我, id:公司id
