@@ -58,7 +58,7 @@ public class UserDao {
 	public UserEntity findUserByCount(String userCount) {
 		UserEntity entity = null;
 		try{
-			Query query = em.createQuery("select u from UserEntity u where u.user_Count =:user_count", UserEntity.class);
+			Query query = em.createQuery("select u from UserEntity u where u.userCount =:user_count", UserEntity.class);
 			query.setParameter("user_count", userCount);
 			entity = (UserEntity) query.getSingleResult();
         } catch (NoResultException e) {
