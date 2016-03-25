@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import tw.com.afw.entity.AccountancyEntity;
+import tw.com.afw.entity.BranchEntity;
 import tw.com.afw.entity.CompanyEntity;
 import tw.com.afw.entity.ContractEntity;
 import tw.com.afw.entity.OfficeEntity;
+import tw.com.afw.service.BranchService;
 import tw.com.afw.service.CompanyService;
 import tw.com.afw.service.ContractService;
 import tw.com.afw.service.OfficeService;
@@ -38,6 +40,7 @@ public class CompanyController {
 	 private OfficeService officeService;
 	 private ContractService contractService;
 	 private UserService userService;
+	 private BranchService branchService;
 	 
 	 public HttpServletRequest request;
 	 
@@ -217,14 +220,22 @@ public class CompanyController {
 	    @SuppressWarnings("unchecked")
 		@RequestMapping(value = "/retrive/companyProfile/{id}", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
 	    public String selectCompanyProfile(@PathVariable("id") int companyId) {
-	    	int ContractEntity = 0;
+	    	
 	    	JSONObject result = new JSONObject();
 	    	JSONObject obj = null;
 	    	try {
 	    		List<ContractEntity> contract = CompanyService.findContractByCompany(companyId);
-				
+	    		obj = new JSONObject();
+	    		for(ContractEntity con: contract){
+	    		  int bid =	 con.getBranchId().getBranchId();
+	    		  int cid =	 con.getCompanyId().getCompanyId();
+	    		  int uid1 =	 con.getBranchId().getBranchId();
+	    		  int uid2 =	 con.getBranchId().getBranchId();
+	    		  BranchEntity branchEntity= branchService.findBranchById(bid);
+	    		}
+	    		
 	    		//TODO mark 起來的都有問題 看一下profile需要哪些資料
-//	    		int bid = contract.get(ContractEntity).getBranchId().getBranchId();
+//	    		int bid = ((ContractEntity) contract).getBranchId().getBranchId();
 //	    		int cid = contract.get(ContractEntity).getCompanyId().getCompanyId();
 //	    		int uid1 = contract.get(ContractEntity).getUserId().getUserId();
 //	    		int uid2 = contract.get(ContractEntity).getUserId2().getUserId();
@@ -237,9 +248,9 @@ public class CompanyController {
 				 
 				//怎麼組起來 
 	    		//下面是範例 上面改好後用下面方式組起來
-				obj = new JSONObject();
+			
 //				obj.put("company", companyEntity);
-				obj.put("contract", contract);
+//				obj.put("contract", contract);
 //				obj.put("branchEntity", branchEntity);
 //				obj.put("user1", user1);
 //				obj.put("user2", user2);

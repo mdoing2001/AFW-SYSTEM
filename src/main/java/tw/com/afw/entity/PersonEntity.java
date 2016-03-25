@@ -26,6 +26,19 @@ public class PersonEntity implements java.io.Serializable{
 	@Column(name = "person_id" ,nullable = false)
 	private int personId;
 	
+
+
+	@ManyToOne	
+	@JoinColumn(name="company_id")
+	private CompanyEntity companyId;
+	
+	@Column(name = "company_name")
+	private String companyName;
+	
+	@Column(name = "company_phone")
+	private String companyPhone;
+
+
 	public int getPersonId() {
 		return personId;
 	}
@@ -57,19 +70,6 @@ public class PersonEntity implements java.io.Serializable{
 	public void setCompanyPhone(String companyPhone) {
 		this.companyPhone = companyPhone;
 	}
-
-	@ManyToOne	
-	@JoinColumn(name="company_id")
-	private CompanyEntity companyId;
-	
-	@Column(name = "company_name")
-	private String companyName;
-	
-	@Column(name = "company_phone")
-	private String companyPhone;
-
-
-	
 	
 	
 	

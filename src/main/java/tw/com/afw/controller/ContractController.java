@@ -23,7 +23,7 @@ public class ContractController {
 	 
 	 
 	
-	@RequestMapping(value = "/new/contract/add/{id}", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "/new/contract/add/{id}", method = RequestMethod.POST, produces = {"application/json; charset=UTF-8"})
 	public String createContract(@PathVariable("id") long id, @RequestBody String newContractStr) {
 		
 		
