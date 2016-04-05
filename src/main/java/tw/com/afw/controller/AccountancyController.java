@@ -22,7 +22,7 @@ public class AccountancyController {
 	@Autowired
 	private AccountancyService accountancyService;
 	 
-	 
+	 //test
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/new/accountancy/add/{id}", method = RequestMethod.POST, produces = {"application/json; charset=UTF-8"})
 	public String createAccountancy(@PathVariable("id") long id, @RequestBody String newAccountancyStr) {
