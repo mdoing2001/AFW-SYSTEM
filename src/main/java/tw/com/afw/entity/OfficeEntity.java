@@ -1,5 +1,6 @@
 package tw.com.afw.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,13 +38,11 @@ public class OfficeEntity implements java.io.Serializable{
 	@Column(name = "office_rent")
 	private String officeRent;
 	
-	
-	@ManyToOne	
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="branch_id")
 	private BranchEntity branchId;
 	
-	
-	@ManyToOne	
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="contract_id")
 	private ContractEntity contractId;
 
@@ -108,7 +107,11 @@ public class OfficeEntity implements java.io.Serializable{
 	}
 
 
-	
-	
-	
+	@Override
+	public String toString() {
+		return "OfficeEntity [officeId=" + officeId + ", officeType="
+				+ officeType + ", officeNumber=" + officeNumber
+				+ ", officeRent=" + officeRent + ", branchId=" + branchId
+				+ ", contractId=" + contractId + "]";
+	}
 }

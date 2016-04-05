@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import tw.com.afw.dao.RemitDao;
 import tw.com.afw.entity.RemitEntity;
 
@@ -26,8 +27,8 @@ public class RemitService {
 	
 	
 	@Transactional
-	public RemitEntity findBranchById(Integer id){
-		return remitDao.findPersonById(id);
+	public RemitEntity findRemitById(Integer id){
+		return remitDao.findRemitById(id);
 	}
 	
 	@Transactional
@@ -46,9 +47,9 @@ public class RemitService {
 		remitDao.delete(remit);
 	}
 
-	
-	
-	
-	
+	@Transactional
+	public List<RemitEntity> findRemitByCompanyId(Integer companyId) {
+		return remitDao.findRemitByCompanyId(companyId);
+	}
 
 }

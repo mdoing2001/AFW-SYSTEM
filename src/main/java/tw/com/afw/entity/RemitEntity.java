@@ -30,7 +30,6 @@ public class RemitEntity implements java.io.Serializable{
 	@Column(name = "remit_mode")
 	private String remitMode;
 	
-	
 	@ManyToOne	
 	@JoinColumn(name="company_id")
 	private CompanyEntity companyId;

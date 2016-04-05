@@ -307,11 +307,20 @@
 		                                        <input class="form-control " id="ccOfficeNumber" name="ccOfficeNumber" type="text">
 		                                    </div>
 		                                </div>
+		                                <div class="form-group">
+                                            <label class="col-lg-2 control-label " for="ccdatesign">簽約日期 *</label>
+                                            <div class="col-lg-10">
+                                            	<div class="input-group">
+                                            		<input type="text" id="ccdatesign" name="ccdatesign" class="form-control" placeholder="yyyy-mm-dd">
+													<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            	</div>
+											</div>
+                                        </div>
                                         <div class="form-group">
                                             <label class="col-lg-2 control-label " for="ccdates">合約日期(起) *</label>
                                             <div class="col-lg-10">
                                             	<div class="input-group">
-                                            		<input type="text" id="ccdates" name="ccdates" class="form-control" placeholder="yyyy/mm/dd">
+                                            		<input type="text" id="ccdates" name="ccdates" class="form-control" placeholder="yyyy-mm-dd">
 													<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                             	</div>
 											</div>
@@ -320,7 +329,7 @@
                                             <label class="col-lg-2 control-label " for="ccdatee">合約日期(終) *</label>
                                             <div class="col-lg-10">
                                             	<div class="input-group">
-                                            		<input type="text" id="ccdatee" name="ccdatee" class="form-control" placeholder="yyyy/mm/dd">
+                                            		<input type="text" id="ccdatee" name="ccdatee" class="form-control" placeholder="yyyy-mm-dd">
 													<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                             	</div>
 											</div>
@@ -486,6 +495,7 @@
 //             	date: true
 //             },
 // 			ccuser: "required",
+//			ccdatesign : "required"
 // 			ccdates: "required",
 //             ccdatee: {
 //             	required: true,
@@ -553,6 +563,7 @@
             	date: "格式錯誤"
             },
             ccuser: "請輸入簽約人",
+            ccdatesign: "請輸入日期",
             ccdates: "請輸入日期",
             ccdatee: {
             	required: "請輸入日期",
@@ -624,7 +635,7 @@
 	
 	// Date Picker
     $('#ccdates').datepicker({
-        format: 'yyyy/mm/dd',
+        format: 'yyyy-mm-dd',
         onClose: function() {
             $('#ccdates').valid();
         }
@@ -632,7 +643,7 @@
 	
  	// Date Picker
     $('#ccdatee').datepicker({
-        format: 'yyyy/mm/dd',
+        format: 'yyyy-mm-dd',
     });
  	
  	
@@ -645,7 +656,7 @@
     	var company = {
    	   		companyName : $('#cname').val(),
    	   		companyType : $('#ctype').val(),
-   	   		companyAddress : $('#cadress').val(),
+   	   		companyAddress : $('#cAddress').val(),
    	   		companyMail : $('#cemail').val(),
    	   		companyCode : $('#cbranch').val(),
    	   		companyEin : $('#cein').val(),
@@ -661,6 +672,7 @@
    	   		userId : $('#ccuser').val(),
    	   		userId2 : $('#ccuserc').val(),
    	   		contractType : $('#cctype').val(),
+   	   		contractDate : $('#ccdatesign').val(),
    	   		contractStart : $('#ccdates').val(),
    	   		contractEnd : $('#ccdatee').val(),
    	   		contractRent : $('#crent').val(),
@@ -693,7 +705,7 @@
 			type:'post',
 			data : JSON.stringify(newData),
 			dataType : 'json',
-			contentType: 'application/json',
+			contentType: 'application/json; charset=UTF-8',
 			success : function(data) {
 				alert("success");
 				console.log(data);

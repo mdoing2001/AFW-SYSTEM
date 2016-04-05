@@ -3,6 +3,7 @@ package tw.com.afw.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,7 +41,7 @@ public class ContractEntity implements java.io.Serializable{
 	@Column(name = "contract_rent")
 	private double contractRent;
 	
-	@ManyToOne	
+	@ManyToOne(cascade=CascadeType.ALL)	
 	@JoinColumn(name="branch_id")
 	private BranchEntity branchId;
 	
@@ -50,18 +51,17 @@ public class ContractEntity implements java.io.Serializable{
 	@Column(name = "contract_type")
 	private String contractType;
 	
-	@ManyToOne	
+	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="user_id")
 	private UserEntity userId;
 	
-	@ManyToOne	
+	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="user_id2")
 	private UserEntity userId2;
 	
-	@ManyToOne	
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="company_id")
 	private CompanyEntity companyId;
-	
 	
 	@Column(name = "contract_remarks")
 	private String contractRemarks;
@@ -70,10 +70,10 @@ public class ContractEntity implements java.io.Serializable{
 	private String contractDel;
 	
 	@Column(name = "contract_deposited")
-	private double contract_deposited;
+	private double contractDeposited;
 	
 	@Column(name = "contract_rented")
-	private double contract_rented;
+	private double contractRented;
 	
 	
 
@@ -181,24 +181,32 @@ public class ContractEntity implements java.io.Serializable{
 		this.contractDel = contractDel;
 	}
 
-	public double getContract_deposited() {
-		return contract_deposited;
+	public double getContractDeposited() {
+		return contractDeposited;
 	}
 
-	public void setContract_deposited(double contract_deposited) {
-		this.contract_deposited = contract_deposited;
+	public void setContractDeposited(double contractDeposited) {
+		this.contractDeposited = contractDeposited;
 	}
 
-	public double getContract_rented() {
-		return contract_rented;
+	public double getContractRented() {
+		return contractRented;
 	}
 
-	public void setContract_rented(double contract_rented) {
-		this.contract_rented = contract_rented;
+	public void setContractRented(double contractRented) {
+		this.contractRented = contractRented;
 	}
 
-	
-	
-	
-
+	@Override
+	public String toString() {
+		return "ContractEntity [contractId=" + contractId + ", contractStart="
+				+ contractStart + ", contractEnd=" + contractEnd
+				+ ", contractDeposit=" + contractDeposit + ", contractRent="
+				+ contractRent + ", branchId=" + branchId + ", contractDate="
+				+ contractDate + ", contractType=" + contractType + ", userId="
+				+ userId + ", userId2=" + userId2 + ", companyId=" + companyId
+				+ ", contractRemarks=" + contractRemarks + ", contractDel="
+				+ contractDel + ", contractDeposited=" + contractDeposited
+				+ ", contractRented=" + contractRented + "]";
+	}
 }

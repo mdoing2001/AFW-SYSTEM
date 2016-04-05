@@ -19,12 +19,10 @@ public class RemitDao {
 	
 	
 	public List<RemitEntity> findAll() {
-		return (List<RemitEntity>) em.createQuery("select e from remit e", RemitEntity.class).getResultList();
+		return (List<RemitEntity>) em.createQuery("select e from RemitEntity e", RemitEntity.class).getResultList();
 	}
 	
-	
-	
-	public RemitEntity findPersonById(Integer id) {
+	public RemitEntity findRemitById(Integer id) {
 		RemitEntity entity = null;
 		try{
 			entity = (RemitEntity) em.find(RemitEntity.class, id);
@@ -35,7 +33,17 @@ public class RemitDao {
 		return entity;
 	}
 	
-	
+	public List<RemitEntity> findRemitByCompanyId(Integer companyId) {
+		List<RemitEntity> results = null;
+		try{
+			results = em.createQuery("select r from RemitEntity r where r.companyId.companyId = :companyId", RemitEntity.class)
+					.setParameter("companyId", companyId).getResultList();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return results;
+	}
 	
 	public void ins(RemitEntity remit) {
 		try {

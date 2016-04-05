@@ -180,7 +180,7 @@
 
 				if ( $this.hasClass('actions') ) {
 					_self.rowSetActionsEditing( $row );
-				} else {
+				} else if(!$this.hasClass('accountReadable')){
 					$this.html( '<input type="text" class="form-control input-block" value="' + data[i] + '"/>' );
 				}
 			});
@@ -202,6 +202,8 @@
 				if ( $this.hasClass('actions') ) {
 					_self.rowSetActionsDefault( $row );
 					return _self.datatable.cell( this ).data();
+				} else if($this.hasClass('accountReadable')) {
+					return $.trim( $(this).text() );
 				} else {
 					return $.trim( $this.find('input').val() );
 				}

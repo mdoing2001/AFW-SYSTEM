@@ -2,6 +2,7 @@ package tw.com.afw.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -58,7 +59,7 @@ public class CompanyEntity implements java.io.Serializable{
 	@Column(name = "company_mail")
 	private String companyMail;
 	
-	@ManyToOne	
+	@ManyToOne(cascade=CascadeType.ALL)	
 	@JoinColumn(name="acc_id")
 	private AccountancyEntity accId;
 	
@@ -209,10 +210,21 @@ public class CompanyEntity implements java.io.Serializable{
 	public void setCompanyCode(String companyCode) {
 		this.companyCode = companyCode;
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "CompanyEntity [companyId=" + companyId + ", companyType="
+				+ companyType + ", companyStatus=" + companyStatus
+				+ ", companyName=" + companyName + ", companyExecutive="
+				+ companyExecutive + ", companyBitrhday=" + companyBitrhday
+				+ ", companyEin=" + companyEin + ", companyAddress="
+				+ companyAddress + ", companyAddress2=" + companyAddress2
+				+ ", companyNumber=" + companyNumber + ", companyFax="
+				+ companyFax + ", companyMail=" + companyMail + ", accId="
+				+ accId + ", companyRemark=" + companyRemark
+				+ ", companyPayStatus=" + companyPayStatus
+				+ ", companyLetterStatus=" + companyLetterStatus
+				+ ", companyCode=" + companyCode + "]";
+	}
 
 }

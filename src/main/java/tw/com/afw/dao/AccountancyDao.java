@@ -16,7 +16,7 @@ import tw.com.afw.entity.AccountancyEntity;
 public class AccountancyDao {
 
 	@PersistenceContext
-	private EntityManager em;
+	private EntityManager em;   
 	
 	
 	public List<AccountancyEntity> findAll() {

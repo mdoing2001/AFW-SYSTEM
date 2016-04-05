@@ -52,7 +52,7 @@ public class UserService {
 	}
 	
 	@Transactional
-	public  UserEntity findUserById(int userId){
+	public  UserEntity findUserById(Integer userId){
 		return userdao.findUserById(userId);
 	}
 	

@@ -34,8 +34,6 @@ public class OfficeService {
 		officeDao.ins(office);
 	}
 	
-	
-	
 	@Transactional
 	public  void update(OfficeEntity office){
 		officeDao.update(office);
@@ -45,5 +43,10 @@ public class OfficeService {
 	public  void del(OfficeEntity office){
 		officeDao.delete(office);
 	}
-
+	
+	@Transactional
+	public OfficeEntity findOffByContract(int cid){
+	  return officeDao.findOffByContractId(cid);
+	}
+	
 }

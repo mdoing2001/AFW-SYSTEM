@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
+import tw.com.afw.entity.CompanyEntity;
 import tw.com.afw.entity.OfficeEntity;
 
 @Repository
@@ -17,9 +18,21 @@ public class OfficeDao {
 	private EntityManager em;
 	
 	public List<OfficeEntity> findAll() {
-		return (List<OfficeEntity>) em.createQuery("select e from office e", OfficeEntity.class).getResultList();
+		return (List<OfficeEntity>) em.createQuery("select e from OfficeEntity e", OfficeEntity.class).getResultList();
 	}
-		
+	
+	
+	public OfficeEntity findOffByContractId(int cid) {
+		OfficeEntity result = null;
+		try {
+			result = em.createQuery("select e from OfficeEntity e where e.contractId.contractId = :cid ", OfficeEntity.class).setParameter("cid", cid).getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
 	public OfficeEntity findOfficeById(Integer fid) {
 			OfficeEntity entity = null;
 			try{
@@ -34,9 +47,9 @@ public class OfficeDao {
 	
 	public void ins(OfficeEntity office) {
 		try {
-			em.getTransaction().begin();
+			//em.getTransaction().begin();
 			em.persist(office);
-			em.getTransaction().commit();
+			//em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

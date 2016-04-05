@@ -19,12 +19,14 @@ import tw.com.afw.entity.UserEntity;
 @Service
 public class CompanyService {
 	
-	
-	
 	@Autowired
 	private CompanyDao dao;
-	private ContractDao condao;
-	private UserDao userdao;
+	
+	@Autowired
+	private ContractDao contractDao;
+	
+	@Autowired
+	private UserDao userDao;
 	
 	@Transactional
 	public  List<CompanyEntity>findAll(){
@@ -33,17 +35,17 @@ public class CompanyService {
 	
 	@Transactional
 	public  List<ContractEntity>findContractByCompany(int companyId){
-		return condao.findContractByCompany(companyId);
+		return contractDao.findContractByCompany(companyId);
 	}
 	
 	@Transactional
 	public  List<ContractEntity>findContractByType(String companyType){
-		return condao.findContractByType(companyType);
+		return contractDao.findContractByType(companyType);
 	}
 
 	@Transactional
 	public  List<ContractEntity>findContractByTypeId(String companyType,int id){
-		return condao.findContractByTypeId(companyType,id);
+		return contractDao.findContractByTypeId(companyType,id);
 	}
 	
 	@Transactional
@@ -52,7 +54,7 @@ public class CompanyService {
 	}
 	
 	@Transactional
-	public  CompanyEntity comById(Integer id){
+	public  CompanyEntity findCompanyById(Integer id){
 		return   dao.findCompanyById(id);
 	}
 	
@@ -95,7 +97,7 @@ public class CompanyService {
 	@Transactional
 	public int userId (String usercount){
 		
-		UserEntity user  = userdao.findUserByCount(usercount);
+		UserEntity user  = userDao.findUserByCount(usercount);
 		int userid= user.getUserId();		
 		return userid;	
 		

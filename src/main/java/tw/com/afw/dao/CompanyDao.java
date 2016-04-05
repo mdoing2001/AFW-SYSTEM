@@ -3,7 +3,9 @@ package tw.com.afw.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -41,16 +43,23 @@ public class CompanyDao {
 	
 
 	public List<CompanyEntity> findCompanyByCode(String code) {
-		return em.createQuery("select c from CompanyEntity c where c.company_code = :code",CompanyEntity.class).setParameter("code", code).getResultList();
-	
+		List<CompanyEntity> results = null;
+		try {
+			results = em.createQuery("select c from CompanyEntity c where c.companyCode = :code",CompanyEntity.class)
+					.setParameter("code", code).getResultList();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+		}
+		return results;
 	}
 	
 	public CompanyEntity findCompanyByEin(String ein) {
 		CompanyEntity entity = null;
 		try{
-			entity = (CompanyEntity) em.find(CompanyEntity.class, ein);
-            
-        } catch (Exception e) {
+			Query query = em.createQuery("select c from CompanyEntity c where c.companyEin = :ein", CompanyEntity.class);
+			query.setParameter("ein", ein);
+            entity = (CompanyEntity) query.getSingleResult();
+        } catch (NoResultException e) {
             e.printStackTrace();
         }
 		return entity;

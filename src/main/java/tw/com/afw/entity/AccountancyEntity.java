@@ -76,9 +76,12 @@ public class AccountancyEntity implements java.io.Serializable {
 		this.accAddress = accAddress;
 	}
 
-	
-	
-	
+	@Override
+	public String toString() {
+		return "AccountancyEntity [acccId=" + acccId + ", accName=" + accName
+				+ ", accContact=" + accContact + ", accPhone=" + accPhone
+				+ ", accAddress=" + accAddress + "]";
+	}
 	
 
 }

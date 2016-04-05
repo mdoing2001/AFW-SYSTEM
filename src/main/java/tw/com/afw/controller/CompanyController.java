@@ -1,10 +1,12 @@
 package tw.com.afw.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -16,14 +18,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import tw.com.afw.entity.AccountancyEntity;
-import tw.com.afw.entity.BranchEntity;
 import tw.com.afw.entity.CompanyEntity;
 import tw.com.afw.entity.ContractEntity;
 import tw.com.afw.entity.OfficeEntity;
+import tw.com.afw.entity.RemitEntity;
+import tw.com.afw.entity.UserEntity;
 import tw.com.afw.service.BranchService;
 import tw.com.afw.service.CompanyService;
 import tw.com.afw.service.ContractService;
 import tw.com.afw.service.OfficeService;
+import tw.com.afw.service.RemitService;
 import tw.com.afw.service.UserService;
 
 import com.google.gson.Gson;
@@ -32,15 +36,24 @@ import com.google.gson.JsonSyntaxException;
 
 @RestController
 public class CompanyController {
-
-	
 	
 	 @Autowired
-	 private CompanyService CompanyService;
+	 private CompanyService companyService;
+	 
+	 @Autowired
 	 private OfficeService officeService;
+	 
+	 @Autowired
 	 private ContractService contractService;
+	 
+	 @Autowired
 	 private UserService userService;
+	 
+	 @Autowired
 	 private BranchService branchService;
+	 
+	 @Autowired
+	 private RemitService remitService; 
 	 
 	 public HttpServletRequest request;
 	 
@@ -50,7 +63,7 @@ public class CompanyController {
 	    public String createCompany(@RequestBody String newCompanyJson) {
 	    	JSONObject result = new JSONObject();
 	        //System.out.println("Creating Company " + company.getCompany_Name());
-	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	        //CompanyService.ins(companyj);
 	    	try {
 	    		//抓取前端全部資料json格式
@@ -70,34 +83,34 @@ public class CompanyController {
 				companyEntity.setCompanyCode(null != companyObj.get("companyCode") ? companyObj.get("companyCode").toString() : null);
 				companyEntity.setCompanyEin(null != companyObj.get("companyEin") ? companyObj.get("companyEin").toString() : null);
 				companyEntity.setCompanyExecutive(null != companyObj.get("companyExecutive") ? companyObj.get("companyExecutive").toString() : null);
-				companyEntity.setCompanyBitrhday(null != companyObj.get("companyBitrhday") ? sdf.parse(companyObj.get("companyBitrhday").toString()) : null);
+				companyEntity.setCompanyBitrhday(!companyObj.get("companyBitrhday").toString().isEmpty() ? sdf.parse(companyObj.get("companyBitrhday").toString()) : null);
 				companyEntity.setCompanyNumber(null != companyObj.get("companyNumber") ? companyObj.get("companyNumber").toString() : null);
 				companyEntity.setCompanyFax(null != companyObj.get("companyFax") ? companyObj.get("companyFax").toString() : null);
+				companyEntity.setCompanyAddress(null != companyObj.get("companyAddress") ? companyObj.get("companyAddress").toString() : null);
 				companyEntity.setCompanyAddress2(null != companyObj.get("companyAddress2") ? companyObj.get("companyAddress2").toString() : null);
 				companyEntity.setCompanyRemark(null != companyObj.get("companyRemark") ? companyObj.get("companyRemark").toString() : null);
 				
 				//TODO:塞contract("contract":{"userId":"","userId2":"-1","contractType":"-1","contractStart":"","contractEnd":"","contractRent":"","contractDeposit":"","contractRented":"","contractDeposited":"","contractRemarks":""})
 				ContractEntity contractEntity = new ContractEntity();
-				contractEntity.setUserId(null != companyObj.get("userId") ? userService.findUserById(Integer.parseInt(companyObj.get("userId").toString())) : null);
-				contractEntity.setUserId2(null != companyObj.get("userId2") ? userService.findUserById(Integer.parseInt(companyObj.get("userId").toString())) : null);
+				contractEntity.setUserId(!contractObj.get("userId").toString().isEmpty() ? userService.findUserById(Integer.parseInt(contractObj.get("userId").toString())) : null);
+				contractEntity.setUserId2(!contractObj.get("userId2").toString().isEmpty() ? userService.findUserById(Integer.parseInt(contractObj.get("userId2").toString())) : null);
 				contractEntity.setContractType(null != contractObj.get("contractType") ? contractObj.get("contractType").toString() : null);
-				contractEntity.setContractStart(null != contractObj.get("contractStart") ? sdf.parse(contractObj.get("contractStart").toString()) : null);
-				contractEntity.setContractEnd(null != contractObj.get("contractEnd") ? sdf.parse(contractObj.get("contractEnd").toString()) : null);
+				contractEntity.setContractDate(!contractObj.get("contractDate").toString().isEmpty() ? sdf.parse(contractObj.get("contractDate").toString()) : null);
+				contractEntity.setContractStart(!contractObj.get("contractStart").toString().isEmpty() ? sdf.parse(contractObj.get("contractStart").toString()) : null);
+				contractEntity.setContractEnd(!contractObj.get("contractEnd").toString().isEmpty() ? sdf.parse(contractObj.get("contractEnd").toString()) : null);
 				contractEntity.setContractRent(null != contractObj.get("contractRent") ? Double.parseDouble(contractObj.get("contractRent").toString()): null);
-				contractEntity.setContractType(null != contractObj.get("contractDeposit") ? contractObj.get("contractDeposit").toString() : null);
-				contractEntity.setContractType(null != contractObj.get("contractRented") ? contractObj.get("contractRented").toString() : null);
-				contractEntity.setContractType(null != contractObj.get("contractDeposited") ? contractObj.get("contractDeposited").toString() : null);
-				contractEntity.setContractType(null != contractObj.get("contractRemarks") ? contractObj.get("contractRemarks").toString() : null);
-							
+				contractEntity.setContractDeposit(null != contractObj.get("contractDeposit") ?  Double.parseDouble(contractObj.get("contractDeposit").toString()) : null);
+				contractEntity.setContractRented(null != contractObj.get("contractRented") ? Double.parseDouble(contractObj.get("contractRented").toString()) : null);
+				contractEntity.setContractDeposited(null != contractObj.get("contractDeposited") ? Double.parseDouble(contractObj.get("contractDeposited").toString()): null);
+				contractEntity.setContractRemarks(null != contractObj.get("contractRemarks") ? contractObj.get("contractRemarks").toString() : null);
 				
 				//TODO:塞office(辦公室號碼 不一定每張合約都有)("office":{"officeNumber":""})
 				OfficeEntity officeEntity = new OfficeEntity();
 				officeEntity.setOfficeNumber(null != officeObj.get("officeNumber") ? officeObj.get("officeNumber").toString() :null );				
 				
-				
 				//塞accountancy("acc":{"accName":"","accContact":"","accPhone":"","accAddress":""})
 				AccountancyEntity accountancyEntity = new AccountancyEntity();
-				accountancyEntity.setAccAddress(null != accountancyObj.get("accAdress") ? accountancyObj.get("accAdress").toString() : null);
+				accountancyEntity.setAccAddress(null != accountancyObj.get("accAddress") ? accountancyObj.get("accAddress").toString() : null);
 				accountancyEntity.setAccContact(null != accountancyObj.get("accContact") ? accountancyObj.get("accContact").toString() : null);
 				accountancyEntity.setAccName(null != accountancyObj.get("accName") ? accountancyObj.get("accName").toString() : null);
 				accountancyEntity.setAccPhone(null != accountancyObj.get("accPhone") ? accountancyObj.get("accPhone").toString() : null);
@@ -114,17 +127,12 @@ public class CompanyController {
 				
 				//company 統編驗證
 				String ein =companyEntity.getCompanyEin();
-				int checkein=CompanyService.checkEin(ein);
-				if(checkein == 1){
-					//新增(下面那行有錯 不用三個都insert 74行開始已經把entity塞進去了 只要insert最後那個就可)
-					//CompanyService.conins(companyEntity, contractEntity, accountancyEntity);
-					CompanyService.ins(companyEntity);
+				int checkein=companyService.checkEin(ein);
+				if(checkein == 1) {
 					
 					if(null != officeObj.get("officeNumber")) {
-						//TODO:需要officeService的insert(新增OfficeEntity)
 						officeService.ins(officeEntity);
 					} else {
-						//TODO:需要contractService的insert(新增ContractEntity)
 						contractService.ins(contractEntity);
 					}
 					
@@ -132,7 +140,7 @@ public class CompanyController {
 			    	result.put("message", "success");
 				}else{
 					result.put("status", "error");
-			    	result.put("message", "insert error");
+			    	result.put("message", "統一編號重複");
 				}
 					
 		    	
@@ -156,29 +164,52 @@ public class CompanyController {
 	    
 	    
 	    
-	    //取回全部客戶(company.html) 這個頁面的資料 不同分店取的分店資料不一樣 管理員取回全部資料, id:使用者id
+	    //取回全部客戶(company.html) 這個頁面的資料 不同分店取的分店資料不一樣 管理員取回全部資料
+	    //TODO:174, 185行上線前需要調整
 	    @SuppressWarnings("unchecked")
 		@RequestMapping(value = "/retrive/company", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
 	    public String selectCompany() {
 	    	Gson gson = new Gson();
 	    	JSONObject result = new JSONObject();
-	    	String companyjson = null;
+	    	
 	    	try {
-				String usercode = (String) request.getSession().getAttribute("usercode");
-				System.err.println(usercode);
+				//String usercode = (String) request.getSession().getAttribute("usercode");
+	    		String usercode = "AA";
+				//System.err.println(usercode);
+	    		List<CompanyEntity> companyArr = null;
+				JSONArray arr = new JSONArray();
+				String officeNum = null;
+				Date date = new Date();
 				
-				if(usercode.equals("AA")){
+				if(usercode.equals("AA")) {
 					//總公司抓取全部顧客資料
-					List<CompanyEntity> companyAll= CompanyService.findAll(); 
-					//list to json
-					companyjson = gson.toJson(companyAll);
-				}else{
-					List<CompanyEntity> companycode = CompanyService.findCompanyByCode(usercode);
-					companyjson = gson.toJson(companycode);
+					System.out.println("TOTAL");
+					companyArr = companyService.findAll();
+				} else {
+					System.out.println("221");
+					//companyArr = companyService.findCompanyByCode(usercode);
+					companyArr = companyService.findCompanyByCode("221");
+				}
+				
+				for(CompanyEntity entity : companyArr) {
+					JSONObject obj = new JSONObject();
+					List<ContractEntity> contractArr = contractService.findContractByCompanyId(entity.getCompanyId());
+					for(ContractEntity contract : contractArr) {
+						if(null != contract.getContractType() && contract.getContractType().equalsIgnoreCase("p")) {
+							if(contract.getContractEnd().after(date)) {
+								System.out.println(officeService.findOffByContract(contract.getContractId()).toString());
+								officeNum = officeService.findOffByContract(contract.getContractId()).getOfficeNumber();
+								date = contract.getContractEnd();
+							}
+						}
+					}
+					obj.put("company", entity);
+					obj.put("officeNumber", officeNum);
+					arr.add(obj);
 				}
 				
 				result.put("status", "success");
-				result.put("message", companyjson);
+				result.put("message", gson.toJson(arr));
 			} catch (Exception e) {
 				e.printStackTrace();
 				result.put("status", "error");
@@ -189,25 +220,52 @@ public class CompanyController {
 	    }
 	    
 	    //取回不同contract type(租辦公室 個人座位....)的資料 一樣不同分店取的分店資料不一樣 管理員取回全部資料, id:使用者id
+	    //TODO:224, 236行上線前需要調整
 	    @SuppressWarnings("unchecked")
-		@RequestMapping(value = "/retrive/company/{id}/{type}", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
-	    public String selectCompanyByType(@PathVariable("id") int companyId,@PathVariable("type") String type) {
+		@RequestMapping(value = "/retrive/company/{type}", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
+	    public String selectCompanyByType(@PathVariable("type") String type) {
 	    	Gson gson = new Gson();
 	    	JSONObject result = new JSONObject();
 	     	try {
-				String usercode = (String) request.getSession().getAttribute("usercode");
+				//String usercode = (String) request.getSession().getAttribute("usercode");
+	     		String usercode = "AA";
 				String typejson = null;
-				if(usercode.equals("AA")){
-					List<ContractEntity> contracttype = CompanyService.findContractByType(type);
-				    typejson = gson.toJson(contracttype);
+				
+				List<CompanyEntity> companyArr = null;
+				JSONArray arr = new JSONArray();
+				String officeNum = "";
+				Date date = new Date();
+				
+				if(usercode.equals("AA")) {
+					System.out.println("TOTAL");
+					companyArr = companyService.findAll();
+				} else {
+					System.out.println("221");
+					//companyArr = companyService.findCompanyByCode(usercode);
+					companyArr = companyService.findCompanyByCode("221");
+				}
 					
-				}else{
-					List<ContractEntity> contracttype =CompanyService.findContractByTypeId(type, companyId);
-					typejson = gson.toJson(contracttype);
+				for(CompanyEntity entity : companyArr) {
+					JSONObject obj = new JSONObject();
+					List<ContractEntity> contractArr = contractService.findContractByCompanyId(entity.getCompanyId());
+					for(ContractEntity contract : contractArr) {
+						if(null != contract.getContractType() && contract.getContractType().equalsIgnoreCase(type)) {
+							if(type.equalsIgnoreCase("p")) {
+								if(contract.getContractEnd().after(date)) {
+									officeNum = officeService.findOffByContract(contract.getContractId()).getOfficeNumber();
+									date = contract.getContractEnd();
+								}
+							}
+							
+							obj.put("company", entity);
+							obj.put("officeNumber", officeNum);
+							arr.add(obj);
+						}
+					}
 				}
 				
 				result.put("status", "success");
-		    	result.put("message", typejson);
+				result.put("message", gson.toJson(arr));
 			} catch (Exception e) {
 				e.printStackTrace();
 				result.put("status", "error");
@@ -222,41 +280,51 @@ public class CompanyController {
 	    public String selectCompanyProfile(@PathVariable("id") int companyId) {
 	    	
 	    	JSONObject result = new JSONObject();
-	    	JSONObject obj = null;
+	    	JSONObject obj = new JSONObject();
+	    	
 	    	try {
-	    		List<ContractEntity> contract = CompanyService.findContractByCompany(companyId);
-	    		obj = new JSONObject();
-	    		for(ContractEntity con: contract){
-	    		  int bid =	 con.getBranchId().getBranchId();
-	    		  int cid =	 con.getCompanyId().getCompanyId();
-	    		  int uid1 =	 con.getBranchId().getBranchId();
-	    		  int uid2 =	 con.getBranchId().getBranchId();
-	    		  BranchEntity branchEntity= branchService.findBranchById(bid);
-	    		}
+	    		CompanyEntity  companyEntity = companyService.findCompanyById(companyId);
+	    		List<ContractEntity> contract = companyService.findContractByCompany(companyId);
+	    		JSONArray arr = new JSONArray();
 	    		
-	    		//TODO mark 起來的都有問題 看一下profile需要哪些資料
-//	    		int bid = ((ContractEntity) contract).getBranchId().getBranchId();
-//	    		int cid = contract.get(ContractEntity).getCompanyId().getCompanyId();
-//	    		int uid1 = contract.get(ContractEntity).getUserId().getUserId();
-//	    		int uid2 = contract.get(ContractEntity).getUserId2().getUserId();
-//				BranchEntity branchEntity= branchService.findBranchById(bid);
-//				CompanyEntity companyEntity =CompanyService.comById(cid);
-//				UserEntity user1= userService.findUserById(uid1);
-//				UserEntity user2= userService.findUserById(uid2);
-				 
-				 
-				 
-				//怎麼組起來 
-	    		//下面是範例 上面改好後用下面方式組起來
+	    		for(ContractEntity entity : contract) {
+	    			JSONObject subObj = new JSONObject();
+	    			//Integer bId = null != entity.getBranchId() ? entity.getBranchId().getBranchId() : null;
+	    			Integer uId1 = null != entity.getUserId() ? entity.getUserId().getUserId() : null;
+	    			Integer uId2 = null != entity.getUserId2() ? entity.getUserId2().getUserId() : null;
+	    			
+	    			//BranchEntity branchEntity = branchService.findBranchById(bId);
+  
+	    			UserEntity  userEntity = null;
+	    			UserEntity  userEntity2 = null;
+	    			if(uId1 != null) {
+	    				userEntity = userService.findUserById(uId1);
+	    			}
+	    			if(uId1 != null) {
+	    				userEntity2 = userService.findUserById(uId2);
+	    			}
+	    			
+	    			
+	    			OfficeEntity officeEntity = officeService.findOffByContract(entity.getContractId());
+	    			
+	    			//subObj.put("branch", branchEntity);
+	    			entity.setCompanyId(null);
+	    			subObj.put("contract", entity);
+	    			subObj.put("user", userEntity);
+	    			subObj.put("user2", userEntity2);
+	    			subObj.put("office", officeEntity);
+	    			arr.add(subObj);
+	    		}
 			
-//				obj.put("company", companyEntity);
-//				obj.put("contract", contract);
+	    		List<RemitEntity> rArr = remitService.findRemitByCompanyId(companyId);
+	    		
+				obj.put("company", companyEntity);
+				obj.put("combine", arr);
+				obj.put("remit", rArr);
 //				obj.put("branchEntity", branchEntity);
-//				obj.put("user1", user1);
-//				obj.put("user2", user2);
 				 
 				result.put("status", "success");
-				result.put("message", obj.toJSONString());
+				result.put("message", new Gson().toJson(obj));
 				 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -264,7 +332,7 @@ public class CompanyController {
 				result.put("message", e);
 			}
 	    	
-	    	return result.toJSONString();
+	    	return result.toString();
 	    }
 	    
 }

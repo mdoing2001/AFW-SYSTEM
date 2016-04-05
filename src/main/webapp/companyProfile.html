@@ -586,11 +586,15 @@
 			                                		<option>其他</option>
 			                                	</select>
 		                                	</div>
+		                                	<div class="form-group">
+			                                    <label for="pcofficeNumc" class="col-lg-2">辦公室號碼</label>
+			                                    <input class=" form-control" id="pcofficeNumc" name="pcofficeNumc" type="text">
+			                                </div>
 	                                        <div class="form-group">
 	                                            <label class="col-lg-2" for="pcdates">合約日期(起) *</label>
                                           		<div class="col-lg-12">
                                            			<div class="input-group">
-                                           				<input type="text" id="pcdates" name="pcdates" class="form-control col-lg-2" placeholder="yyyy/mm/dd" value="1111/11/11">
+                                           				<input type="text" id="pcdates" name="pcdates" class="form-control col-lg-2" placeholder='yyyy-mm-dd' value="1111/11/11">
 														<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 													</div>
 												</div>
@@ -599,7 +603,7 @@
 	                                            <label class="col-lg-2" for="pcdatee">合約日期(終) *</label>
                                             	<div class="col-lg-12">
                                            			<div class="input-group">
-	                                            		<input type="text" id="pcdatee" name="pcdatee" class="form-control" placeholder="yyyy/mm/dd" value="1111/11/11">
+	                                            		<input type="text" id="pcdatee" name="pcdatee" class="form-control" placeholder='yyyy-mm-dd' value="1111/11/11">
 														<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 													</div>
                                             	</div>
@@ -635,7 +639,7 @@
 	                                                <h4 class="modal-title">New Contract</h4> 
 	                                            </div> 
 	                                            <div class="modal-body"> 
-	                                                <div class="row"> 
+	                                                <div class="row">
 	                                                    <div class="col-md-6"> 
 	                                                        <div class="form-group"> 
 	                                                           <label for="pcNUser" class="control-label">簽約人*</label>
@@ -647,29 +651,39 @@
 	                                                            <label for="pcNUserc" class="control-label">介紹人</label>
 			                                    				<input class=" form-control" id="pcNUserc" name="pcNUserc" type="text">
 	                                                        </div> 
-	                                                    </div> 
+	                                                    </div>
 	                                                </div> 
 	                                                <div class="row"> 
 	                                                    <div class="col-md-12"> 
 	                                                        <div class="form-group">
 	                                                            <label for="pcNType" class="control-label">類型 *</label>
 							                                	<select class="form-control" id="pcNType" name="pcNType">
-							                                		<option>請選擇</option>
-							                                		<option>租辦公室</option>
-							                                		<option>登記</option>
-							                                		<option>聯絡處</option>
-							                                		<option>其他</option>
+							                                		<option value="-1">請選擇</option>
+			                                						<option value="o">租辦公室</option>
+			                                						<option value="p">個人座位</option>
+			                                						<option value="r">登記</option>
+			                                						<option value="c">聯絡處</option>
+			                                						<option value="s">停業</option>
+			                                						<option value="other">其他</option>
 							                                	</select> 
 	                                                        </div> 
 	                                                    </div> 
-	                                                </div> 
+	                                                </div>
+	                                                <div class="row">
+	                                                	<div class="col-md-12"> 
+	                                                        <div class="form-group">
+	                                                            <label for="pcofficeNum" class="control-label">辦公室號碼</label>
+			                                    				<input class=" form-control" id="pcofficeNum" name="pcofficeNum" type="text">
+	                                                        </div> 
+	                                                    </div>
+	                                                </div>
 	                                                <div class="row"> 
 	                                                    <div class="col-md-6"> 
 	                                                        <div class="form-group"> 
 	                                                            <label class="control-label" for="pcNDates">合約日期(起) *</label>
 				                                          		<div class="col-lg-12">
 				                                           			<div class="input-group">
-				                                           				<input type="text" id="pcNDates" name="pcNDates" class="form-control col-lg-2" placeholder="yyyy/mm/dd" value="">
+				                                           				<input type="text" id="pcNDates" name="pcNDates" class="form-control col-lg-2" placeholder='yyyy-mm-dd' value="">
 																		<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 																	</div>
 																</div>
@@ -680,7 +694,7 @@
 	                                                            <label class="control-label" for="pcNDatee">合約日期(終) *</label>
 				                                            	<div class="col-lg-12">
 				                                           			<div class="input-group">
-					                                            		<input type="text" id="pcNDatee" name="pcNDatee" class="form-control" placeholder="yyyy/mm/dd" value="">
+					                                            		<input type="text" id="pcNDatee" name="pcNDatee" class="form-control" placeholder='yyyy-mm-dd' value="">
 																		<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 																	</div>
 				                                            	</div>
@@ -721,7 +735,7 @@
 	                                                </div> 
 	                                            </div> 
 	                                            <div class="modal-footer"> 
-	                                                <button type="button" class="btn btn-info">Save changes</button>
+	                                                <button type="button" class="btn btn-info">Save</button>
 	                                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
 	                                            </div> 
 	                                        </div> 
@@ -920,14 +934,28 @@
 	
 	// Date Picker
     $('#pcdates').datepicker({
-        format: 'yyyy/mm/dd',
+        format: 'yyyy-mm-dd',
         onClose: function() {
             $('#ccdates').valid();
         }
     });
 	
     $('#pcdatee').datepicker({
-        format: 'yyyy/mm/dd',
+        format: 'yyyy-mm-dd',
+    });
+    
+    $('#pcNDates').datepicker({
+        format: 'yyyy-mm-dd',
+        onClose: function() {
+            $('#pcNDates').valid();
+        }
+    });
+    
+    $('#pcNDatee').datepicker({
+        format: 'yyyy-mm-dd',
+        onClose: function() {
+            $('#pcNDatee').valid();
+        }
     });
  	// Date Picker
 	
@@ -938,6 +966,42 @@
 	$('#contractUpdate').on('click', function() {
 	    $("#contractForm").valid();
 	});
+	
+	
+	
+	<!-----------------------ajax-------------------------------->
+	
+	var root = location.protocol + '//' + location.host;
+    
+    var retriveDataAjax = function() {
+    	$.ajax({
+			url:root + "/AFW-I-System/retrive/companyProfile/1",
+			type:'get',
+			dataType : 'json',
+			contentType: 'application/json',
+			success : function(response) {
+				//alert("success");
+				console.log("retriveDataAjax:" + response.message);
+				if(response.status == 'success') {
+					var data = jQuery.parseJSON(response.message);
+					console.log(data);
+				}
+			},
+			error : function(e) {
+				alert("error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+    }
+	
+  	//page load
+    window.onload = function() {
+    	retriveDataAjax();
+	};
+	
 })(jQuery)
 		
 		

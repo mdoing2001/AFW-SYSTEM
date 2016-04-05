@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
+
 import tw.com.afw.entity.ContractEntity;
 
 @Repository
@@ -17,12 +18,12 @@ public class ContractDao {
 	
 	
 	public List<ContractEntity> findAll() {
-		return (List<ContractEntity>) em.createQuery("SELECT e FROM contract e where e.contract_del !='*' ", ContractEntity.class).getResultList();
+		return (List<ContractEntity>) em.createQuery("SELECT e FROM ContractEntity e where e.contractDel !='*' ", ContractEntity.class).getResultList();
 	}
 	
 	
 	public List<ContractEntity> findContractByCompany(int companyId) {
-		return em.createQuery("select e from contract e where e.company_id:companyId",ContractEntity.class).setParameter("companyId", companyId).getResultList();
+		return em.createQuery("select e from ContractEntity e where e.companyId.companyId = :companyId",ContractEntity.class).setParameter("companyId", companyId).getResultList();
 	
 	}
 	
@@ -82,6 +83,22 @@ public class ContractDao {
 		}
 	}
 	
+	//搜尋合約by公司類型
+	@SuppressWarnings("unchecked")
+	public List<ContractEntity> findContractByCompanyIdAndCompanyType(Integer id, String type) {
+		List<ContractEntity> entity = null;
+		
+		try {
+			Query query = em.createQuery("select c from ContractEntity c where c.companyId.companyId = :ID AND c.contractType = :TYPE", ContractEntity.class);
+			query.setParameter("ID", id);
+			query.setParameter("TYPE", type);
+			entity = query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return entity;
+	}
 	
 
 }

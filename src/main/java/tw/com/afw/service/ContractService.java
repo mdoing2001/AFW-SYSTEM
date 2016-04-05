@@ -26,10 +26,8 @@ public class ContractService {
 		return contractDao.findAll();
 	}
 	
-	
-	
 	@Transactional
-	public ContractEntity findOfficeById(Integer id){
+	public ContractEntity findContracById(Integer id){
 		return contractDao.findContractById(id);
 	}
 	
@@ -38,15 +36,19 @@ public class ContractService {
 		contractDao.ins(contract);
 	}
 	
-	
 	@Transactional
 	public  void update(ContractEntity contract){
 		contractDao.update(contract);
 	}
 	
 	@Transactional
-	public  void del(int contract){
+	public void delete(int contract){
 		contractDao.delete(contract);
+	}
+	
+	@Transactional
+	public List<ContractEntity> findContractByCompanyId(Integer id) {
+		return contractDao.findContractByCompany(id);
 	}
 	
 	
