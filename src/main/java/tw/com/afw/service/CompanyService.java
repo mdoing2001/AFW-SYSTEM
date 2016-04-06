@@ -60,7 +60,7 @@ public class CompanyService {
 	
 	
 	@Transactional
-	public  CompanyEntity comByEin(String ein){
+	public CompanyEntity findCompanyByEin(String ein){
 		return   dao.findCompanyByEin(ein);
 	}
 	

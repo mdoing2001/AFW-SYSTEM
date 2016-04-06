@@ -24,40 +24,36 @@ public class RemitController {
 	
 	@Autowired
 	private RemitService remitService;
+	
+	@Autowired
 	private CompanyService companyService;
 	 
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/new/remit/add/{id}", method = RequestMethod.POST, produces = {"application/json; charset=UTF-8"})
-	public String createRemit(@PathVariable("id") long id, @RequestBody String newRemitStr) {
+	@RequestMapping(value = "/new/remit/add", method = RequestMethod.POST, produces = {"application/json; charset=UTF-8"})
+	public String createRemit(@RequestBody String newRemitStr) {
 		
 		JSONObject result = new JSONObject();
 		
 		try {
 			
-			JSONObject obj = (JSONObject) new JSONParser().parse(newRemitStr);
-			JSONObject remitObj = (JSONObject) obj.get("remit");
+			JSONObject remitObj = (JSONObject) new JSONParser().parse(newRemitStr);
 			
-			RemitEntity Remitentity = 	new RemitEntity();
-			CompanyEntity Companyentity =  new CompanyEntity();
+			RemitEntity remitEntity = 	new RemitEntity();
 			
-			Remitentity.setRemitAccount(null != remitObj.get("remitAccount") ? remitObj.get("remitAccount").toString() : null);
-			Remitentity.setRemitDeposit(null != remitObj.get("remitDeposit") ? remitObj.get("remitDeposit").toString() : null);
-			Remitentity.setRemitMode(null != remitObj.get("remitMode") ? remitObj.get("remitMode").toString() : null);
-			Remitentity.setCompanyId(null != remitObj.get("companyId") ? companyService.findCompanyById(Integer.parseInt(remitObj.get("companyId").toString())) : null);
+			remitEntity.setRemitAccount(null != remitObj.get("remitAccount") ? remitObj.get("remitAccount").toString() : null);
+			//remitEntity.setRemitDeposit(null != remitObj.get("remitDeposit") ? remitObj.get("remitDeposit").toString() : null);
+			remitEntity.setRemitMode(null != remitObj.get("remitMode") ? remitObj.get("remitMode").toString() : null);
+			remitEntity.setCompanyId(null != remitObj.get("companyId") ? companyService.findCompanyById(Integer.parseInt(remitObj.get("companyId").toString())) : null);
 			
-			Remitentity.setCompanyId(Companyentity);
-			
-			remitService.ins(Remitentity);
+			remitService.ins(remitEntity);
 			result.put("status", "success");
 			result.put("message", "success");
 			
-			
 		} catch (Exception e) {
+			e.printStackTrace();
 			result.put("status", "error");
 	    	result.put("message", "insert error");
 		}
-		
-		
 		
 		return result.toJSONString();
 	}

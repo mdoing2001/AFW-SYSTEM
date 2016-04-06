@@ -135,9 +135,11 @@ public class CompanyController {
 					} else {
 						contractService.ins(contractEntity);
 					}
+					Integer companyId = companyService.findCompanyByEin(companyEntity.getCompanyEin()).getCompanyId();
 					
 					result.put("status", "success");
 			    	result.put("message", "success");
+			    	result.put("companyId", companyId);
 				}else{
 					result.put("status", "error");
 			    	result.put("message", "統一編號重複");
@@ -178,8 +180,8 @@ public class CompanyController {
 				//System.err.println(usercode);
 	    		List<CompanyEntity> companyArr = null;
 				JSONArray arr = new JSONArray();
-				String officeNum = null;
-				Date date = new Date();
+				
+				
 				
 				if(usercode.equals("AA")) {
 					//總公司抓取全部顧客資料
@@ -192,10 +194,13 @@ public class CompanyController {
 				}
 				
 				for(CompanyEntity entity : companyArr) {
+					String officeNum = null;
 					JSONObject obj = new JSONObject();
 					List<ContractEntity> contractArr = contractService.findContractByCompanyId(entity.getCompanyId());
+					
 					for(ContractEntity contract : contractArr) {
-						if(null != contract.getContractType() && contract.getContractType().equalsIgnoreCase("p")) {
+						Date date = new Date();
+						if(null != contract.getContractType() && contract.getContractType().equalsIgnoreCase("o")) {
 							if(contract.getContractEnd().after(date)) {
 								System.out.println(officeService.findOffByContract(contract.getContractId()).toString());
 								officeNum = officeService.findOffByContract(contract.getContractId()).getOfficeNumber();
@@ -233,8 +238,6 @@ public class CompanyController {
 				
 				List<CompanyEntity> companyArr = null;
 				JSONArray arr = new JSONArray();
-				String officeNum = "";
-				Date date = new Date();
 				
 				if(usercode.equals("AA")) {
 					System.out.println("TOTAL");
@@ -247,10 +250,12 @@ public class CompanyController {
 					
 				for(CompanyEntity entity : companyArr) {
 					JSONObject obj = new JSONObject();
+					String officeNum = "";
 					List<ContractEntity> contractArr = contractService.findContractByCompanyId(entity.getCompanyId());
 					for(ContractEntity contract : contractArr) {
+						Date date = new Date();
 						if(null != contract.getContractType() && contract.getContractType().equalsIgnoreCase(type)) {
-							if(type.equalsIgnoreCase("p")) {
+							if(type.equalsIgnoreCase("o")) {
 								if(contract.getContractEnd().after(date)) {
 									officeNum = officeService.findOffByContract(contract.getContractId()).getOfficeNumber();
 									date = contract.getContractEnd();
@@ -333,6 +338,48 @@ public class CompanyController {
 			}
 	    	
 	    	return result.toString();
+	    }
+	    
+	    @SuppressWarnings("unchecked")
+		@RequestMapping(value = "/company/update/{id}", method = RequestMethod.PUT, produces = {"application/json; charset=UTF-8"})
+	    public String updateCompany(@RequestBody String companyJson, @PathVariable("id") int companyId) {
+	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    	JSONObject result = new JSONObject();
+	    	
+			try {
+				JSONObject companyObj = (JSONObject) new JSONParser().parse(companyJson);
+		    	CompanyEntity  companyEntity = companyService.findCompanyById(companyId);
+		    	if(companyEntity != null) {
+		    		companyEntity.setCompanyName(null != companyObj.get("companyName") ? companyObj.get("companyName").toString() : null);
+					companyEntity.setCompanyType(null != companyObj.get("companyType") ? companyObj.get("companyType").toString() : null);
+					companyEntity.setCompanyMail(null != companyObj.get("companyMail") ? companyObj.get("companyMail").toString() : null);
+					companyEntity.setCompanyCode(null != companyObj.get("companyCode") ? companyObj.get("companyCode").toString() : null);
+					companyEntity.setCompanyEin(null != companyObj.get("companyEin") ? companyObj.get("companyEin").toString() : null);
+					companyEntity.setCompanyExecutive(null != companyObj.get("companyExecutive") ? companyObj.get("companyExecutive").toString() : null);
+					companyEntity.setCompanyBitrhday(!companyObj.get("companyBitrhday").toString().isEmpty() ? sdf.parse(companyObj.get("companyBitrhday").toString()) : null);
+					companyEntity.setCompanyNumber(null != companyObj.get("companyNumber") ? companyObj.get("companyNumber").toString() : null);
+					companyEntity.setCompanyFax(null != companyObj.get("companyFax") ? companyObj.get("companyFax").toString() : null);
+					companyEntity.setCompanyAddress(null != companyObj.get("companyAddress") ? companyObj.get("companyAddress").toString() : null);
+					companyEntity.setCompanyAddress2(null != companyObj.get("companyAddress2") ? companyObj.get("companyAddress2").toString() : null);
+					companyEntity.setCompanyLetterStatus(null != companyObj.get("companyLetterStatus") ? companyObj.get("companyLetterStatus").toString() : null);
+					companyEntity.setCompanyRemark(null != companyObj.get("companyRemark") ? companyObj.get("companyRemark").toString() : null);
+					
+					companyService.upd(companyEntity);
+		    	}
+		    	
+				result.put("status", "success");
+		    	result.put("message", "success");
+			} catch (ParseException e) {
+				e.printStackTrace();
+				result.put("status", "error");
+				result.put("message", e);
+			} catch (java.text.ParseException e) {
+				e.printStackTrace();
+				result.put("status", "error");
+				result.put("message", e);
+			}
+		
+	    	return result.toJSONString();
 	    }
 	    
 }

@@ -49,9 +49,9 @@ public class AccountancyDao {
 	
 	public void update(AccountancyEntity accountancy) {
 		try {
-			em.getTransaction().begin();
+			//em.getTransaction().begin();
 			em.merge(accountancy);
-			em.getTransaction().commit();
+			//em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

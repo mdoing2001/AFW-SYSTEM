@@ -25,15 +25,21 @@ import tw.com.afw.service.UserService;
 
 @RestController
 public class ContractController {
-
-	
 	
 	@Autowired
-	private ContractService Contractservice;
-	private BranchService Branchservice;
-	private UserService Userservice;
-	private CompanyService Companyservice;
-	private OfficeService Officeservice;
+	private ContractService contractService;
+	
+	@Autowired
+	private BranchService branchService;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private CompanyService companyService;
+	
+	@Autowired
+	private OfficeService officeService;
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/new/contract/add/{id}", method = RequestMethod.POST, produces = {"application/json; charset=UTF-8"})
@@ -57,10 +63,10 @@ public class ContractController {
 			contractEntity.setContractRent(null != contractObj.get("contractRent") ? Double.parseDouble(contractObj.get("contractRent").toString()): null);
 			contractEntity.setContractDeposited(null != contractObj.get("contractDeposited") ? Double.parseDouble(contractObj.get("contractRented").toString()): null);
 			contractEntity.setContractRented(null != contractObj.get("contractRented") ? Double.parseDouble(contractObj.get("contractRented").toString()): null);
-			contractEntity.setBranchId(Branchservice.findBranchById(Integer.parseInt(contractObj.get("branchId").toString())));
-			contractEntity.setUserId(Userservice.findUserById(Integer.parseInt(contractObj.get("userId").toString())));
-			contractEntity.setUserId(Userservice.findUserById(Integer.parseInt(contractObj.get("userId2").toString())));
-			contractEntity.setCompanyId(Companyservice.findCompanyById(Integer.parseInt(contractObj.get("companyId").toString())));
+			contractEntity.setBranchId(branchService.findBranchById(Integer.parseInt(contractObj.get("branchId").toString())));
+			contractEntity.setUserId(userService.findUserById(Integer.parseInt(contractObj.get("userId").toString())));
+			contractEntity.setUserId(userService.findUserById(Integer.parseInt(contractObj.get("userId2").toString())));
+			contractEntity.setCompanyId(companyService.findCompanyById(Integer.parseInt(contractObj.get("companyId").toString())));
 			contractEntity.setContractDate(null != contractObj.get("contractDate") ? sdf.parse(contractObj.get("contractDate").toString()) : null);
 			contractEntity.setContractType(null != contractObj.get("contractType") ? contractObj.get("contractType").toString() : null);
 			contractEntity.setContractRemarks(null != contractObj.get("contractRemarks") ? contractObj.get("contractRemarks").toString() : null);
@@ -71,7 +77,7 @@ public class ContractController {
 			contractEntity.setUserId2(Userentity);
 			contractEntity.setCompanyId(Companyentity);
 			
-			Contractservice.ins(contractEntity);
+			contractService.ins(contractEntity);
 			
 			result.put("status", "success");
 			result.put("message", "success");
@@ -94,48 +100,38 @@ public class ContractController {
 	//先用contract 的 id把contract撈出來 再去set(前端不確定是改哪一個 所以全部都要set)
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/contract/update/{id}", method = RequestMethod.PUT, produces = {"application/json; charset=UTF-8"})
-	public String updateContract(@PathVariable("id") long id, @RequestBody String ContractStr) {
-		//step1 id撈contract
+	public String updateContract(@PathVariable("id") int id, @RequestBody String ContractStr) {
 		
-		//step2 contractStr 轉乘jsonobject
-		
-		//step3 jsonobject去get所有的值(參考createCompany那隻)在set進去step1的contract
-		
-		//step4 merge
-		
-		//.....
 		JSONObject result = new JSONObject();
-	  	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	  	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	  	
 	  	try {
 	  		
-	  		JSONObject obj = (JSONObject) new JSONParser().parse(ContractStr);
-			JSONObject contractObj = (JSONObject) obj.get("contract");
-			ContractEntity Contractentity=   Contractservice.findContracById( Integer.parseInt(contractObj.get("contractId").toString()));
+	  		JSONObject contractObj = (JSONObject) new JSONParser().parse(ContractStr);
+			ContractEntity contractEntity = contractService.findContracById(id);
 			
-			Contractentity.setContractStart(null != contractObj.get("contractStart") ? sdf.parse(contractObj.get("contractStart").toString()) : null);
-			Contractentity.setContractEnd(null != contractObj.get("contractEnd") ? sdf.parse(contractObj.get("contractEnd").toString()) : null);
-			Contractentity.setContractDeposit(null != contractObj.get("contractDeposit") ?  Double.parseDouble(contractObj.get("contractDeposit").toString()) : null);
-			Contractentity.setContractRent(null != contractObj.get("contractRent") ? Double.parseDouble(contractObj.get("contractRent").toString()): null);
-			Contractentity.setContractDeposited(null != contractObj.get("contractDeposited") ? Double.parseDouble(contractObj.get("contractRented").toString()): null);
-			Contractentity.setContractRented(null != contractObj.get("contractRented") ? Double.parseDouble(contractObj.get("contractRented").toString()): null);
-			Contractentity.setBranchId(Branchservice.findBranchById(Integer.parseInt(contractObj.get("branchId").toString())));
-			Contractentity.setUserId(Userservice.findUserById(Integer.parseInt(contractObj.get("userId").toString())));
-			Contractentity.setUserId(Userservice.findUserById(Integer.parseInt(contractObj.get("userId2").toString())));
-			Contractentity.setCompanyId(Companyservice.findCompanyById(Integer.parseInt(contractObj.get("companyId").toString())));
-			Contractentity.setContractDate(null != contractObj.get("contractDate") ? sdf.parse(contractObj.get("contractDate").toString()) : null);
-			Contractentity.setContractType(null != contractObj.get("contractType") ? contractObj.get("contractType").toString() : null);
-			Contractentity.setContractRemarks(null != contractObj.get("contractRemarks") ? contractObj.get("contractRemarks").toString() : null);
-			Contractentity.setContractDel(null != contractObj.get("contractDel") ? contractObj.get("contractDel").toString() : null);
+			contractEntity.setContractStart(null != contractObj.get("contractStart") ? sdf.parse(contractObj.get("contractStart").toString()) : null);
+			contractEntity.setContractEnd(null != contractObj.get("contractEnd") ? sdf.parse(contractObj.get("contractEnd").toString()) : null);
+			contractEntity.setContractDeposit(null != contractObj.get("contractDeposit") ?  Double.parseDouble(contractObj.get("contractDeposit").toString()) : null);
+			contractEntity.setContractRent(null != contractObj.get("contractRent") ? Double.parseDouble(contractObj.get("contractRent").toString()): null);
+			contractEntity.setContractDeposited(null != contractObj.get("contractDeposited") ? Double.parseDouble(contractObj.get("contractRented").toString()): null);
+			contractEntity.setContractRented(null != contractObj.get("contractRented") ? Double.parseDouble(contractObj.get("contractRented").toString()): null);
+			contractEntity.setContractDate(!contractObj.get("contractDate").toString().isEmpty() ? sdf.parse(contractObj.get("contractDate").toString()) : null);
+			contractEntity.setContractType(null != contractObj.get("contractType") ? contractObj.get("contractType").toString() : null);
+			contractEntity.setContractRemarks(null != contractObj.get("contractRemarks") ? contractObj.get("contractRemarks").toString() : null);
+			contractEntity.setContractDel(null != contractObj.get("contractDel") ? contractObj.get("contractDel").toString() : null);
 			
-			Contractservice.update(Contractentity);
+			contractService.update(contractEntity);
+			
+			OfficeEntity officeEntity = officeService.findOffByContract(id);
+			officeEntity.setOfficeNumber(null != contractObj.get("officeNumber") ? contractObj.get("officeNumber").toString() : null);
+			officeService.update(officeEntity);
 			
 			result.put("status", "success");
 			result.put("message", "success");
-
-			
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			result.put("status", "error");
 	    	result.put("message", "update error");
 		}
@@ -156,14 +152,14 @@ public class ContractController {
 	  		JSONObject obj = (JSONObject) new JSONParser().parse(ContractOfficeStr);
 		    JSONObject contractObj = (JSONObject) obj.get("contract");
 		    
-		    ContractEntity Contractentity=   Contractservice.findContracById( Integer.parseInt(contractObj.get("contractId").toString()));
+		    ContractEntity Contractentity=   contractService.findContracById( Integer.parseInt(contractObj.get("contractId").toString()));
 		    int cid= Contractentity.getContractId();
 		    
-		    OfficeEntity  Officeentity =   Officeservice.findOffByContract(cid);
+		    OfficeEntity  Officeentity =   officeService.findOffByContract(cid);
 		    
 		    Officeentity.setOfficeType(null != contractObj.get("officeType") ? contractObj.get("officeType").toString() : null);
 	
-		    Officeservice.update(Officeentity);
+		    officeService.update(Officeentity);
 		    
 			result.put("status", "success");
 			result.put("message", "success");
@@ -188,10 +184,10 @@ public class ContractController {
 			JSONObject obj = (JSONObject) new JSONParser().parse(userOfficeStr);
 		    JSONObject contractObj = (JSONObject) obj.get("contract");
 			
-		    ContractEntity Contractentity=   Contractservice.findContracById( Integer.parseInt(contractObj.get("contractId").toString()));
-		    Contractentity.setUserId2(Userservice.findUserById(Integer.parseInt(contractObj.get("userId2").toString())));
+		    ContractEntity Contractentity = contractService.findContracById( Integer.parseInt(contractObj.get("contractId").toString()));
+		    Contractentity.setUserId2(userService.findUserById(Integer.parseInt(contractObj.get("userId2").toString())));
 		   
-	        Contractservice.update(Contractentity);
+		    contractService.update(Contractentity);
 			
 			result.put("status", "success");
 			result.put("message", "success");

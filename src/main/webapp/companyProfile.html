@@ -343,8 +343,7 @@
                                     <li class=""><a data-toggle="tab" href="#projects">紙本檔案</a></li>
                                 </ul>
 
-                                <div class="tab-content m-0"> 
-
+                                <div class="tab-content m-0">
                                     <div id="aboutme" class="tab-pane active">
                                     <div class="profile-desk">
                                         <h1>葉碧霞小姐</h1>
@@ -362,25 +361,25 @@
                                                 <tr>
                                                     <td><b>公司地址</b></td>
                                                     <td>
-                                                    	<span id="paddress">11111台北市士林區德行東路358巷8弄11號1樓</span>
+                                                    	<span id="address">11111台北市士林區德行東路358巷8弄11號1樓</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td><b>統一編號</b></td>
                                                     <td>
-                                                    	<span id="pein">12345678</span>
+                                                    	<span id="ein">12345678</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td><b>公司電話</b></td>
                                                     <td class="ng-binding">
-                                                    	<span id="pphoneNumber">(123)-456-7890</span>
+                                                    	<span id="phoneNumber">(123)-456-7890</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td><b>登記地</b></td>
                                                     <td>
-                                                    	<span id="pbranch">微風店</span>
+                                                    	<span id="branch">微風店</span>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -395,7 +394,7 @@
                                         	<h3>公司資料</h3>
 	                                        <div class="form-group">
 			                                    <label for="pname" class=" col-lg-2">公司名稱 *</label>
-												<input class=" form-control" id="pname" name="pname" type="text" value="全方位商務中心有限公司">
+												<input class=" form-control" id="pname" name="pname" type="text" value="">
 			                                </div>
 			                                <div class="form-group">
 			                                    <label for="ptype" class=" col-lg-2">行業別</label>
@@ -403,40 +402,39 @@
 			                                </div>
 			                                <div class="form-group">
 			                                    <label for="pAddress" class=" col-lg-2">公司地址 *</label>
-			                                    <input class="form-control " id="pAddress" name="pAddress" value="台北市士林區德行東路358巷8弄11號1樓">
+			                                    <input class="form-control " id="pAddress" name="pAddress" value="">
 			                                </div>
 			                                <div class="form-group">
-			                                    <label for="pemail" class=" col-lg-2">E-Mail *</label>
-			                                    <input class="form-control " id="pemail" type="email" name="pemail" value="123@gmail.com">
+			                                    <label for="pemail" class=" col-lg-2">E-Mail</label>
+			                                    <input class="form-control " id="pemail" type="email" name="pemail" value="">
 			                                </div>
 			                                <div class="form-group">
 			                                	<label for="pbranch" class=" col-lg-2">登記地 *</label>
 			                                	<select class="form-control" id="pbranch" name="pbranch">
-			                                		<option value="">請選擇</option>
-			                                		<option selected>微風店</option>
-			                                		<option>南京店</option>
-			                                		<option>中正店</option>
+			                                		<option value="-1">請選擇</option>
+					                          		<option value="221">微風店</option>
+					                          		<option value="169">敦化店</option>
+					                          		<option value="222">大安店</option>
+					                          		<option value="295">忠孝店</option>
+					                          		<option value="201">復興店</option>
+					                          		<option value="189">南京店</option>
 			                                	</select>
 			                                </div>
 			                                <div class="form-group">
-			                                	<label for="pOfficeNumber" class="col-lg-2">辦公室號碼</label>
-			                                    <input class="form-control " id="pOfficeNumber" name="pOfficeNumber" type="text" value="">
-			                                </div>
-			                                <div class="form-group">
-			                                	<label for="peim" class="col-lg-2">統編 *</label>
-			                                    <input class="form-control " id="peim" name="peim" type="text" value="12345678">
+			                                	<label for="pein" class="col-lg-2">統編 *</label>
+			                                    <input class="form-control " id="pein" name="pein" type="text" value="">
 			                                </div>
 			                                <div class="form-group">
 			                                    <label for="pceo" class="col-lg-2">負責人 *</label>
-			                                    <input class="form-control" id="pceo" name="pceo" type="text" value="葉碧霞">
+			                                    <input class="form-control" id="pceo" name="pceo" type="text" value="">
 			                                </div>
 			                                <div class="form-group">
 			                                    <label for="pbirthday" class="col-lg-2">負責人生日</label>
-			                                    <input class=" form-control" id="pbirthday" name="pbirthday" type="date" value="">
+			                                    <input class="form-control" id="pbirthday" name="pbirthday" type="date">
 			                                </div>
 			                                <div class="form-group">
 			                                    <label for="pphoneNumber" class="col-lg-2">電話 *</label>
-			                                    <input class="form-control" id="pphoneNumber" name="pphoneNumber" type="text" value="123456789">
+			                                    <input class="form-control" id="pphoneNumber" name="pphoneNumber" type="text" value="">
 			                                </div>
 			                                <div class="form-group">
 			                                    <label for="pfaxNumber" class="col-lg-2">傳真</label>
@@ -447,52 +445,101 @@
 			                                    <input class="form-control " id="pAddress2" name="pAddress2" type="text">
 			                                </div>
 			                                <div class="form-group">
+			                                    <label for="pLetterStatus" class="col-lg-2">信件處理</label>
+			                                    <input class="form-control " id="pLetterStatus" name="pLetterStatus" type="text">
+			                                </div>
+			                                <div class="form-group">
 			                                    <label for="pcomment" class="col-lg-2">附註</label>
 			                                    <textarea class="form-control " id="pcomment" name="pcomment"></textarea>
 			                                </div>
-			                                
+			                                <button class="btn btn-primary" id="companyUpdate" type="button">Save</button>
                                         </form>
                                     </div>
                                 </div>
                                 <!-- TODO 末五碼須隨著帳號變動 -->
                                 <!-- remit -->
                                 <div id="edit-remit" class="tab-pane">
-                                    <div class="user-profile-content table-responsive">
-                                        <table class="table table-bordered table-hover" id="datatable-editable">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>帳號</th>
-                                                    <th>帳號末五碼</th>
-                                                    <th>編輯</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="accountReadable">1</td>
-                                                    <td>111111111111</td>
-                                                    <td class="accountReadable">12345</td>
-                                                    <td class="actions">
-				                                        <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
-				                                        <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
-				                                        <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-				                                        <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
-                                    				</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>222222222222</td>
-                                                    <td>12345</td>
-                                                    <td class="actions">
-				                                        <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
-				                                        <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
-				                                        <a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-				                                        <a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
-                                    				</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                    <div class="row m-t-10">
+                                		<div class="col-md-12">
+											<button class="btn btn-primary pull-right" data-toggle="modal" data-target="#rem-close-modal">新增</button>
+										</div>
+                                        <div class="col-md-12">
+                                            <div class="portlet"><!-- /primary heading -->
+                                                <div id="portlet3" class="panel-collapse collapse in">
+                                                    <div class="portlet-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>帳號</th>
+                                                                        <th>帳號末五碼</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="remitTbody">
+                                                                	<tr>
+                                                                        <td>#</td>
+                                                                        <td>None</td>
+                                                                        <td>None</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- /Portlet -->
+                                        </div>
                                     </div>
+                                    
+                                    <div class="user-profile-content" id="contractProfile" style="display:block">
+                                		<h3>匯款資料</h3>
+										<form role="form" id="remitForm">
+	                                		<div class="form-group">
+			                                    <label for="praccount" class="col-lg-2">帳號</label>
+			                                    <input class=" form-control" id="praccount" name="praccount" type="text" value="" >
+			                                </div>
+			                                <div class="form-group">
+			                                    <label for="praccount5" class="col-lg-2">帳號末五碼</label>
+			                                    <input class=" form-control" id="praccount5" name="praccount5" type="text" value="" >
+			                                </div>
+		                                	<div class="form-group">
+			                                    <label for="prmode" class="col-lg-2">備註</label>
+			                                    <input class=" form-control" id="prmode" name="prmode" type="text">
+			                                </div>
+			                                <button class="btn btn-primary" id="remitUpdate" type="button">Save</button>
+		                        		</form>
+		                        	</div>
+                                    
+                                    <div id="rem-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	                                    <div class="modal-dialog"> 
+	                                        <div class="modal-content"> 
+	                                            <div class="modal-header"> 
+	                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+	                                                <h4 class="modal-title">New Remit</h4> 
+	                                            </div> 
+	                                            <div class="modal-body"> 
+													<div class="row">
+	                                                    <div class="col-md-6"> 
+	                                                        <div class="form-group"> 
+	                                                           <label for="prNaccount" class="control-label">帳號</label>
+			                                    				<input class=" form-control" id="prNaccount" name="prNaccount" type="text" value=""> 
+	                                                        </div> 
+	                                                    </div>
+	                                                    <div class="col-md-6"> 
+	                                                        <div class="form-group"> 
+	                                                           <label for="prNmode" class="control-label">備註</label>
+			                                    				<input class=" form-control" id="prNmode" name="prNmode" type="text" value=""> 
+	                                                        </div> 
+	                                                    </div>
+	                                                </div>
+	                                            </div> 
+	                                            <div class="modal-footer"> 
+	                                                <button type="button" class="btn btn-info" id="remitSave">Save</button>
+	                                                <button type="button" class="btn btn-white" data-dismiss="modal" id="remitClose">Close</button>
+	                                            </div> 
+	                                        </div> 
+	                                    </div>
+	                                </div><!-- /.modal -->
                               	</div>
                               	
                               	<!-- accountancy -->
@@ -516,7 +563,7 @@
 			                                    <label for="paAddress" class="control-label col-lg-2">地址</label>
 			                                    <input class=" form-control" id="paAddress" name="paAddress" type="text">
 		                                	</div>
-                                            <button class="btn btn-primary" id="profileUpdate" type="button">Save</button>
+                                            <button class="btn btn-primary" id="accountancyUpdate" type="button">Save</button>
                                     	</form>
                                     </div>
                               	</div>
@@ -542,21 +589,7 @@
                                                                         <th>簽約人</th>
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td><a class="contract_link" href="#">1</a></td>
-                                                                        <td>01/01/2015</td>
-                                                                        <td>01/01/2016</td>
-                                                                        <td><span class="label label-info">到期</span></td>
-                                                                        <td>謝欣育</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td><a class="contract_link" href="#">2</a></td>
-                                                                        <td>01/01/2016</td>
-                                                                        <td>01/01/2017</td>
-                                                                        <td><span class="label label-success">進行中</span></td>
-                                                                        <td>謝欣育</td>
-                                                                    </tr>
+                                                                <tbody id="contractTbody">
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -565,36 +598,43 @@
                                             </div> <!-- /Portlet -->
                                         </div>
                                     </div>
-                                    <h3>合約資料</h3>
-                                	<div class="user-profile-content">
+                                    
+                                	<div class="user-profile-content" id="contractProfile" style="display:none">
+                                		<h3>合約資料</h3>
 										<form role="form" id="contractForm">
 	                                		<div class="form-group">
-			                                    <label for="pcuser" class="col-lg-2">簽約人(ps:不能修改)</label>
-			                                    <input class=" form-control" id="pcuser" name="pcuser" type="text" value="謝欣育">
+			                                    <label for="pcuser" class="col-lg-2">簽約人</label>
+			                                    <input class=" form-control" id="pcuser" name="pcuser" type="text" value="" disabled>
 			                                </div>
 			                                <div class="form-group">
-			                                    <label for="pcuserc" class="col-lg-2">介紹人(ps:不能修改)</label>
-			                                    <input class=" form-control" id="pcuserc" name="pcuserc" type="text">
+			                                    <label for="pcuserc" class="col-lg-2">介紹人</label>
+			                                    <input class=" form-control" id="pcuserc" name="pcuserc" type="text" disabled>
 			                                </div>
 			                                <div class="form-group">
 			                                	<label for="pctype" class="col-lg-2">類型 *</label>
 			                                	<select class="form-control" id="pctype" name="pctype">
-			                                		<option value="">請選擇</option>
-			                                		<option selected>租辦公室</option>
-			                                		<option>登記</option>
-			                                		<option>聯絡處</option>
-			                                		<option>其他</option>
+			                                		<option value="-1">請選擇</option>
+			                                		<option value="o">租辦公室</option>
+			                                		<option value="p">個人座位</option>
+			                                		<option value="r">登記</option>
+			                                		<option value="c">聯絡處</option>
+			                                		<option value="s">停業</option>
+			                                		<option value="other">其他</option>
 			                                	</select>
 		                                	</div>
 		                                	<div class="form-group">
 			                                    <label for="pcofficeNumc" class="col-lg-2">辦公室號碼</label>
 			                                    <input class=" form-control" id="pcofficeNumc" name="pcofficeNumc" type="text">
 			                                </div>
+			                                <div class="form-group">
+			                                    <label for="pcdatesign" class="col-lg-2">簽約日期</label>
+			                                    <input class="form-control" id="pcdatesign" name="pcdatesign" type="date">
+			                                </div>
 	                                        <div class="form-group">
 	                                            <label class="col-lg-2" for="pcdates">合約日期(起) *</label>
                                           		<div class="col-lg-12">
                                            			<div class="input-group">
-                                           				<input type="text" id="pcdates" name="pcdates" class="form-control col-lg-2" placeholder='yyyy-mm-dd' value="1111/11/11">
+                                           				<input type="text" id="pcdates" name="pcdates" class="form-control col-lg-2" placeholder='yyyy-mm-dd'>
 														<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 													</div>
 												</div>
@@ -603,18 +643,18 @@
 	                                            <label class="col-lg-2" for="pcdatee">合約日期(終) *</label>
                                             	<div class="col-lg-12">
                                            			<div class="input-group">
-	                                            		<input type="text" id="pcdatee" name="pcdatee" class="form-control" placeholder='yyyy-mm-dd' value="1111/11/11">
+	                                            		<input type="text" id="pcdatee" name="pcdatee" class="form-control" placeholder='yyyy-mm-dd'>
 														<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 													</div>
                                             	</div>
 	                                        </div>
 	                                        <div class="form-group">
 			                                	<label for="prent" class="col-lg-2">租金 *</label>
-			                                    <input class="form-control " id="prent" name="prent" type="text" value="10000">
+			                                    <input class="form-control " id="prent" name="prent" type="text" value="">
 			                                </div>
 			                                <div class="form-group">
 			                                	<label for="pdeposit" class="col-lg-2">押金 *</label>
-			                                    <input class="form-control " id="pdeposit" name="pdeposit" type="text" value="20000">
+			                                    <input class="form-control " id="pdeposit" name="pdeposit" type="text" value="">
 			                                </div>
 			                                <div class="form-group">
 			                                	<label for="prented" class="col-lg-2">已收租金</label>
@@ -735,7 +775,7 @@
 	                                                </div> 
 	                                            </div> 
 	                                            <div class="modal-footer"> 
-	                                                <button type="button" class="btn btn-info">Save</button>
+	                                                <button type="button" class="btn btn-info" id="contractSave">Save</button>
 	                                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
 	                                            </div> 
 	                                        </div> 
@@ -777,9 +817,6 @@
 
     </section>
     <!-- Main Content Ends -->
-        
-
-
 
 
 <!-- js placed at the end of the document so the pages load faster -->
@@ -804,6 +841,9 @@
 <script src="assets/datatables/dataTables.bootstrap.js"></script>
 <script src="assets/jquery-datatables-editable/datatables.editable.init.js"></script>
 
+<script src="assets/sweet-alert/sweet-alert.min.js"></script>
+<script src="assets/sweet-alert/sweet-alert.init.js"></script>
+
 <script type="text/javascript">
 (function($){
 	//TODO add contract validate
@@ -817,10 +857,10 @@
             },
             pbranch: "required",
             pAddress: "required",
-            pOfficeNumber: {
+            pcofficeNumc: {
             	digits: true
             },
-            peim: {
+            pein: {
             	required: true,
             	digits: true
             },
@@ -869,10 +909,10 @@
             },
             pbranch: "請選擇簽約分店",
             pAddress: "請輸入地址",
-            pOfficeNumber: {
+            pcofficeNumc: {
             	digits: "格式錯誤"
             },
-            peim: {
+            pein: {
             	required: "請輸入統編",
             	digits: "格式錯誤"
             },
@@ -932,7 +972,7 @@
     }, "End date should be after start date");
 	//validate endDate > startDate
 	
-	// Date Picker
+	// Date Picker //
     $('#pcdates').datepicker({
         format: 'yyyy-mm-dd',
         onClose: function() {
@@ -957,34 +997,62 @@
             $('#pcNDatee').valid();
         }
     });
- 	// Date Picker
+ 	// Date Picker //
 	
-	$('#profileUpdate').on('click', function() {
-	    $("#companyProfileForm").valid();
+	$('#companyUpdate').on('click', function() {
+	    var status = $("#companyProfileForm").valid();
+	    if(status == true) {
+		    updateCompany();
+	    }
+	});
+ 	
+	$('#accountancyUpdate').on('click', function() {
+	    var status = $("#accountancyForm").valid();
+	    if(status == true) {
+	    	updateAccountancy();
+	    }
+	    
 	});
  	
 	$('#contractUpdate').on('click', function() {
-	    $("#contractForm").valid();
+	    var status = $("#contractForm").valid();
+	    if(status == true) {
+	    	updateContract();
+	    }
+	});
+	
+	$('#remitSave').on('click', function() {
+		if($('#prNaccount').val() != '') {
+			alert("");
+			createRemit();	
+		}
+		
 	});
 	
 	
 	
 	<!-----------------------ajax-------------------------------->
-	
+	var contractData = [];
 	var root = location.protocol + '//' + location.host;
-    
+    var id;
+	
     var retriveDataAjax = function() {
     	$.ajax({
-			url:root + "/AFW-I-System/retrive/companyProfile/1",
+			url:root + "/AFW-I-System/retrive/companyProfile/" + id,
 			type:'get',
 			dataType : 'json',
 			contentType: 'application/json',
 			success : function(response) {
 				//alert("success");
-				console.log("retriveDataAjax:" + response.message);
+				//console.log("retriveDataAjax:" + response.message);
 				if(response.status == 'success') {
 					var data = jQuery.parseJSON(response.message);
-					console.log(data);
+					//console.log(data);
+					setCompanyData(data.company);
+					setAccountancyData(data.company.accId);
+					setRemitData(data.company);
+					setContractData(data.combine);
+					contractData = data.combine;
 				}
 			},
 			error : function(e) {
@@ -996,9 +1064,322 @@
 			}
 		});
     }
+    var companyId = 0;
+    var setCompanyData = function(data) {
+    	console.log(data);
+    	companyId = data.companyId;
+    	$('#pname').val(data.companyName);
+    	$('#ptype').val(data.companyType);
+    	$('#pAddress').val(data.companyAddress);
+    	$('#pemail').val(data.companyMail);
+    	$('#pbranch').val(data.companyCode);
+    	$('#pein').val(data.companyEin);
+    	$('#pceo').val(data.companyExecutive);
+    	//TODO date
+    	var date = new Date(data.companyBitrhday);
+    	var day = ("0" + date.getDate()).slice(-2);
+    	var month = ("0" + (date.getMonth() + 1)).slice(-2);
+    	var dateFormat = date.getFullYear()+"/"+month+"/"+day;
+    	//console.log(dateFormat);
+    	$('#pbirthday').val(dateFormat);
+    	
+    	$('#pphoneNumber').val(data.companyNumber);
+    	$('#pfaxNumber').val(data.companyFax);
+    	$('#pAddress2').val(data.companyAddress2);
+    	$('#pLetterStatus').val(data.companyLetterStatus);
+    	$('#pcomment').val(data.companyRemark);
+    }
+    
+	var setContractData = function(data) {
+    	//console.log(data);
+    	var str = "";
+    	for(var i=0; i<data.length; i++) {
+    		//console.log(data[i].contract);
+    		
+    		var dateS = new Date(data[i].contract.contractStart);
+        	var day = ("0" + dateS.getDate()).slice(-2);
+        	var month = ("0" + (dateS.getMonth() + 1)).slice(-2);
+        	var dateFormatS = dateS.getFullYear()+"-"+month+"-"+day;
+        	
+        	var dateE = new Date(data[i].contract.contractEnd);
+        	var day = ("0" + dateE.getDate()).slice(-2);
+        	var month = ("0" + (dateE.getMonth() + 1)).slice(-2);
+        	var dateFormatE = dateE.getFullYear()+"-"+month+"-"+day;
+    		var endDate = new Date(dateFormatE);
+        	
+        	var q = new Date();
+        	var m = q.getMonth()+1;
+        	var d = q.getDay();
+        	var y = q.getYear();
+        	var today = new Date(y,m,d);
+        	
+        	var contractStatus;
+        	if(endDate > today) {
+        		contractStatus = '合約中';
+        	} else {
+        		contractStatus = '到期';
+        	}
+        	
+        	var order = i+1;
+    		str = str + '<tr>' +
+            '<td><button class="contract_link btn btn-success btn-sm m-b-5" onclick="setEachContractData(event);" id='+ data[i].contract.contractId + '>' + order +'</button></td>' +
+            '<td>' + dateFormatS + '</td>' +
+            '<td>' + dateFormatE + '</td>' +
+            '<td><span class="label label-info">' + contractStatus + '</span></td>' +
+            '<td>' + '謝欣育' + '</td></tr>';
+            //'<td>' + data[i].user.userName + '</td></tr>';
+            
+            
+            
+    		if(data[i].office != null) {
+    			//console.log(data[i].office);
+    		}
+    		
+			if(data[i].user != null) {
+				console.log(data[i].user);
+    		}
+			
+			if(data[i].user2 != null) {
+				console.log(data[i].user2);
+    		}
+    	}
+    	$("#contractTbody").html(str);
+    }
+	var contractId = 0;
+	window.setEachContractData = function(e) {
+		$('#contractProfile').css('display', 'block');
+		contractId = e.target.id;
+		for(var i=0; i<contractData.length; i++) {
+			if(contractData[i].contract.contractId == contractId) {
+				console.log(contractData[i]);
+				
+				//$('#pcuser').val(contractData[i].user.userName);
+				if(contractData[i].user2 != null) {
+					$('#pcuserc').val(contractData[i].user2.userName);
+	    		} else {
+	    			$('#pcuserc').val("");
+	    		}
+				
+				$('#pctype').val(contractData[i].contract.contractType);
+				$('#pcofficeNumc').val(contractData[i].office.officeNumber);
+				//TODO
+				$('#pcdatesign').val(contractData[i].contract.contractDate)
+				
+				var dateS = new Date(contractData[i].contract.contractStart);
+	        	var day = ("0" + dateS.getDate()).slice(-2);
+	        	var month = ("0" + (dateS.getMonth() + 1)).slice(-2);
+	        	var dateFormatS = dateS.getFullYear()+"-"+month+"-"+day;
+				$('#pcdates').val(dateFormatS);
+				
+				var dateE = new Date(contractData[i].contract.contractEnd);
+	        	var day = ("0" + dateE.getDate()).slice(-2);
+	        	var month = ("0" + (dateE.getMonth() + 1)).slice(-2);
+	        	var dateFormatE = dateE.getFullYear()+"-"+month+"-"+day;
+	    		$('#pcdatee').val(dateFormatE);
+	    		
+	    		$('#prent').val(contractData[i].contract.contractRent);
+	    		$('#pdeposit').val(contractData[i].contract.contractDeposit);
+	    		$('#prented').val(contractData[i].contract.contractRented);
+	    		$('#pdeposited').val(contractData[i].contract.contractDeposited);
+	    		$('#pcommentc').val(contractData[i].contract.contractRemarks);
+			}
+		}
+	}
+	
+	var accId = 0;
+	var setAccountancyData = function(data) {
+    	//console.log(data);
+    	accId = data.acccId;
+    	$('#paName').val(data.accName);
+    	$('#paContact').val(data.accContact);
+    	$('#paPhoneNumber').val(data.accPhone);
+    	$('#paAddress').val(data.accAddress);
+    }
+	
+	//TODO need to fix
+	window.setRemitData = function(data) {
+		
+    	//console.log(data);
+    	var str = "<tr role='row' class='odd'>" +
+            "<td class='accountReadable sorting_1'>" + 1 + "</td>" +
+            "<td>"+111111111111+"</td>" +
+            "<td class='accountReadable'>" + 88888 + "</td>" +
+            "<td class='actions'>" +
+                "<a href=# class='hidden on-editing save-row'><i class='fa fa-save'></i></a>" +
+                "<a href=# class='hidden on-editing cancel-row'><i class='fa fa-times'></i></a>" +
+                "<a href=# class='on-default edit-row'><i class='fa fa-pencil'></i></a>" +
+                "<a href=# class='on-default remove-row'><i class='fa fa-trash-o'></i></a>" +
+			"</td></tr>";
+			
+			
+    	//$("#remitTbody").html(str);
+    }
+	
+	var updateCompany = function() {
+		var company = {
+			companyName : $('#pname').val(),
+  	   		companyType : $('#ptype').val(),
+  	   		companyAddress : $('#pAddress').val(),
+  	   		companyMail : $('#pemail').val(),
+  	   		companyCode : $('#pbranch').val(),
+  	   		companyEin : $('#pein').val(),
+  	   		companyExecutive : $('#pceo').val(),
+  	   		companyBitrhday : $('#pbirthday').val(),
+  	   		companyNumber : $('#pphoneNumber').val(),
+  	   		companyFax : $('#pfaxNumber').val(),
+  	   		companyAddress2 : $('#pAddress2').val(),
+  	   		companyLetterStatus : $('#pLetterStatus').val(),
+  	   		companyRemark : $('#pcomment').val()
+		}
+		
+		console.log(JSON.stringify(company));
+		$.ajax({
+			url:root + "/AFW-I-System/company/update/"+companyId,
+			type:'put',
+			data : JSON.stringify(company),
+			dataType : 'json',
+			contentType: 'application/json; charset=UTF-8',
+			success : function(data) {
+				//alert("success");
+				console.log(data);
+				if(data.status == 'success') {
+					swal("更新成功!", "", "success");
+				}
+			},
+			error : function(e) {
+				alert("something error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+	}
+	
+	var updateAccountancy = function() {
+		var accountancy = {
+			accName : $('#paName').val(),
+   	   		accContact : $('#paContact').val(),
+   	   		accPhone : $('#paPhoneNumber').val(),
+   	   		accAddress : $('#paAddress').val()
+		}
+		
+		console.log(JSON.stringify(accountancy));
+		$.ajax({
+			url:root + "/AFW-I-System/accountancy/update/" + accId,
+			type:'put',
+			data : JSON.stringify(accountancy),
+			dataType : 'json',
+			contentType: 'application/json; charset=UTF-8',
+			success : function(data) {
+				console.log(data);
+				if(data.status == 'success') {
+					swal("更新成功!", "", "success");
+				}
+			},
+			error : function(e) {
+				alert("something error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+	}
+	
+	var updateContract = function() {
+		var contract = {
+   	   		contractType : $('#pctype').val(),
+   	   		contractDate : $('#pcdatesign').val(),
+   	   		contractStart : $('#pcdates').val(),
+   	   		contractEnd : $('#pcdatee').val(),
+   	   		contractRent : $('#prent').val(),
+   	   		contractDeposit : $('#pdeposit').val(),
+   	   		contractRented : $('#prented').val(),
+   	   		contractDeposited : $('#pdeposited').val(),
+   	   		contractRemarks : $('#pcommentc').val(),
+   	   		officeNumber : $('#pcofficeNumc').val()
+		}
+		
+		console.log(JSON.stringify(contract));
+		$.ajax({
+			url:root + "/AFW-I-System/contract/update/" + contractId,
+			type:'put',
+			data : JSON.stringify(contract),
+			dataType : 'json',
+			contentType: 'application/json; charset=UTF-8',
+			success : function(data) {
+				console.log(data);
+				if(data.status == 'success') {
+					swal("更新成功!", "", "success");
+				}
+			},
+			error : function(e) {
+				alert("something error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+	}
+	
+	var createRemit = function() {
+		var remit = {
+			remitAccount : $('#prNaccount').val(),
+			remitMode : $('#prNmode').val(),
+			companyId : companyId
+		}
+		
+		console.log(JSON.stringify(remit));
+		$.ajax({
+			url:root + "/AFW-I-System/new/remit/add/",
+			type:'post',
+			data : JSON.stringify(remit),
+			dataType : 'json',
+			contentType: 'application/json; charset=UTF-8',
+			success : function(data) {
+				console.log(data);
+				if(data.status == 'success') {
+					$('#remitClose').click();
+					swal("新增成功!", "", "success");
+				}
+			},
+			error : function(e) {
+				alert("something error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+	}
+	
+	
+	
+	
+	
+    
+	var getUrlParameter = function getUrlParameter(sParam) {
+	    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+	        sURLVariables = sPageURL.split('&'),
+	        sParameterName,
+	        i;
+
+	    for (i = 0; i < sURLVariables.length; i++) {
+	        sParameterName = sURLVariables[i].split('=');
+
+	        if (sParameterName[0] === sParam) {
+	            return sParameterName[1] === undefined ? true : sParameterName[1];
+	        }
+	    }
+	};
+	
+	
 	
   	//page load
     window.onload = function() {
+    	id = getUrlParameter('id');
     	retriveDataAjax();
 	};
 	

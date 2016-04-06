@@ -707,8 +707,15 @@
 			dataType : 'json',
 			contentType: 'application/json; charset=UTF-8',
 			success : function(data) {
-				alert("success");
+				//alert("success");
 				console.log(data);
+				if(data.status == 'success') {
+					var id = data.companyId;
+					window.location.href = root + "/AFW-I-System/companyProfile.html?id=" + id;
+				} else {
+					alert(data.message);
+				}
+				
 			},
 			error : function(e) {
 				alert("error");

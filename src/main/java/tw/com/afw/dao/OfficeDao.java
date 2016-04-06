@@ -58,9 +58,9 @@ public class OfficeDao {
 	
 	public void update(OfficeEntity office) {
 		try {
-			em.getTransaction().begin();
+			//em.getTransaction().begin();
 			em.merge(office);
-			em.getTransaction().commit();
+			//em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

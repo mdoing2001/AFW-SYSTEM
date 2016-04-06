@@ -54,27 +54,16 @@ public class AccountancyController {
 		return result.toJSONString();
 	}
 	
-	//先用accountancy 的 id把accountancy撈出來 再去set(前端不確定是改哪一個 所以全部都要set)
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/accountancy/update/{id}", method = RequestMethod.PUT, produces = {"application/json; charset=UTF-8"})
-	public String updateAccountancy(@PathVariable("id") long id, @RequestBody String accountancyStr) {
-		//step1 id撈accountancy
-		
-		//step2 accountancyStr 轉乘jsonobject
-		
-		//step3 jsonobject去get所有的值(參考createCompany那隻)在set進去step1的accountancy
-		
-		//step4 merge
-		
-		//.....
+	public String updateAccountancy(@PathVariable("id") int id, @RequestBody String accountancyStr) {
 		
 		JSONObject result = new JSONObject();
 		
 		try {
-			JSONObject obj = (JSONObject) new JSONParser().parse(accountancyStr);
-			JSONObject accountancyObj = (JSONObject) obj.get("accountancy");
+			JSONObject accountancyObj = (JSONObject) new JSONParser().parse(accountancyStr);
 			
-			AccountancyEntity Accountancyentity  = accountancyService.findAccountancyById(Integer.parseInt(accountancyObj.get("accId").toString()));
+			AccountancyEntity Accountancyentity  = accountancyService.findAccountancyById(id);
 			
 			Accountancyentity.setAccName(null != accountancyObj.get("accName") ?  accountancyObj.get("accName").toString() : null);
 			Accountancyentity.setAccContact(null != accountancyObj.get("accContact") ?  accountancyObj.get("accContact").toString() : null);

@@ -1,5 +1,6 @@
 package tw.com.afw.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,7 @@ public class RemitEntity implements java.io.Serializable{
 	@Column(name = "remit_mode")
 	private String remitMode;
 	
-	@ManyToOne	
+	@ManyToOne
 	@JoinColumn(name="company_id")
 	private CompanyEntity companyId;
 

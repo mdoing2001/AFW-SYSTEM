@@ -89,9 +89,9 @@ public class CompanyDao {
 	
 	public void update(CompanyEntity company) {
 		try {
-			em.getTransaction().begin();
+			//em.getTransaction().begin();
 			em.merge(company);
-			em.getTransaction().commit();
+			//em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

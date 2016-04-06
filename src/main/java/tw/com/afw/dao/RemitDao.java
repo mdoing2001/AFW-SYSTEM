@@ -47,9 +47,9 @@ public class RemitDao {
 	
 	public void ins(RemitEntity remit) {
 		try {
-			em.getTransaction().begin();
+			//em.getTransaction().begin();
 			em.persist(remit);
-			em.getTransaction().commit();
+			//em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
