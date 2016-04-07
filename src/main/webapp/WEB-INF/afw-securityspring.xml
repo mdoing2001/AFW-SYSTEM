@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+ xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+ http://www.springframework.org/schema/security
+ http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
+ 
+    <!--
+     
+               說明:
+         <http> 設定區塊主要是要設定filter 及 因為需求需要被springSecurity 監控的地方，
+                       並且可以設定filter chain 相關順序以及登入及登出預設url，可利用spring bean 特性
+                       針對因需求而客製化的filter。
+                        
+               設定說明:
+         1.auto-config="true" spring 會依照預設的filter chain 進行注入動作 ，當然也可以使用自訂filter進行
+          1.1 文件說明:
+            Automatically registers a login form, BASIC authentication, anonymous authentication, logout services, 
+   remember-me and servlet-api-integration. If set to "true", all of these capabilities are added (although 
+   you can still customize the configuration of each by providing the respective element). If unspecified, 
+   defaults to "false".
+    1.2 filter chain 文件說明:
+       http://static.springsource.org/spring-security/site/docs/3.0.x/reference/ns-config.html - 2.3.5 Adding in Your Own Filters
+          
+         2.entry-point-ref 登入進入點 此設定如果沒設定，則<form-login login-page=""/> 必須要設定，兩者擇一。
+          
+         3.intercept-url 針對所有request filter 需要做權限控管部分作客製化設定，此部分我不直接導向頁面，因為如果直接導向頁面，
+                             則必須將相關頁面至於可由外部url直接讀取位置，有安全性顧慮，因此統一至於WEB-INF目錄下，並使用spring controller 進行forward。
+          
+         4.access-denied-page 當使用者登入後，如權限不足以瀏覽所設定的位址，則導向設定頁面，如沒設定，則拋出403錯誤代碼。
+          4.1 IS_AUTHENTICATED_ANONYMOUSLY  如果使用者沒有經過正式權限授予則會透過AnonymousAuthenticationFilter自動給予一個ANONYMOUSLY權限。
+            signifies that anyone can access this URL. By default the AnonymousAuthenticationFilter ensures an 'anonymous' Authentication with no roles so that every user has an authentication. The token accepts any authentication, even anonymous.
+          4.2 IS_AUTHENTICATED_FULLY 使用者具備權限即可
+            requires the user to be fully authenticated with an explicit login.
+          
+         5.custom-filter  position="PRE_AUTH_FILTER" 依照 http://static.springsource.org/spring-security/site/docs/3.0.x/reference/ns-config.html
+                             中說明PRE_AUTH_FILTER 為一種透過內部系統進行驗證後並且透過request data such as headers，進行登入動作，而ref對象為繼承AbstractPreAuthenticatedProcessingFilter
+                             子類別。
+           5.1 文件說明:
+           The purpose is then only to extract the necessary information on the principal from the incoming request, 
+           rather than to authenticate them. External authentication systems may provide this information via request data such as headers or cookies which the pre-authentication system can extract. 
+           It is assumed that the external system is responsible for the accuracy of the data and preventing the submission of forged values
+                            上述已經說明此filter主要是用來取得必要資訊，而並非是要驗證資訊，此filter獲得資訊是假定內部系統所傳送的資訊是有防止變造能力的系統，也就是在信任狀況下進行後續動作
+           By default, the filter chain will proceed when an authentication attempt fails in order to allow other authentication mechanisms to process the request. To reject the credentials immediately, 
+           set the continueFilterChainOnUnsuccessfulAuthentication flag to false. The exception raised by the AuthenticationManager will the be re-thrown
+                             預設中如沒得到相關資訊程序會進行下去並透過類似的機制進行後續驗證處理，但如果系統中透過內部登入機制不允許繼續進行流程，則需要將 continueFilterChainOnUnsuccessfulAuthentication設定為false。
+          
+         6.form-login 此設定為自動會讓UsernamePasswordAuthenticationFilter加入filter chain，但是  <custom-filter position="FORM_LOGIN_FILTER" ref="loginFilter" /> 就無法使用
+                             因為form-login已經率先占用此位置，所以如果有需要客製化 UsernamePasswordAuthenticationFilter 並且取代原本位置 並且  auto-config="false" 
+           6.1 文件說明:
+           Note that you can still use auto-config. The form-login element just overrides the default settings. Also note that we've added an extra intercept-url element to say that any requests for the login page should be available to anonymous users [5]. 
+           Otherwise the request would be matched by the pattern /** and it wouldn't be possible to access the login page itself! This is a common configuration error and will result in an infinite loop in the application. Spring Security will emit a warning in the log if your login page appears to be secured. 
+           It is also possible to have all requests matching a particular pattern bypass the security filter chain completely:
+                             這段有提到一個比較有趣的狀況，就是例如很多時候很多人設定了<form-login login-page='/login'/> 但是卻沒有設定<intercept-url pattern="/login*" filters="none"/>
+                             這是一個很常見的錯誤，會造成無窮迴圈。因為當filter發現使用者未登入的時候會想要把使用者導向login.jsp，但是由於沒設定所以會導致存取login.jsp又被導向login.jsp這樣無窮迴圈
+          
+         7.補充，auto-config設定為true，則會加入 BASIC authentication, anonymous authentication, logout services, remember-me and servlet-api-integration 四種
+                             所以如果並非上述四種filter，則加入其他自訂filter則無須理會auto-config設定為true造成衝突的狀況
+           7.1 文件說明:
+           Automatically registers a login form, BASIC authentication, anonymous authentication, logout services, 
+     remember-me and servlet-api-integration. If set to "true", all of these capabilities are added (although 
+     you can still customize the configuration of each by providing the respective element). If unspecified, 
+     defaults to "false".
+                                      
+      -->
+ <http auto-config="true" entry-point-ref="loginUrlEntryPoint"
+  access-denied-page="/accessDenied">
+  <intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+  <intercept-url pattern="/expire" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+  <intercept-url pattern="/accessDenied" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+  <intercept-url pattern="/welcome" access="IS_AUTHENTICATED_FULLY" />
+  <intercept-url pattern="/logout" filters="none" />
+  <intercept-url pattern="/css/**" filters="none" />
+  <intercept-url pattern="/**" access="ROLE_ADMIN,ROLE_USER,ROLE_CUS_USER" />
+  <custom-filter position="PRE_AUTH_FILTER" ref="siteminderFilter" />
+  <custom-filter position="CONCURRENT_SESSION_FILTER" ref="concurrencyFilter" />
+  <custom-filter before="FORM_LOGIN_FILTER" ref="loginFilter" />
+  <logout logout-success-url="/logout" />
+  <form-login
+   authentication-failure-url="/login"
+   authentication-success-handler-ref="authenticationSuccessHandler" />
+  <session-management session-authentication-strategy-ref="sas" invalid-session-url="/invalid"/>
+ </http>
+ 
+     <!-- 
+        1.說明:此filter主要是用來處理兩種情況
+         1.1 透過sessionRegistry取得session 相關資訊，如判斷過期則進行過期導頁程序
+         1.2 透過sessionRegistry取得相關session資訊，如沒過期，則重新更新到期日期資訊。
+        2.sessionRegistry 通常預設都是使用SessionRegistryImpl進行
+     -->
+ <beans:bean id="concurrencyFilter"
+  class="org.springframework.security.web.session.ConcurrentSessionFilter">
+  <beans:property name="sessionRegistry" ref="sessionRegistry" />
+  <beans:property name="expiredUrl" value="/expire" />
+ </beans:bean>
+     <!-- 
+        1.說明:此filter是Override UsernamePasswordAuthenticationFilter
+         1.1 UsernamePasswordAuthenticationFilter
+         1.2 透過sessionRegistry取得相關session資訊，如沒過期，則重新更新到期日期資訊。
+        2.authenticationManager 驗證使用者資料的主要驗證程式 。
+        3.filterProcessesUrl 設定驗證參數 ，主要用來判斷request URL 中是否還含有j_spring_security_check，用來辨別request 為驗證要求。
+     -->
+ <beans:bean id="loginFilter"
+  class="com.bt.filter.BtUsernamePasswordAuthenticationFilter">
+  <beans:property name="authenticationManager" ref="authenticationManager" />
+  <beans:property name="authenticationFailureHandler"
+   ref="authenticationFailureHandler" />
+  <beans:property name="filterProcessesUrl" value="/j_spring_security_check" />
+ </beans:bean>
+ 
+    <!-- 1.說明 : UsernamePasswordAuthenticationFilter 驗證成功後，透過此handler進行後續session資料儲存及導頁
+          1.1:defaultTargetUrl 和<http> 中的 <form-login> login-processing-url 效果相同，兩者可以擇一 
+    -->
+ <beans:bean id="authenticationSuccessHandler"
+  class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+  <beans:property name="defaultTargetUrl" value="/welcome" />
+ </beans:bean>
+ 
+ <beans:bean id="authenticationFailureHandler"
+  class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+  <beans:property name="defaultFailureUrl" value="/login" />
+ </beans:bean>
+ 
+ <beans:bean id="sessionRegistry"
+  class="org.springframework.security.core.session.SessionRegistryImpl" />
+   
+ <!-- 
+    1.說明:主要是要判斷是否每一個user登入的session數量超過所設定的上限，預設值為1
+     1.1 文件說明:Strategy which handles concurrent session-control, in addition to the functionality provided by the base class. When invoked following an authentication, it will check whether the user in question should be allowed to proceed,
+         by comparing the number of sessions they already have active with the configured maximumSessions value. The SessionRegistry is used as the source of data on authenticated users and session data.
+            If a user has reached the maximum number of permitted sessions, the behaviour depends on the exceptionIfMaxExceeded property. The default behaviour is to expired the least recently used session, 
+            which will be invalidated by the ConcurrentSessionFilter if accessed again. If exceptionIfMaxExceeded is set to true, however, the user will be prevented from starting a new authenticated session.
+                     如已經有使用者超過登入上限數量，則會將前一個用戶的session expire。如exceptionIfMaxExceeded = true，則不會踢掉前一個user session，而會透過SessionManagementFilter
+                     進行導頁而無法登入
+  -->
+ <beans:bean id="sas"
+  class="org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy">
+  <beans:constructor-arg name="sessionRegistry"
+   ref="sessionRegistry" />
+  <beans:property name="exceptionIfMaximumExceeded"
+   value="true" />
+  <beans:property name="maximumSessions" value="1" />
+ </beans:bean>
+    <!--  
+        1.說明:SSO登入主要filter，透過header資訊進行登入
+          1.1.文件說明:As with most pre-authenticated scenarios, it is essential that the external authentication system is set up correctly as this filter does no authentication whatsoever. 
+              All the protection is assumed to be provided externally and if this filter is included inappropriately in a configuration, it would be possible to assume the identity of a user merely by setting the correct header name.
+              This also means it should not generally be used in combination with other Spring Security authentication mechanisms such as form login, as this would imply there was a means of bypassing the external system which would be risky.
+                        文件中闡述了幾個要點，就是使用此filter是假定是使用內部系統進行保護並且額外透過CA Siteminder來進行header 資料的給予，如設定檔中有不恰當的設定，有可能會導致
+         header資訊被任意竄改，造成安全性問題，同時官方也建議如已經使用此filter進行登入，則不要混用其他登入機制，例如login form，以確保安全。
+        2.參數說明:
+          principalRequestHeader:設定header標頭名稱，SM_USER為預設值
+          exceptionIfHeaderMissing:如沒傳入principalRequestHeader值則拋出例外
+          authenticationManager:提供給RequestHeaderAuthenticationFilter獲得使用者資料用
+    -->
+ <beans:bean id="siteminderFilter"
+  class="org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter">
+  <beans:property name="principalRequestHeader" value="SM_USER" />
+  <beans:property name="exceptionIfHeaderMissing" value="false" />
+  <beans:property name="authenticationManager" ref="authenticationManager" />
+ </beans:bean>
+   <!-- 
+                    說明:RequestHeaderAuthenticationFilter 透過 PreAuthenticatedAuthenticationProvider 取得授權資料
+        preAuthenticatedUserDetailsService:用來取得授權資料
+    -->
+ <beans:bean id="preauthAuthProvider"
+  class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider">
+  <beans:property name="preAuthenticatedUserDetailsService">
+   <beans:bean id="userDetailsServiceWrapper"
+    class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper">
+    <beans:property name="userDetailsService" ref="userDetailsService" />
+   </beans:bean>
+  </beans:property>
+ </beans:bean>
+ 
+ <beans:bean id="usernamePasswordProvider"
+  class="com.bt.security.provider.BTCustomerAuthenticationProvider">
+  <beans:property name="userDetailsService" ref="userDetailsService" />
+  <beans:property name="passwordEncoder" ref="md5PasswordEncoder" />
+ </beans:bean>
+ 
+ <beans:bean id="md5PasswordEncoder"
+  class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
+ 
+ <authentication-manager alias="authenticationManager">
+  <authentication-provider ref="preauthAuthProvider" />
+  <authentication-provider ref="usernamePasswordProvider" />
+ </authentication-manager>
+ 
+ <beans:bean id="userDetailsService" class="com.bt.security.BTUserDetailService" />
+ 
+ <beans:bean id="loginUrlEntryPoint"
+  class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+  <beans:property name="loginFormUrl" value="/login" />
+ </beans:bean>
+ 
+ 
+</beans:beans>
