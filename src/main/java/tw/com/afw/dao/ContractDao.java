@@ -51,9 +51,9 @@ public class ContractDao {
 	
     public void ins(ContractEntity contract) {
 		try {
-			em.getTransaction().begin();
+			//em.getTransaction().begin();
 			em.persist(contract);
-			em.getTransaction().commit();
+			//em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

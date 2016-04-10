@@ -11,11 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import tw.com.afw.entity.BranchEntity;
-import tw.com.afw.entity.CompanyEntity;
 import tw.com.afw.entity.ContractEntity;
 import tw.com.afw.entity.OfficeEntity;
-import tw.com.afw.entity.UserEntity;
 import tw.com.afw.service.BranchService;
 import tw.com.afw.service.CompanyService;
 import tw.com.afw.service.ContractService;
@@ -42,58 +39,51 @@ public class ContractController {
 	private OfficeService officeService;
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/new/contract/add/{id}", method = RequestMethod.POST, produces = {"application/json; charset=UTF-8"})
-	public String createContract(@PathVariable("id") long id, @RequestBody String newContractStr) {
+	@RequestMapping(value = "/new/contract/add", method = RequestMethod.POST, produces = {"application/json; charset=UTF-8"})
+	public String createContract(@RequestBody String newContractStr) {
 		//
 		JSONObject result = new JSONObject();
-	  	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	  	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			
-			JSONObject obj = (JSONObject) new JSONParser().parse(newContractStr);
-			JSONObject contractObj = (JSONObject) obj.get("contract");
+			JSONObject contractObj = (JSONObject) new JSONParser().parse(newContractStr);
 			
 			ContractEntity contractEntity = new ContractEntity();
-			BranchEntity Branchentity= new BranchEntity();
-			UserEntity Userentity=new UserEntity();
-			CompanyEntity Companyentity = new CompanyEntity();
+			//BranchEntity Branchentity= new BranchEntity();
+			OfficeEntity officeEntity = new OfficeEntity();
 			
 			contractEntity.setContractStart(null != contractObj.get("contractStart") ? sdf.parse(contractObj.get("contractStart").toString()) : null);
 			contractEntity.setContractEnd(null != contractObj.get("contractEnd") ? sdf.parse(contractObj.get("contractEnd").toString()) : null);
 			contractEntity.setContractDeposit(null != contractObj.get("contractDeposit") ?  Double.parseDouble(contractObj.get("contractDeposit").toString()) : null);
 			contractEntity.setContractRent(null != contractObj.get("contractRent") ? Double.parseDouble(contractObj.get("contractRent").toString()): null);
-			contractEntity.setContractDeposited(null != contractObj.get("contractDeposited") ? Double.parseDouble(contractObj.get("contractRented").toString()): null);
+			contractEntity.setContractDeposited(null != contractObj.get("contractDeposited") ? Double.parseDouble(contractObj.get("contractDeposited").toString()): null);
 			contractEntity.setContractRented(null != contractObj.get("contractRented") ? Double.parseDouble(contractObj.get("contractRented").toString()): null);
-			contractEntity.setBranchId(branchService.findBranchById(Integer.parseInt(contractObj.get("branchId").toString())));
+			//contractEntity.setBranchId(branchService.findBranchById(Integer.parseInt(contractObj.get("branchId").toString())));
 			contractEntity.setUserId(userService.findUserById(Integer.parseInt(contractObj.get("userId").toString())));
-			contractEntity.setUserId(userService.findUserById(Integer.parseInt(contractObj.get("userId2").toString())));
+			contractEntity.setUserId2(userService.findUserById(Integer.parseInt(contractObj.get("userId2").toString())));
 			contractEntity.setCompanyId(companyService.findCompanyById(Integer.parseInt(contractObj.get("companyId").toString())));
 			contractEntity.setContractDate(null != contractObj.get("contractDate") ? sdf.parse(contractObj.get("contractDate").toString()) : null);
 			contractEntity.setContractType(null != contractObj.get("contractType") ? contractObj.get("contractType").toString() : null);
 			contractEntity.setContractRemarks(null != contractObj.get("contractRemarks") ? contractObj.get("contractRemarks").toString() : null);
 			contractEntity.setContractDel(null != contractObj.get("contractDel") ? contractObj.get("contractDel").toString() : null);
 			
-			contractEntity.setBranchId(Branchentity);
-			contractEntity.setUserId(Userentity);
-			contractEntity.setUserId2(Userentity);
-			contractEntity.setCompanyId(Companyentity);
-			
-			contractService.ins(contractEntity);
+			if(!contractObj.get("officeNumber").toString().isEmpty() && contractObj.get("contractType").toString().equalsIgnoreCase("o")) {
+				officeEntity.setOfficeNumber(contractObj.get("officeNumber").toString());
+				officeEntity.setContractId(contractEntity);
+				officeService.ins(officeEntity);
+			} else {
+				contractService.ins(contractEntity);
+			}
 			
 			result.put("status", "success");
 			result.put("message", "success");
-
 			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			result.put("status", "error");
 	    	result.put("message", "insert error");
-			
 		}
-		
-		
-		
-		
 		return result.toJSONString();
 	}
 	

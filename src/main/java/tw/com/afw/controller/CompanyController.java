@@ -305,7 +305,7 @@ public class CompanyController {
 	    			if(uId1 != null) {
 	    				userEntity = userService.findUserById(uId1);
 	    			}
-	    			if(uId1 != null) {
+	    			if(uId2 != null) {
 	    				userEntity2 = userService.findUserById(uId2);
 	    			}
 	    			

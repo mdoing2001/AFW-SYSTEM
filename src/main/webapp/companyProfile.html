@@ -491,7 +491,7 @@
                                         </div>
                                     </div>
                                     
-                                    <div class="user-profile-content" id="contractProfile" style="display:block">
+                                    <div class="user-profile-content" id="remitProfile" style="display:block">
                                 		<h3>匯款資料</h3>
 										<form role="form" id="remitForm">
 	                                		<div class="form-group">
@@ -572,7 +572,7 @@
                                 <div id="edit-contract" class="tab-pane">
                                 	<div class="row m-t-10">
                                 		<div class="col-md-12">
-											<button class="btn btn-primary pull-right" data-toggle="modal" data-target="#con-close-modal">新增合約</button>
+											<button class="btn btn-primary pull-right" data-toggle="modal" data-target="#con-close-modal" id="createContract">新增合約</button>
 										</div>
                                         <div class="col-md-12">
                                             <div class="portlet"><!-- /primary heading -->
@@ -689,7 +689,9 @@
 	                                                    <div class="col-md-6"> 
 	                                                        <div class="form-group">
 	                                                            <label for="pcNUserc" class="control-label">介紹人</label>
-			                                    				<input class=" form-control" id="pcNUserc" name="pcNUserc" type="text">
+	                                                            <select class="form-control" id="pcNUserc" name="pcNUserc">
+	                                                            	<option value="-1">請選擇</option>
+	                                                            </select>
 	                                                        </div> 
 	                                                    </div>
 	                                                </div> 
@@ -768,15 +770,15 @@
 	                                                <div class="row"> 
 	                                                    <div class="col-md-12"> 
 	                                                        <div class="form-group no-margin"> 
-	                                                            <label for="pcommentc" class="control-label">附註</label>
-			                                    				<textarea class="form-control " id="pcommentc" name="pcommentc"></textarea>
+	                                                            <label for="pNcommentc" class="control-label">附註</label>
+			                                    				<textarea class="form-control " id="pNcommentc" name="pNcommentc"></textarea>
 	                                                        </div> 
 	                                                    </div>
 	                                                </div> 
 	                                            </div> 
 	                                            <div class="modal-footer"> 
 	                                                <button type="button" class="btn btn-info" id="contractSave">Save</button>
-	                                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+	                                                <button type="button" class="btn btn-white" data-dismiss="modal" id="contractClose">Close</button>
 	                                            </div> 
 	                                        </div> 
 	                                    </div>
@@ -1026,9 +1028,19 @@
 			alert("");
 			createRemit();	
 		}
-		
 	});
 	
+	$('#contractSave').on('click', function() {
+		if($('#pcNType').val() != -1) {
+			alert("");
+			createContract();	
+		}
+	});
+	
+	$('#createContract').on('click', function() {
+		$("#pcNUserc option").remove();
+		getAllUserAjax();
+	});
 	
 	
 	<!-----------------------ajax-------------------------------->
@@ -1355,10 +1367,85 @@
 		});
 	}
 	
+	var createContract = function() {
+		var contract = {
+			//userId : $('#pcNUser').val(),
+			userId : 5,
+   	   		userId2 : $('#pcNUserc').val(),
+   	   		contractType : $('#pcNType').val(),
+   	   		contractDate : $('#ccdatesign').val(),
+   	   		contractStart : $('#pcNDates').val(),
+   	   		contractEnd : $('#pcNDatee').val(),
+   	   		contractRent : $('#pNRent').val(),
+   	   		contractDeposit : $('#pNDeposit').val(),
+   	   		contractRented : $('#pNRented').val(),
+   	   		contractDeposited : $('#pNDeposited').val(),
+   	   		contractRemarks : $('#pNcommentc').val(),
+   	   		officeNumber : $('#pcofficeNum').val(),
+   	   		companyId : companyId
+	   	}
+		
+		console.log(JSON.stringify(contract));
+		$.ajax({
+			url:root + "/AFW-I-System/new/contract/add",
+			type:'post',
+			data : JSON.stringify(contract),
+			dataType : 'json',
+			contentType: 'application/json; charset=UTF-8',
+			success : function(data) {
+				console.log(data);
+				if(data.status == 'success') {
+					$('#contractClose').click();
+					swal("新增成功!", "", "success");
+				}
+			},
+			error : function(e) {
+				alert("something error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+	}
 	
+	//TODO
+	var setUser = function() {
+		
+	}
 	
+    var getAllUserAjax = function() {
+    	$.ajax({
+			url:root + "/AFW-I-System/new/user/getAllUser",
+			type:'get',
+			dataType : 'json',
+			contentType: 'application/json',
+			success : function(response) {
+				//alert("success");
+				console.log("getAllUserAjax:" + response.message);
+				if(response.status == 'success') {
+					setUserToContractDropDown(response.message);
+				}
+			},
+			error : function(e) {
+				alert("error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+    }
 	
-	
+    var setUserToContractDropDown = function(data) {
+    	var obj = jQuery.parseJSON(data);
+    	$("#pcNUserc").append($("<option></option>")
+				.attr("value", -1).text('請選擇'));
+    	for(var i=0; i<obj.length; i++) {
+    		$("#pcNUserc").append($("<option></option>")
+    				.attr("value", obj[i].userId).text(obj[i].userName));
+    	}
+    }
     
 	var getUrlParameter = function getUrlParameter(sParam) {
 	    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
