@@ -55,12 +55,12 @@ public class CompanyController {
 	 @Autowired
 	 private RemitService remitService; 
 	 
-	 public HttpServletRequest request;
+	
 	 
      
 	    @SuppressWarnings("unchecked")
 		@RequestMapping(value = "/new/company/add", method = RequestMethod.POST, produces = {"application/json; charset=UTF-8"})
-	    public String createCompany(@RequestBody String newCompanyJson) {
+	    public String createCompany(@RequestBody String newCompanyJson  , HttpServletRequest request) {
 	    	JSONObject result = new JSONObject();
 	        //System.out.println("Creating Company " + company.getCompany_Name());
 	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -170,22 +170,22 @@ public class CompanyController {
 	    //TODO:174, 185行上線前需要調整
 	    @SuppressWarnings("unchecked")
 		@RequestMapping(value = "/retrive/company", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
-	    public String selectCompany() {
+	    public String selectCompany(@RequestBody String selectcompantjons  , HttpServletRequest request) {
 	    	Gson gson = new Gson();
 	    	JSONObject result = new JSONObject();
-	    	
+	   
 	    	try {
 				//String usercode = (String) request.getSession().getAttribute("usercode");
-	    		String usercode = "AA";
+	    		String usercode = (String) request.getSession().getAttribute("usercode");
 				//System.err.println(usercode);
 	    		List<CompanyEntity> companyArr = null;
 				JSONArray arr = new JSONArray();
-				
+
 				
 				
 				if(usercode.equals("AA")) {
 					//總公司抓取全部顧客資料
-					System.out.println("TOTAL");
+					System.out.println("TOTAL1");
 					companyArr = companyService.findAll();
 				} else {
 					System.out.println("221");
@@ -228,19 +228,19 @@ public class CompanyController {
 	    //TODO:224, 236行上線前需要調整
 	    @SuppressWarnings("unchecked")
 		@RequestMapping(value = "/retrive/company/{type}", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
-	    public String selectCompanyByType(@PathVariable("type") String type) {
+	    public String selectCompanyByType(@PathVariable("type") String type  , HttpServletRequest request) {
 	    	Gson gson = new Gson();
 	    	JSONObject result = new JSONObject();
 	     	try {
 				//String usercode = (String) request.getSession().getAttribute("usercode");
-	     		String usercode = "AA";
+	     		String usercode = (String) request.getSession().getAttribute("usercode");
 				String typejson = null;
 				
 				List<CompanyEntity> companyArr = null;
 				JSONArray arr = new JSONArray();
 				
 				if(usercode.equals("AA")) {
-					System.out.println("TOTAL");
+					System.out.println("TOTAL2"+usercode);			
 					companyArr = companyService.findAll();
 				} else {
 					System.out.println("221");
@@ -282,7 +282,7 @@ public class CompanyController {
 	    //取回每間公司(客戶)的資料(companyProfile) ex:合約也要全部給我, id:公司id
 	    @SuppressWarnings("unchecked")
 		@RequestMapping(value = "/retrive/companyProfile/{id}", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
-	    public String selectCompanyProfile(@PathVariable("id") int companyId) {
+	    public String selectCompanyProfile(@PathVariable("id") int companyId  , HttpServletRequest request) {
 	    	
 	    	JSONObject result = new JSONObject();
 	    	JSONObject obj = new JSONObject();
@@ -342,7 +342,7 @@ public class CompanyController {
 	    
 	    @SuppressWarnings("unchecked")
 		@RequestMapping(value = "/company/update/{id}", method = RequestMethod.PUT, produces = {"application/json; charset=UTF-8"})
-	    public String updateCompany(@RequestBody String companyJson, @PathVariable("id") int companyId) {
+	    public String updateCompany(@RequestBody String companyJson, @PathVariable("id") int companyId  , HttpServletRequest request) {
 	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	    	JSONObject result = new JSONObject();
 	    	
