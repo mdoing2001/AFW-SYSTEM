@@ -77,14 +77,17 @@ public class CompanyDao {
 	}
 		
 		
-    public void insert(CompanyEntity company) {
+    public Integer insert(CompanyEntity company) {
+    	Integer id = 0;
 		try {
-			em.getTransaction().begin();
+			//em.getTransaction().begin();
 			em.persist(company);
-			em.getTransaction().commit();
+			//em.getTransaction().commit();
+			id = company.getCompanyId();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return id;
 	}
 	
 	public void update(CompanyEntity company) {

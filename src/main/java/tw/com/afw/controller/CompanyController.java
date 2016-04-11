@@ -77,7 +77,7 @@ public class CompanyController {
 				
 				//TODO:塞company("company":{"companyName":"","companyType":"","companyMail":"","companyCode":"-1","companyEin":"","companyExecutive":"","companyBitrhday":"","companyNumber":"","companyFax":"","companyAddress2":"","companyRemark":""})
 				CompanyEntity companyEntity = new CompanyEntity();
-				companyEntity.setCompanyName(null != companyObj.get("companyName") ? companyObj.get("companyName").toString() : null);
+				companyEntity.setCompanyName(null != companyObj.get("companyName") ? companyObj.get("companyName").toString().trim() : null);
 				companyEntity.setCompanyType(null != companyObj.get("companyType") ? companyObj.get("companyType").toString() : null);
 				companyEntity.setCompanyMail(null != companyObj.get("companyMail") ? companyObj.get("companyMail").toString() : null);
 				companyEntity.setCompanyCode(null != companyObj.get("companyCode") ? companyObj.get("companyCode").toString() : null);
@@ -90,60 +90,62 @@ public class CompanyController {
 				companyEntity.setCompanyAddress2(null != companyObj.get("companyAddress2") ? companyObj.get("companyAddress2").toString() : null);
 				companyEntity.setCompanyRemark(null != companyObj.get("companyRemark") ? companyObj.get("companyRemark").toString() : null);
 				
-				//TODO:塞contract("contract":{"userId":"","userId2":"-1","contractType":"-1","contractStart":"","contractEnd":"","contractRent":"","contractDeposit":"","contractRented":"","contractDeposited":"","contractRemarks":""})
-				ContractEntity contractEntity = new ContractEntity();
-				contractEntity.setUserId(!contractObj.get("userId").toString().isEmpty() ? userService.findUserById(Integer.parseInt(contractObj.get("userId").toString())) : null);
-				contractEntity.setUserId2(!contractObj.get("userId2").toString().isEmpty() ? userService.findUserById(Integer.parseInt(contractObj.get("userId2").toString())) : null);
-				contractEntity.setContractType(null != contractObj.get("contractType") ? contractObj.get("contractType").toString() : null);
-				contractEntity.setContractDate(!contractObj.get("contractDate").toString().isEmpty() ? sdf.parse(contractObj.get("contractDate").toString()) : null);
-				contractEntity.setContractStart(!contractObj.get("contractStart").toString().isEmpty() ? sdf.parse(contractObj.get("contractStart").toString()) : null);
-				contractEntity.setContractEnd(!contractObj.get("contractEnd").toString().isEmpty() ? sdf.parse(contractObj.get("contractEnd").toString()) : null);
-				contractEntity.setContractRent(null != contractObj.get("contractRent") ? Double.parseDouble(contractObj.get("contractRent").toString()): null);
-				contractEntity.setContractDeposit(null != contractObj.get("contractDeposit") ?  Double.parseDouble(contractObj.get("contractDeposit").toString()) : null);
-				contractEntity.setContractRented(null != contractObj.get("contractRented") ? Double.parseDouble(contractObj.get("contractRented").toString()) : null);
-				contractEntity.setContractDeposited(null != contractObj.get("contractDeposited") ? Double.parseDouble(contractObj.get("contractDeposited").toString()): null);
-				contractEntity.setContractRemarks(null != contractObj.get("contractRemarks") ? contractObj.get("contractRemarks").toString() : null);
 				
-				//TODO:塞office(辦公室號碼 不一定每張合約都有)("office":{"officeNumber":""})
-				OfficeEntity officeEntity = new OfficeEntity();
-				officeEntity.setOfficeNumber(null != officeObj.get("officeNumber") ? officeObj.get("officeNumber").toString() :null );				
-				
-				//塞accountancy("acc":{"accName":"","accContact":"","accPhone":"","accAddress":""})
-				AccountancyEntity accountancyEntity = new AccountancyEntity();
-				accountancyEntity.setAccAddress(null != accountancyObj.get("accAddress") ? accountancyObj.get("accAddress").toString() : null);
-				accountancyEntity.setAccContact(null != accountancyObj.get("accContact") ? accountancyObj.get("accContact").toString() : null);
-				accountancyEntity.setAccName(null != accountancyObj.get("accName") ? accountancyObj.get("accName").toString() : null);
-				accountancyEntity.setAccPhone(null != accountancyObj.get("accPhone") ? accountancyObj.get("accPhone").toString() : null);
-				
-				//(辦公室號碼 不一定每張合約都有)
-				if(null != officeObj.get("officeNumber")) {
-					companyEntity.setAccId(accountancyEntity);
-					contractEntity.setCompanyId(companyEntity);
-					officeEntity.setContractId(contractEntity);
-				} else {
-					companyEntity.setAccId(accountancyEntity);
-					contractEntity.setCompanyId(companyEntity);
-				}
-				
-				//company 統編驗證
-				String ein =companyEntity.getCompanyEin();
-				int checkein=companyService.checkEin(ein);
-				if(checkein == 1) {
+//				//company 統編驗證
+//				String ein =companyEntity.getCompanyEin();
+//				int checkein=companyService.checkEin(ein);
+//				if(checkein == 1) {
 					
-					if(null != officeObj.get("officeNumber")) {
+					Integer companyId = companyService.ins(companyEntity);
+					
+					//TODO:塞contract("contract":{"userId":"","userId2":"-1","contractType":"-1","contractStart":"","contractEnd":"","contractRent":"","contractDeposit":"","contractRented":"","contractDeposited":"","contractRemarks":""})
+					ContractEntity contractEntity = new ContractEntity();
+					contractEntity.setUserId(!contractObj.get("userId").toString().isEmpty() ? userService.findUserById(Integer.parseInt(contractObj.get("userId").toString())) : null);
+					contractEntity.setUserId2(!contractObj.get("userId2").toString().isEmpty() ? userService.findUserById(Integer.parseInt(contractObj.get("userId2").toString())) : null);
+					contractEntity.setContractType("" != contractObj.get("contractType") ? contractObj.get("contractType").toString() : null);
+					contractEntity.setContractDate(!contractObj.get("contractDate").toString().isEmpty() ? sdf.parse(contractObj.get("contractDate").toString()) : null);
+					contractEntity.setContractStart(!contractObj.get("contractStart").toString().isEmpty() ? sdf.parse(contractObj.get("contractStart").toString()) : null);
+					contractEntity.setContractEnd(!contractObj.get("contractEnd").toString().isEmpty() ? sdf.parse(contractObj.get("contractEnd").toString()) : null);
+					contractEntity.setContractRent(!contractObj.get("contractRent").toString().isEmpty() ? Double.parseDouble(contractObj.get("contractRent").toString()): 0);
+					contractEntity.setContractDeposit(!contractObj.get("contractDeposit").toString().isEmpty() ?  Double.parseDouble(contractObj.get("contractDeposit").toString()) : 0);
+					contractEntity.setContractRented(!contractObj.get("contractRented").toString().isEmpty() ? Double.parseDouble(contractObj.get("contractRented").toString()) : 0);
+					contractEntity.setContractDeposited(!contractObj.get("contractDeposited").toString().isEmpty() ? Double.parseDouble(contractObj.get("contractDeposited").toString()): 0);
+					contractEntity.setContractRemarks(null != contractObj.get("contractRemarks") ? contractObj.get("contractRemarks").toString() : null);
+					
+					//TODO:塞office(辦公室號碼 不一定每張合約都有)("office":{"officeNumber":""})
+					OfficeEntity officeEntity = new OfficeEntity();
+					officeEntity.setOfficeNumber(null != officeObj.get("officeNumber") ? officeObj.get("officeNumber").toString() :null );				
+					
+					//塞accountancy("acc":{"accName":"","accContact":"","accPhone":"","accAddress":""})
+					AccountancyEntity accountancyEntity = new AccountancyEntity();
+					accountancyEntity.setAccAddress(null != accountancyObj.get("accAddress") ? accountancyObj.get("accAddress").toString() : null);
+					accountancyEntity.setAccContact(null != accountancyObj.get("accContact") ? accountancyObj.get("accContact").toString() : null);
+					accountancyEntity.setAccName(null != accountancyObj.get("accName") ? accountancyObj.get("accName").toString() : null);
+					accountancyEntity.setAccPhone(null != accountancyObj.get("accPhone") ? accountancyObj.get("accPhone").toString() : null);
+					
+					CompanyEntity nCompanyEntity = companyService.findCompanyById(companyId);
+					System.out.println(nCompanyEntity.toString());
+					//(辦公室號碼 不一定每張合約都有)
+					if(!contractObj.get("contractType").toString().isEmpty() && contractObj.get("contractType").toString().equalsIgnoreCase("o")) {
+						nCompanyEntity.setAccId(accountancyEntity);
+						companyService.upd(nCompanyEntity);
+						contractEntity.setCompanyId(nCompanyEntity);
+						officeEntity.setContractId(contractEntity);
 						officeService.ins(officeEntity);
 					} else {
+						nCompanyEntity.setAccId(accountancyEntity);
+						companyService.upd(nCompanyEntity);
+						contractEntity.setCompanyId(nCompanyEntity);
 						contractService.ins(contractEntity);
 					}
-					Integer companyId = companyService.findCompanyByEin(companyEntity.getCompanyEin()).getCompanyId();
 					
 					result.put("status", "success");
 			    	result.put("message", "success");
 			    	result.put("companyId", companyId);
-				}else{
-					result.put("status", "error");
-			    	result.put("message", "統一編號重複");
-				}
+//				}else{
+//					result.put("status", "error");
+//			    	result.put("message", "統一編號重複");
+//				}
 					
 		    	
 			} catch (JsonSyntaxException e) {
@@ -170,7 +172,7 @@ public class CompanyController {
 	    //TODO:174, 185行上線前需要調整
 	    @SuppressWarnings("unchecked")
 		@RequestMapping(value = "/retrive/company", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
-	    public String selectCompany(@RequestBody String selectcompantjons  , HttpServletRequest request) {
+	    public String selectCompany(HttpServletRequest request) {
 	    	Gson gson = new Gson();
 	    	JSONObject result = new JSONObject();
 	   
@@ -188,9 +190,8 @@ public class CompanyController {
 					System.out.println("TOTAL1");
 					companyArr = companyService.findAll();
 				} else {
-					System.out.println("221");
 					//companyArr = companyService.findCompanyByCode(usercode);
-					companyArr = companyService.findCompanyByCode("221");
+					companyArr = companyService.findCompanyByCode(usercode);
 				}
 				
 				for(CompanyEntity entity : companyArr) {
@@ -234,6 +235,7 @@ public class CompanyController {
 	     	try {
 				//String usercode = (String) request.getSession().getAttribute("usercode");
 	     		String usercode = (String) request.getSession().getAttribute("usercode");
+	     		System.out.println(usercode);
 				String typejson = null;
 				
 				List<CompanyEntity> companyArr = null;
@@ -243,7 +245,7 @@ public class CompanyController {
 					System.out.println("TOTAL2"+usercode);			
 					companyArr = companyService.findAll();
 				} else {
-					System.out.println("221");
+					//System.out.println("221");
 					//companyArr = companyService.findCompanyByCode(usercode);
 					companyArr = companyService.findCompanyByCode("221");
 				}

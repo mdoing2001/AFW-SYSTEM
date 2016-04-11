@@ -59,7 +59,7 @@ public class ContractEntity implements java.io.Serializable{
 	@JoinColumn(name="user_id2")
 	private UserEntity userId2;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="company_id")
 	private CompanyEntity companyId;
 	

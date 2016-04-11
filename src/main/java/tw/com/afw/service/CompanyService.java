@@ -55,40 +55,40 @@ public class CompanyService {
 	
 	@Transactional
 	public  CompanyEntity findCompanyById(Integer id){
-		return   dao.findCompanyById(id);
+		return dao.findCompanyById(id);
 	}
 	
 	
 	@Transactional
 	public CompanyEntity findCompanyByEin(String ein){
-		return   dao.findCompanyByEin(ein);
+		return dao.findCompanyByEin(ein);
 	}
 	
 	@Transactional
-	public  CompanyEntity comByNumber(String number){
-		return   dao.findCompanyByEin(number);
+	public CompanyEntity comByNumber(String number){
+		return dao.findCompanyByEin(number);
 	}
 	
 	@Transactional
-	public  void ins(CompanyEntity company){
-		dao.insert(company);
+	public Integer ins(CompanyEntity company) {
+		return dao.insert(company);
 	}
 	
 
 	@Transactional
-	public  void upd(CompanyEntity company){
+	public void upd(CompanyEntity company){
 		dao.update(company);
 	}
 	
 	
 	@Transactional
-	public  void del(CompanyEntity company){
+	public void del(CompanyEntity company){
 		dao.delete(company);
 	}
 	
 	
 	@Transactional
-	public  void deleteId(int del_id){
+	public void deleteId(int del_id){
 		dao.deleteById(del_id);
 	}
 	
@@ -113,8 +113,6 @@ public class CompanyService {
 		}else{
 			return 0;
 		}
-		
-		
 	}
 	
 

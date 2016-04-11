@@ -3,6 +3,7 @@ package tw.com.afw.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
@@ -26,7 +27,7 @@ public class OfficeDao {
 		OfficeEntity result = null;
 		try {
 			result = em.createQuery("select e from OfficeEntity e where e.contractId.contractId = :cid ", OfficeEntity.class).setParameter("cid", cid).getSingleResult();
-		} catch (Exception e) {
+		} catch (NoResultException e) {
 			e.printStackTrace();
 		}
 

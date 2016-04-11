@@ -77,6 +77,7 @@ public class AccountancyController {
 			result.put("message", "success");
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			result.put("status", "error");
 	    	result.put("message", "update error");
 		}

@@ -3,6 +3,7 @@ package tw.com.afw.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
@@ -39,7 +40,7 @@ public class RemitDao {
 			results = em.createQuery("select r from RemitEntity r where r.companyId.companyId = :companyId", RemitEntity.class)
 					.setParameter("companyId", companyId).getResultList();
             
-        } catch (Exception e) {
+        } catch (NoResultException e) {
             e.printStackTrace();
         }
 		return results;
@@ -58,9 +59,9 @@ public class RemitDao {
 	
 	public void update(RemitEntity remit) {
 		try {
-			em.getTransaction().begin();
+			//em.getTransaction().begin();
 			em.merge(remit);
-			em.getTransaction().commit();
+			//em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

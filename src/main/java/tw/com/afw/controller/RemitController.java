@@ -61,27 +61,15 @@ public class RemitController {
 	//利用company id 去 撈 remitEntity 再去set全部的值
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/remit/update/{id}", method = RequestMethod.PUT, produces = {"application/json; charset=UTF-8"})
-	public String updateRemit(@PathVariable("id") long id, @RequestBody String remitStr) {
-		//step1 id撈remitEntity
-		
-		//step2 remitStr 轉乘jsonobject
-		
-		//step3 jsonobject去get所有的值(參考createCompany那隻)在set進去step1的remitEntity
-		
-		//step4 merge
-		
-		//.....
-		
+	public String updateRemit(@PathVariable("id") Integer id, @RequestBody String remitStr) {
 		JSONObject result = new JSONObject();
 		
 		try {
 			
-			JSONObject obj = (JSONObject) new JSONParser().parse(remitStr);
-			JSONObject remitObj = (JSONObject) obj.get("remit");
+			JSONObject remitObj = (JSONObject) new JSONParser().parse(remitStr);
 			
-			RemitEntity  Remitentity = remitService.findRemitById(Integer.parseInt(remitObj.get("remitId").toString()));
+			RemitEntity Remitentity = remitService.findRemitById(id);
 			Remitentity.setRemitAccount(null != remitObj.get("remitAccount") ? remitObj.get("remitAccount").toString() : null);
-			Remitentity.setRemitDeposit(null != remitObj.get("remitDeposit") ? remitObj.get("remitDeposit").toString() : null);
 			Remitentity.setRemitMode(null != remitObj.get("remitMode") ? remitObj.get("remitMode").toString() : null);
 			Remitentity.setCompanyId(null != remitObj.get("companyId") ? companyService.findCompanyById(Integer.parseInt(remitObj.get("companyId").toString())) : null);
 			
@@ -90,6 +78,7 @@ public class RemitController {
 			result.put("status", "success");
 			result.put("message", "success");
 		} catch (Exception e) {
+			e.printStackTrace();
 			result.put("status", "error");
 	    	result.put("message", "update error");
 		}
