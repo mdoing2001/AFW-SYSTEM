@@ -65,5 +65,30 @@ public class LoginController {
 		 return results.toJSONString();
 	 }
 	 
+	 
+	 @SuppressWarnings("unchecked")
+	 @RequestMapping(value = "/new/user/logout", method = RequestMethod.POST, produces = "application/json")
+	 public String checkLogout(HttpServletRequest request)  {
+		
+		 
+		 JSONObject results = new JSONObject();
+		 
+		 try {
+		
+			 request.getSession().invalidate();
+			results.put("status", "success");
+			results.put("message", "success");
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			results.put("status", "error");
+			results.put("message", e);
+		}
+		 
+		 
+		 return results.toJSONString();
+		 
+	 }
+	 
 
 }
