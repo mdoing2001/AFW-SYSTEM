@@ -28,6 +28,8 @@ public class OfficeDao {
 		try {
 			result = em.createQuery("select e from OfficeEntity e where e.contractId.contractId = :cid ", OfficeEntity.class).setParameter("cid", cid).getSingleResult();
 		} catch (NoResultException e) {
+			//e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

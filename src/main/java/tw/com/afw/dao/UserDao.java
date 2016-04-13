@@ -62,7 +62,9 @@ public class UserDao {
 			query.setParameter("user_count", userCount);
 			entity = (UserEntity) query.getSingleResult();
         } catch (NoResultException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+        } catch (Exception e) {
+        	e.printStackTrace();
         }
 		return entity;
 	}

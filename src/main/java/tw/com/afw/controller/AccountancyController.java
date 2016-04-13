@@ -63,18 +63,23 @@ public class AccountancyController {
 		try {
 			JSONObject accountancyObj = (JSONObject) new JSONParser().parse(accountancyStr);
 			
-			AccountancyEntity Accountancyentity  = accountancyService.findAccountancyById(id);
+			AccountancyEntity accountancyEntity  = accountancyService.findAccountancyById(id);
 			
-			Accountancyentity.setAccName(null != accountancyObj.get("accName") ?  accountancyObj.get("accName").toString() : null);
-			Accountancyentity.setAccContact(null != accountancyObj.get("accContact") ?  accountancyObj.get("accContact").toString() : null);
-			Accountancyentity.setAccPhone(null != accountancyObj.get("accPhone") ?  accountancyObj.get("accPhone").toString() : null);
-			Accountancyentity.setAccAddress(null != accountancyObj.get("accAddress") ?  accountancyObj.get("accAddress").toString() : null);
+			if(accountancyEntity != null) {
+				accountancyEntity.setAccName(null != accountancyObj.get("accName") ?  accountancyObj.get("accName").toString() : null);
+				accountancyEntity.setAccContact(null != accountancyObj.get("accContact") ?  accountancyObj.get("accContact").toString() : null);
+				accountancyEntity.setAccPhone(null != accountancyObj.get("accPhone") ?  accountancyObj.get("accPhone").toString() : null);
+				accountancyEntity.setAccAddress(null != accountancyObj.get("accAddress") ?  accountancyObj.get("accAddress").toString() : null);
+				
+				accountancyService.update(accountancyEntity);
+				
+				result.put("status", "success");
+				result.put("message", "success");
+			} else {
+				result.put("status", "error");
+		    	result.put("message", "更新有誤 請重新操作");
+			}
 			
-			
-			accountancyService.update(Accountancyentity);
-			
-			result.put("status", "success");
-			result.put("message", "success");
 			
 		} catch (Exception e) {
 			e.printStackTrace();

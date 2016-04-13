@@ -32,6 +32,9 @@ public class CompanyEntity implements java.io.Serializable{
 	@Column(name = "company_status")
 	private String companyStatus;
 	
+	@Column(name = "company_status_change_date")
+	private Date companyStatusChangeDate;
+	
 	@Column(name = "company_name")
 	private String companyName;
 	
@@ -210,11 +213,20 @@ public class CompanyEntity implements java.io.Serializable{
 	public void setCompanyCode(String companyCode) {
 		this.companyCode = companyCode;
 	}
+	
+	public Date getCompanyStatusChangeDate() {
+		return companyStatusChangeDate;
+	}
+
+	public void setCompanyStatusChangeDate(Date companyStatusChangeDate) {
+		this.companyStatusChangeDate = companyStatusChangeDate;
+	}
 
 	@Override
 	public String toString() {
 		return "CompanyEntity [companyId=" + companyId + ", companyType="
 				+ companyType + ", companyStatus=" + companyStatus
+				+ ", companyStatusChangeDate=" + companyStatusChangeDate
 				+ ", companyName=" + companyName + ", companyExecutive="
 				+ companyExecutive + ", companyBitrhday=" + companyBitrhday
 				+ ", companyEin=" + companyEin + ", companyAddress="
@@ -226,5 +238,7 @@ public class CompanyEntity implements java.io.Serializable{
 				+ ", companyLetterStatus=" + companyLetterStatus
 				+ ", companyCode=" + companyCode + "]";
 	}
+
+	
 
 }

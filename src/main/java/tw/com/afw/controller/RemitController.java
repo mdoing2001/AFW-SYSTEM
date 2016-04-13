@@ -9,11 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import tw.com.afw.entity.CompanyEntity;
 import tw.com.afw.entity.RemitEntity;
-import tw.com.afw.service.AccountancyService;
 import tw.com.afw.service.CompanyService;
-import tw.com.afw.service.ContractService;
 import tw.com.afw.service.RemitService;
 
 
@@ -68,15 +65,20 @@ public class RemitController {
 			
 			JSONObject remitObj = (JSONObject) new JSONParser().parse(remitStr);
 			
-			RemitEntity Remitentity = remitService.findRemitById(id);
-			Remitentity.setRemitAccount(null != remitObj.get("remitAccount") ? remitObj.get("remitAccount").toString() : null);
-			Remitentity.setRemitMode(null != remitObj.get("remitMode") ? remitObj.get("remitMode").toString() : null);
-			Remitentity.setCompanyId(null != remitObj.get("companyId") ? companyService.findCompanyById(Integer.parseInt(remitObj.get("companyId").toString())) : null);
+			RemitEntity remitEntity = remitService.findRemitById(id);
+			if(remitEntity != null) {
+				remitEntity.setRemitAccount(null != remitObj.get("remitAccount") ? remitObj.get("remitAccount").toString() : null);
+				remitEntity.setRemitMode(null != remitObj.get("remitMode") ? remitObj.get("remitMode").toString() : null);
+				remitEntity.setCompanyId(null != remitObj.get("companyId") ? companyService.findCompanyById(Integer.parseInt(remitObj.get("companyId").toString())) : null);
+				
+				remitService.update(remitEntity);
+				result.put("status", "success");
+				result.put("message", "success");
+			} else {
+				result.put("status", "error");
+		    	result.put("message", "更新有誤 請重新操作");
+			}
 			
-			remitService.update(Remitentity);
-			
-			result.put("status", "success");
-			result.put("message", "success");
 		} catch (Exception e) {
 			e.printStackTrace();
 			result.put("status", "error");

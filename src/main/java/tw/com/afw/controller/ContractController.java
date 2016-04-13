@@ -100,29 +100,35 @@ public class ContractController {
 	  		JSONObject contractObj = (JSONObject) new JSONParser().parse(ContractStr);
 			ContractEntity contractEntity = contractService.findContracById(id);
 			
-			contractEntity.setContractStart(!contractObj.get("contractStart").toString().isEmpty() ? sdf.parse(contractObj.get("contractStart").toString()) : null);
-			contractEntity.setContractEnd(!contractObj.get("contractEnd").toString().isEmpty() ? sdf.parse(contractObj.get("contractEnd").toString()) : null);
-			contractEntity.setContractDeposit(!contractObj.get("contractDeposit").toString().isEmpty() ?  Double.parseDouble(contractObj.get("contractDeposit").toString()) : 0);
-			contractEntity.setContractRent(!contractObj.get("contractRent").toString().isEmpty() ? Double.parseDouble(contractObj.get("contractRent").toString()): 0);
-			contractEntity.setContractDeposited(!contractObj.get("contractDeposited").toString().isEmpty() ? Double.parseDouble(contractObj.get("contractRented").toString()): 0);
-			contractEntity.setContractRented(!contractObj.get("contractRented").toString().isEmpty() ? Double.parseDouble(contractObj.get("contractRented").toString()): 0);
-			contractEntity.setContractDate(!contractObj.get("contractDate").toString().isEmpty() ? sdf.parse(contractObj.get("contractDate").toString()) : null);
-			contractEntity.setContractType(null != contractObj.get("contractType") ? contractObj.get("contractType").toString() : null);
-			contractEntity.setContractRemarks(null != contractObj.get("contractRemarks") ? contractObj.get("contractRemarks").toString() : null);
-			contractEntity.setContractDel(null != contractObj.get("contractDel") ? contractObj.get("contractDel").toString() : null);
-			
-			contractService.update(contractEntity);
-			
-			if(!contractObj.get("contractType").toString().isEmpty() && contractObj.get("contractType").toString().equalsIgnoreCase("o")) {
-				OfficeEntity officeEntity = officeService.findOffByContract(id);
-				if(officeEntity != null) {
-					officeEntity.setOfficeNumber(contractObj.get("officeNumber").toString());
-					officeService.update(officeEntity);
+			if(contractEntity != null) {
+				contractEntity.setContractStart(!contractObj.get("contractStart").toString().isEmpty() ? sdf.parse(contractObj.get("contractStart").toString()) : null);
+				contractEntity.setContractEnd(!contractObj.get("contractEnd").toString().isEmpty() ? sdf.parse(contractObj.get("contractEnd").toString()) : null);
+				contractEntity.setContractDeposit(!contractObj.get("contractDeposit").toString().isEmpty() ?  Double.parseDouble(contractObj.get("contractDeposit").toString()) : 0);
+				contractEntity.setContractRent(!contractObj.get("contractRent").toString().isEmpty() ? Double.parseDouble(contractObj.get("contractRent").toString()): 0);
+				contractEntity.setContractDeposited(!contractObj.get("contractDeposited").toString().isEmpty() ? Double.parseDouble(contractObj.get("contractDeposited").toString()): 0);
+				contractEntity.setContractRented(!contractObj.get("contractRented").toString().isEmpty() ? Double.parseDouble(contractObj.get("contractRented").toString()): 0);
+				contractEntity.setContractDate(!contractObj.get("contractDate").toString().isEmpty() ? sdf.parse(contractObj.get("contractDate").toString()) : null);
+				contractEntity.setContractType(null != contractObj.get("contractType") ? contractObj.get("contractType").toString() : null);
+				contractEntity.setContractRemarks(null != contractObj.get("contractRemarks") ? contractObj.get("contractRemarks").toString() : null);
+				contractEntity.setContractDel(null != contractObj.get("contractDel") ? contractObj.get("contractDel").toString() : null);
+				
+				contractService.update(contractEntity);
+				
+				if(!contractObj.get("contractType").toString().isEmpty() && contractObj.get("contractType").toString().equalsIgnoreCase("o")) {
+					OfficeEntity officeEntity = officeService.findOffByContract(id);
+					if(officeEntity != null) {
+						officeEntity.setOfficeNumber(contractObj.get("officeNumber").toString());
+						officeService.update(officeEntity);
+					}
 				}
+				
+				result.put("status", "success");
+				result.put("message", "success");
+			} else {
+				result.put("status", "error");
+		    	result.put("message", "更新有誤 請重新操作");
 			}
 			
-			result.put("status", "success");
-			result.put("message", "success");
 			
 		} catch (Exception e) {
 			e.printStackTrace();

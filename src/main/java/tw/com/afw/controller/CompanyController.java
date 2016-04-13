@@ -89,7 +89,7 @@ public class CompanyController {
 				companyEntity.setCompanyAddress(null != companyObj.get("companyAddress") ? companyObj.get("companyAddress").toString() : null);
 				companyEntity.setCompanyAddress2(null != companyObj.get("companyAddress2") ? companyObj.get("companyAddress2").toString() : null);
 				companyEntity.setCompanyRemark(null != companyObj.get("companyRemark") ? companyObj.get("companyRemark").toString() : null);
-				
+				companyEntity.setCompanyStatus("on");
 				
 //				//company 統編驗證
 //				String ein =companyEntity.getCompanyEin();
@@ -124,7 +124,7 @@ public class CompanyController {
 					accountancyEntity.setAccPhone(null != accountancyObj.get("accPhone") ? accountancyObj.get("accPhone").toString() : null);
 					
 					CompanyEntity nCompanyEntity = companyService.findCompanyById(companyId);
-					System.out.println(nCompanyEntity.toString());
+					//System.out.println(nCompanyEntity.toString());
 					//(辦公室號碼 不一定每張合約都有)
 					if(!contractObj.get("contractType").toString().isEmpty() && contractObj.get("contractType").toString().equalsIgnoreCase("o")) {
 						nCompanyEntity.setAccId(accountancyEntity);
@@ -178,44 +178,49 @@ public class CompanyController {
 	   
 	    	try {
 				//String usercode = (String) request.getSession().getAttribute("usercode");
-	    		String usercode = (String) request.getSession().getAttribute("usercode");
+	    		String userCode = (String) request.getSession().getAttribute("usercode");
 				//System.err.println(usercode);
 	    		List<CompanyEntity> companyArr = null;
 				JSONArray arr = new JSONArray();
 
 				
-				
-				if(usercode.equals("AA")) {
-					//總公司抓取全部顧客資料
-					System.out.println("TOTAL1");
-					companyArr = companyService.findAll();
-				} else {
-					//companyArr = companyService.findCompanyByCode(usercode);
-					companyArr = companyService.findCompanyByCode(usercode);
-				}
-				
-				for(CompanyEntity entity : companyArr) {
-					String officeNum = null;
-					JSONObject obj = new JSONObject();
-					List<ContractEntity> contractArr = contractService.findContractByCompanyId(entity.getCompanyId());
+				if(userCode != null) {
+					if(userCode.equals("AA")) {
+						//總公司抓取全部顧客資料
+						System.out.println("AA");
+						companyArr = companyService.findAll();
+					} else {
+						System.out.println(userCode);
+						companyArr = companyService.findCompanyByCode(userCode);
+					}
 					
-					for(ContractEntity contract : contractArr) {
-						Date date = new Date();
-						if(null != contract.getContractType() && contract.getContractType().equalsIgnoreCase("o")) {
-							if(contract.getContractEnd().after(date)) {
-								System.out.println(officeService.findOffByContract(contract.getContractId()).toString());
-								officeNum = officeService.findOffByContract(contract.getContractId()).getOfficeNumber();
-								date = contract.getContractEnd();
+					for(CompanyEntity entity : companyArr) {
+						String officeNum = null;
+						JSONObject obj = new JSONObject();
+						List<ContractEntity> contractArr = contractService.findContractByCompanyId(entity.getCompanyId());
+						
+						for(ContractEntity contract : contractArr) {
+							Date date = new Date();
+							if(null != contract.getContractType() && contract.getContractType().equalsIgnoreCase("o")) {
+								if(contract.getContractEnd().after(date)) {
+									System.out.println(officeService.findOffByContract(contract.getContractId()).toString());
+									officeNum = officeService.findOffByContract(contract.getContractId()).getOfficeNumber();
+									date = contract.getContractEnd();
+								}
 							}
 						}
+						obj.put("company", entity);
+						obj.put("officeNumber", officeNum);
+						arr.add(obj);
 					}
-					obj.put("company", entity);
-					obj.put("officeNumber", officeNum);
-					arr.add(obj);
+					
+					result.put("status", "success");
+					result.put("message", gson.toJson(arr));
+				} else {
+					result.put("status", "error");
+					result.put("message", "請重新登入");
 				}
 				
-				result.put("status", "success");
-				result.put("message", gson.toJson(arr));
 			} catch (Exception e) {
 				e.printStackTrace();
 				result.put("status", "error");
@@ -233,21 +238,17 @@ public class CompanyController {
 	    	Gson gson = new Gson();
 	    	JSONObject result = new JSONObject();
 	     	try {
-				//String usercode = (String) request.getSession().getAttribute("usercode");
 	     		String usercode = (String) request.getSession().getAttribute("usercode");
-	     		System.out.println(usercode);
-				String typejson = null;
 				
 				List<CompanyEntity> companyArr = null;
 				JSONArray arr = new JSONArray();
 				
 				if(usercode.equals("AA")) {
-					System.out.println("TOTAL2"+usercode);			
+					System.out.println(usercode);			
 					companyArr = companyService.findAll();
 				} else {
-					//System.out.println("221");
-					//companyArr = companyService.findCompanyByCode(usercode);
-					companyArr = companyService.findCompanyByCode("221");
+					System.out.println(usercode);
+					companyArr = companyService.findCompanyByCode(usercode);
 				}
 					
 				for(CompanyEntity entity : companyArr) {
@@ -350,7 +351,7 @@ public class CompanyController {
 	    	
 			try {
 				JSONObject companyObj = (JSONObject) new JSONParser().parse(companyJson);
-		    	CompanyEntity  companyEntity = companyService.findCompanyById(companyId);
+		    	CompanyEntity companyEntity = companyService.findCompanyById(companyId);
 		    	if(companyEntity != null) {
 		    		companyEntity.setCompanyName(null != companyObj.get("companyName") ? companyObj.get("companyName").toString() : null);
 					companyEntity.setCompanyType(null != companyObj.get("companyType") ? companyObj.get("companyType").toString() : null);
@@ -367,10 +368,15 @@ public class CompanyController {
 					companyEntity.setCompanyRemark(null != companyObj.get("companyRemark") ? companyObj.get("companyRemark").toString() : null);
 					
 					companyService.upd(companyEntity);
+					
+					result.put("status", "success");
+			    	result.put("message", "success");
+		    	} else {
+		    		result.put("status", "error");
+			    	result.put("message", "更新有誤 請重新操作");
 		    	}
 		    	
-				result.put("status", "success");
-		    	result.put("message", "success");
+				
 			} catch (ParseException e) {
 				e.printStackTrace();
 				result.put("status", "error");
@@ -381,6 +387,42 @@ public class CompanyController {
 				result.put("message", e);
 			}
 		
+	    	return result.toJSONString();
+	    }
+	    
+	    @SuppressWarnings("unchecked")
+		@RequestMapping(value = "/company/status/update/{id}", method = RequestMethod.PUT, produces = {"application/json; charset=UTF-8"})
+	    public String updateCompanyStatus(@RequestBody String companyJson, @PathVariable("id") int companyId, HttpServletRequest request) {
+	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    	JSONObject result = new JSONObject();
+	    	
+	    	try {
+				JSONObject companyObj = (JSONObject) new JSONParser().parse(companyJson);
+		    	CompanyEntity companyEntity = companyService.findCompanyById(companyId);
+		    	
+		    	if(companyEntity != null) {
+		    		companyEntity.setCompanyStatus(!companyObj.get("companyStatus").toString().isEmpty() ? companyObj.get("companyStatus").toString() : null);
+			    	companyEntity.setCompanyStatusChangeDate(!companyObj.get("companyStatusChangeDate").toString().isEmpty() ? sdf.parse(companyObj.get("companyStatusChangeDate").toString()) : null);
+			    	
+			    	companyService.upd(companyEntity);
+			    	
+			    	result.put("status", "success");
+			    	result.put("message", "success");
+		    	} else {
+		    		result.put("status", "error");
+			    	result.put("message", "更新有誤 請重新操作");
+		    	}
+		    	
+	    	} catch (ParseException e) {
+				e.printStackTrace();
+				result.put("status", "error");
+				result.put("message", e);
+	    	} catch (java.text.ParseException e) {
+				e.printStackTrace();
+				result.put("status", "error");
+				result.put("message", e);
+			}
+	    	
 	    	return result.toJSONString();
 	    }
 	    

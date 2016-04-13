@@ -105,7 +105,6 @@
 	                    <li><a href="companyRegister.html">登記</a></li>
 	                    <li><a href="companyCC.html">聯絡處 & 停業</a></li>
 	                    <li><a href="companyClose.html">退租</a></li>
-	                    <li class="active"><a href="companyProfile.html">客戶檔案</a></li>
 	                </ul>
 	            </li>
 				<li class="has-submenu"><a href="#"><i class="ion-grid"></i> <span class="nav-label">收租</span></a>
@@ -346,10 +345,10 @@
                                 <div class="tab-content m-0">
                                     <div id="aboutme" class="tab-pane active">
                                     <div class="profile-desk">
-                                        <h1>葉碧霞小姐</h1>
-                                        <span class="designation">全方位商務中心有限公司</span>
+                                        <h1 id="aboutCeo"></h1>
+                                        <span class="designation" id="aboutCompanyName"></span>
 										<div>
-											<span class="label label-success">營業中</span>
+											<button class="btn pull-left updateStatus" data-toggle="modal" data-target="#status-update-modal" ></button>
 										</div>
                                         <table class="table table-condensed">
                                             <thead>
@@ -361,25 +360,25 @@
                                                 <tr>
                                                     <td><b>公司地址</b></td>
                                                     <td>
-                                                    	<span id="address">11111台北市士林區德行東路358巷8弄11號1樓</span>
+                                                    	<span id="aboutAddress"></span>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td><b>統一編號</b></td>
                                                     <td>
-                                                    	<span id="ein">12345678</span>
+                                                    	<span id="aboutEin"></span>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td><b>公司電話</b></td>
                                                     <td class="ng-binding">
-                                                    	<span id="phoneNumber">(123)-456-7890</span>
+                                                    	<span id="aboutPhoneNumber"></span>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td><b>登記地</b></td>
                                                     <td>
-                                                    	<span id="branch">微風店</span>
+                                                    	<span id="aboutBranch"></span>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -387,6 +386,45 @@
                                     </div> <!-- end profile-desk -->
                                 </div> <!-- about-me -->
 								
+								<div id="status-update-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	                                    <div class="modal-dialog"> 
+	                                        <div class="modal-content"> 
+	                                            <div class="modal-header"> 
+	                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+	                                                <h4 class="modal-title">Update Status</h4> 
+	                                            </div> 
+	                                            <div class="modal-body"> 
+													<div class="row">
+	                                                    <div class="col-md-6"> 
+	                                                        <div class="form-group"> 
+	                                                       		<label for="companyStatus" class="control-label">狀態</label>
+			                                    				<select class="form-control" id="companyStatus" name="companyStatus">
+							                                		<option value="-1">請選擇</option>
+							                                		<option value="on">營業</option>
+							                                		<option value="off">停業</option>
+							                                		<option value="discard">註銷</option>
+							                                		<option value="change">遷移</option>
+							                                		<option value="nopay">不繳費</option>
+							                                		<option value="remove">解散</option>
+			                                					</select>
+	                                                        </div> 
+	                                                    </div>
+	                                                    <div class="col-md-6"> 
+	                                                        <div class="form-group"> 
+	                                                           	<label for="statusChangeDate" class="control-label">更改日期</label>
+			                                    				<input class=" form-control" id="statusChangeDate" name="statusChangeDate" type="date" value=""> 
+	                                                        </div> 
+	                                                    </div>
+	                                                </div>
+	                                            </div> 
+	                                            <div class="modal-footer"> 
+	                                                <button type="button" class="btn btn-info" id="companyStatusSave">Save</button>
+	                                                <button type="button" class="btn btn-white" data-dismiss="modal" id="companyStatusClose">Close</button>
+	                                            </div> 
+	                                        </div> 
+	                                    </div>
+								</div><!-- /.modal -->
+	                                
                                 <!-- company -->
                                 <div id="edit-companyProfile" class="tab-pane">
                                     <div class="user-profile-content">
@@ -430,7 +468,7 @@
 			                                </div>
 			                                <div class="form-group">
 			                                    <label for="pbirthday" class="col-lg-2">負責人生日</label>
-			                                    <input class="form-control" id="pbirthday" name="pbirthday" type="date">
+			                                    <input class="form-control" id="pbirthday" name="pbirthday" type="text" placeholder="yyyy-mm-dd">
 			                                </div>
 			                                <div class="form-group">
 			                                    <label for="pphoneNumber" class="col-lg-2">電話 *</label>
@@ -624,29 +662,31 @@
 			                                </div>
 			                                <div class="form-group">
 			                                    <label for="pcdatesign" class="col-lg-2">簽約日期</label>
-			                                    <input class="form-control" id="pcdatesign" name="pcdatesign" type="date">
+			                                    <input class="form-control" id="pcdatesign" name="pcdatesign" type="text" placeholder="yyyy-mm-dd">
 			                                </div>
 	                                        <div class="form-group">
 	                                            <label class="col-lg-2" for="pcdates">合約日期(起) *</label>
-                                          		<div class="col-lg-12">
-                                           			<div class="input-group">
-                                           				<input type="text" id="pcdates" name="pcdates" class="form-control col-lg-2" placeholder='yyyy-mm-dd'>
-														<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-													</div>
-												</div>
+	                                            <input type="text" id="pcdates" name="pcdates" class="form-control" placeholder="yyyy-mm-dd">
+<!--                                           		<div class="col-lg-12"> -->
+<!--                                            			<div class="input-group"> -->
+<!--                                            				<input type="text" id="pcdates" name="pcdates" class="form-control col-lg-2" placeholder='yyyy-mm-dd'> -->
+<!-- 														<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> -->
+<!-- 													</div> -->
+<!-- 												</div> -->
 	                                        </div>
 	                                        <div class="form-group">
 	                                            <label class="col-lg-2" for="pcdatee">合約日期(終) *</label>
-                                            	<div class="col-lg-12">
-                                           			<div class="input-group">
-	                                            		<input type="text" id="pcdatee" name="pcdatee" class="form-control" placeholder='yyyy-mm-dd'>
-														<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-													</div>
-                                            	</div>
+	                                            <input type="text" id="pcdatee" name="pcdatee" class="form-control" placeholder="yyyy-mm-dd">
+<!--                                             	<div class="col-lg-12"> -->
+<!--                                            			<div class="input-group"> -->
+<!-- 	                                            		<input type="text" id="pcdatee" name="pcdatee" class="form-control" placeholder='yyyy-mm-dd'> -->
+<!-- 														<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> -->
+<!-- 													</div> -->
+<!--                                             	</div> -->
 	                                        </div>
 	                                        <div class="form-group">
 			                                	<label for="prent" class="col-lg-2">租金 *</label>
-			                                    <input class="form-control " id="prent" name="prent" type="text" value="">
+			                                    <input class="form-control" id="prent" name="prent" type="text" value="">
 			                                </div>
 			                                <div class="form-group">
 			                                	<label for="pdeposit" class="col-lg-2">押金 *</label>
@@ -678,8 +718,10 @@
 	                                                <div class="row">
 	                                                    <div class="col-md-6"> 
 	                                                        <div class="form-group"> 
-	                                                           <label for="pcNUser" class="control-label">簽約人*</label>
-			                                    				<input class=" form-control" id="pcNUser" name="pcNUser" type="text" value=""> 
+	                                                        	<label for="pcNUser" class="control-label">簽約人*</label>
+			                                    				<select class="form-control" id="pcNUser" name="pcNUser">
+	                                                            	<option value="-1">請選擇</option>
+	                                                            </select>
 	                                                        </div> 
 	                                                    </div> 
 	                                                    <div class="col-md-6"> 
@@ -708,7 +750,7 @@
 	                                                    </div>
 	                                                    <div class="col-md-6">
 			                                    			<label for="pcNdatesign" class="control-label">簽約日期</label>
-			                                   				<input class="form-control" id="pcNdatesign" name="pcNdatesign" type="date">
+			                                   				<input class="form-control" id="pcNdatesign" name="pcNdatesign" type="text" placeholder="yyyy-mm-dd">
 			                                			</div>
 	                                                </div>
 	                                                <div class="row">
@@ -723,23 +765,25 @@
 	                                                    <div class="col-md-6"> 
 	                                                        <div class="form-group"> 
 	                                                            <label class="control-label" for="pcNDates">合約日期(起) *</label>
-				                                          		<div class="col-lg-12">
-				                                           			<div class="input-group">
-				                                           				<input type="text" id="pcNDates" name="pcNDates" class="form-control col-lg-2" placeholder='yyyy-mm-dd' value="">
-																		<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-																	</div>
-																</div>
+	                                                            <input type="text" id="pcNDates" name="pcNDates" class="form-control" placeholder="yyyy-mm-dd">
+<!-- 				                                          		<div class="col-lg-12"> -->
+<!-- 				                                           			<div class="input-group"> -->
+<!-- 				                                           				<input type="text" id="pcNDates" name="pcNDates" class="form-control col-lg-2" placeholder='yyyy-mm-dd' value=""> -->
+<!-- 																		<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> -->
+<!-- 																	</div> -->
+<!-- 																</div> -->
 	                                                        </div> 
 	                                                    </div> 
 	                                                    <div class="col-md-6"> 
 	                                                        <div class="form-group"> 
 	                                                            <label class="control-label" for="pcNDatee">合約日期(終) *</label>
-				                                            	<div class="col-lg-12">
-				                                           			<div class="input-group">
-					                                            		<input type="text" id="pcNDatee" name="pcNDatee" class="form-control" placeholder='yyyy-mm-dd' value="">
-																		<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-																	</div>
-				                                            	</div>
+	                                                            <input type="text" id="pcNDatee" name="pcNDatee" class="form-control" placeholder="yyyy-mm-dd">
+<!-- 				                                            	<div class="col-lg-12"> -->
+<!-- 				                                           			<div class="input-group"> -->
+<!-- 					                                            		<input type="text" id="pcNDatee" name="pcNDatee" class="form-control" placeholder='yyyy-mm-dd' value=""> -->
+<!-- 																		<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> -->
+<!-- 																	</div> -->
+<!-- 				                                            	</div> -->
 	                                                        </div> 
 	                                                    </div> 
 	                                                    <div class="col-md-6"> 
@@ -867,11 +911,11 @@
             	digits: true
             },
             pceo: "required",
-            pphoneNumber: {
-            	required: true,
-            	minlength:9,
-            	digits: true
-            },
+//             pphoneNumber: {
+//             	required: true,
+//             	minlength:9,
+//             	digits: true
+//             },
            	pbirthday: {
             	date: true
             },
@@ -979,26 +1023,52 @@
         format: 'yyyy-mm-dd',
         onClose: function() {
             $('#ccdates').valid();
-        }
+        },
+        autoclose: true
     });
 	
     $('#pcdatee').datepicker({
         format: 'yyyy-mm-dd',
+        autoclose: true
     });
     
     $('#pcNDates').datepicker({
         format: 'yyyy-mm-dd',
         onClose: function() {
             $('#pcNDates').valid();
-        }
+        },
+        autoclose: true
     });
     
     $('#pcNDatee').datepicker({
         format: 'yyyy-mm-dd',
         onClose: function() {
             $('#pcNDatee').valid();
-        }
+        },
+        autoclose: true
     });
+    
+    $(function() {
+		$( "#pbirthday" ).datepicker({
+	        format: 'yyyy-mm-dd',
+	        autoclose: true
+	    });
+	});
+    
+    $(function() {
+		$( "#pcNdatesign" ).datepicker({
+	        format: 'yyyy-mm-dd',
+	        autoclose: true
+	    });
+	});
+    
+    $(function() {
+		$( "#pcdatesign" ).datepicker({
+	        format: 'yyyy-mm-dd',
+	        autoclose: true
+	    });
+	});
+    
  	// Date Picker //
 	
 	$('#companyUpdate').on('click', function() {
@@ -1033,22 +1103,30 @@
 	
 	$('#remitSave').on('click', function() {
 		if($('#prNaccount').val() != '') {
-			alert("");
 			createRemit();	
-		}
+		} else {
+	    	alert('Text Can Not Empty');
+	    }
 	});
 	
 	$('#contractSave').on('click', function() {
 		if($('#pcNType').val() != -1) {
-			alert("");
 			createContract();	
-		}
+		} else {
+	    	alert('Text Can Not Empty');
+	    }
 	});
 	
 	$('#createContract').on('click', function() {
 		$("#pcNUserc option").remove();
 		getAllUserAjax();
 	});
+	
+	$('#companyStatusSave').on('click', function() {
+		updateCompanyStatus();
+	});
+	
+	
 	
 	
 	<!-----------------------ajax-------------------------------->
@@ -1079,6 +1157,8 @@
 					}
 					setContractData(data.combine);
 					contractData = data.combine;
+				} else {
+					alert(data.message);
 				}
 			},
 			error : function(e) {
@@ -1095,25 +1175,53 @@
     	console.log(data);
     	companyId = data.companyId;
     	$('#pname').val(data.companyName);
+    	//about page
+    	$('#aboutCompanyName').html(data.companyName);
+    	//
     	$('#ptype').val(data.companyType);
     	$('#pAddress').val(data.companyAddress);
+    	//about page
+    	$('#aboutAddress').html(data.companyAddress);
+    	//
     	$('#pemail').val(data.companyMail);
     	$('#pbranch').val(data.companyCode);
+    	//about page
+    	$('#aboutBranch').html(data.companyCode);
+    	//
     	$('#pein').val(data.companyEin);
+    	//about page
+    	$('#aboutEin').html(data.companyEin);
+    	//
     	$('#pceo').val(data.companyExecutive);
-    	//TODO date
-    	var date = new Date(data.companyBitrhday);
-    	var day = ("0" + date.getDate()).slice(-2);
-    	var month = ("0" + (date.getMonth() + 1)).slice(-2);
-    	var dateFormat = date.getFullYear()+"/"+month+"/"+day;
-    	//console.log(dateFormat);
-    	$('#pbirthday').val(dateFormat);
+    	//about page
+    	$('#aboutCeo').html(data.companyExecutive);
+    	
+    	if(data.companyBitrhday != null) {
+        	var date = new Date(data.companyBitrhday);
+        	var day = ("0" + date.getDate()).slice(-2);
+        	var month = ("0" + (date.getMonth() + 1)).slice(-2);
+        	var dateFormat = date.getFullYear()+"-"+month+"-"+day;
+        	$('#pbirthday').attr('value', dateFormat);
+    	}
     	
     	$('#pphoneNumber').val(data.companyNumber);
+    	//about page
+    	$('#aboutPhoneNumber').html(data.companyNumber);
+    	//
     	$('#pfaxNumber').val(data.companyFax);
     	$('#pAddress2').val(data.companyAddress2);
     	$('#pLetterStatus').val(data.companyLetterStatus);
     	$('#pcomment').val(data.companyRemark);
+    	
+    	//set status
+    	switch(data.companyStatus) {
+		    case 'on': $('.updateStatus').html('營業'); $('.updateStatus').attr('id','on'); $('.updateStatus').addClass('btn-primary'); break;
+		    case 'off': $('.updateStatus').html('停業'); $('.updateStatus').attr('id','off'); $('.updateStatus').addClass('btn-danger'); break;
+		    case 'discard': $('.updateStatus').html('註銷'); $('.updateStatus').attr('id','discard'); $('.updateStatus').addClass('btn-danger'); break;
+		    case 'change': $('.updateStatus').html('遷移'); $('.updateStatus').attr('id','change'); $('.updateStatus').addClass('btn-danger'); break;
+		    case 'nopay': $('.updateStatus').html('不繳費'); $('.updateStatus').attr('id','nopay'); $('.updateStatus').addClass('btn-danger'); break;
+		    case 'remove': $('.updateStatus').html('解散'); $('.updateStatus').attr('id','remove'); $('.updateStatus').addClass('btn-danger'); break;
+		}
     }
     
 	var setContractData = function(data) {
@@ -1152,8 +1260,8 @@
             '<td>' + dateFormatS + '</td>' +
             '<td>' + dateFormatE + '</td>' +
             '<td><span class="label label-info">' + contractStatus + '</span></td>' +
-            '<td>' + '謝欣育' + '</td></tr>';
-            //'<td>' + data[i].user.userName + '</td></tr>';
+            //'<td>' + '謝欣育' + '</td></tr>';
+            '<td>' + data[i].user.userName + '</td></tr>';
             
             
             
@@ -1174,12 +1282,14 @@
 	var contractId = 0;
 	window.setEachContractData = function(e) {
 		$('#contractProfile').css('display', 'block');
+		console.log($(this));
+		$(this).parents('tr').eq(0).addClass('active');
 		contractId = e.target.id;
 		for(var i=0; i<contractData.length; i++) {
 			if(contractData[i].contract.contractId == contractId) {
 				console.log(contractData[i]);
 				
-				//$('#pcuser').val(contractData[i].user.userName);
+				$('#pcuser').val(contractData[i].user.userName);
 				if(contractData[i].user2 != null) {
 					$('#pcuserc').val(contractData[i].user2.userName);
 	    		} else {
@@ -1193,8 +1303,11 @@
 					$('#pcofficeNumc').val('');
 				}
 				
-				//TODO
-				$('#pcdatesign').val(contractData[i].contract.contractDate)
+				var date = new Date(contractData[i].contract.contractDate);
+    			var day = ("0" + date.getDate()).slice(-2);
+    			var month = ("0" + (date.getMonth() + 1)).slice(-2);
+    			var dateFormat = date.getFullYear()+"-"+month+"-"+day;
+    			$('#pcdatesign').attr('value', dateFormat);
 				
 				var dateS = new Date(contractData[i].contract.contractStart);
 	        	var day = ("0" + dateS.getDate()).slice(-2);
@@ -1283,6 +1396,8 @@
 				console.log(data);
 				if(data.status == 'success') {
 					swal("更新成功!", "", "success");
+				} else {
+					alert(data.message);
 				}
 			},
 			error : function(e) {
@@ -1314,6 +1429,8 @@
 				console.log(data);
 				if(data.status == 'success') {
 					swal("更新成功!", "", "success");
+				} else {
+					alert(data.message);
 				}
 			},
 			error : function(e) {
@@ -1351,6 +1468,11 @@
 				console.log(data);
 				if(data.status == 'success') {
 					swal("更新成功!", "", "success");
+					setTimeout(function() {
+						location.reload();
+					}, 1000);
+				} else {
+					alert(data.message);
 				}
 			},
 			error : function(e) {
@@ -1381,6 +1503,46 @@
 				console.log(data);
 				if(data.status == 'success') {
 					swal("更新成功!", "", "success");
+					setTimeout(function() {
+						location.reload();
+					}, 1000);
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function(e) {
+				alert("something error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+	}
+	
+	var updateCompanyStatus = function() {
+		var company = {
+   	   		companyStatus : $('#companyStatus').val(),
+   	   		companyStatusChangeDate : $('#statusChangeDate').val()
+		}
+		
+		console.log(JSON.stringify(company));
+		$.ajax({
+			url:root + "/AFW-I-System/company/status/update/" + companyId,
+			type:'put',
+			data : JSON.stringify(company),
+			dataType : 'json',
+			contentType: 'application/json; charset=UTF-8',
+			success : function(data) {
+				console.log(data);
+				if(data.status == 'success') {
+					$('#companyStatusClose').click();
+					swal("更新成功!", "", "success");
+					setTimeout(function() {
+						location.reload();
+					}, 1000);
+				} else {
+					alert(data.message);
 				}
 			},
 			error : function(e) {
@@ -1402,7 +1564,7 @@
 		
 		console.log(JSON.stringify(remit));
 		$.ajax({
-			url:root + "/AFW-I-System/new/remit/add/",
+			url:root + "/AFW-I-System/new/remit/add",
 			type:'post',
 			data : JSON.stringify(remit),
 			dataType : 'json',
@@ -1412,6 +1574,11 @@
 				if(data.status == 'success') {
 					$('#remitClose').click();
 					swal("新增成功!", "", "success");
+					setTimeout(function() {
+						location.reload();
+					}, 1000);
+				} else {
+					alert(data.message);
 				}
 			},
 			error : function(e) {
@@ -1454,6 +1621,11 @@
 				if(data.status == 'success') {
 					$('#contractClose').click();
 					swal("新增成功!", "", "success");
+					setTimeout(function() {
+						location.reload();
+					}, 1000);
+				} else {
+					alert(data.message);
 				}
 			},
 			error : function(e) {
@@ -1499,10 +1671,20 @@
     	$("#pcNUserc").append($("<option></option>")
 				.attr("value", -1).text('請選擇'));
     	for(var i=0; i<obj.length; i++) {
-    		$("#pcNUserc").append($("<option></option>")
-    				.attr("value", obj[i].userId).text(obj[i].userName));
+    		if(obj[i].userName != 'Admin') {
+	    		$("#pcNUser").append($("<option></option>")
+	    				.attr("value", obj[i].userId).text(obj[i].userName));
+	    		
+	    		$("#pcNUserc").append($("<option></option>")
+	    				.attr("value", obj[i].userId).text(obj[i].userName));
+    		}
     	}
     }
+    
+    $('.updateStatus').on('click', function() {
+    	var id = $('.updateStatus').attr('id');
+    	$('#companyStatus').val(id);
+    })
     
 	var getUrlParameter = function getUrlParameter(sParam) {
 	    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
