@@ -25,10 +25,10 @@ public class RentEntity  implements java.io.Serializable{
 	
 	
 	@Column(name = "rent_year")
-	private int rentYear;
+	private Integer rentYear;
 		
-	@Column(name = "rent_monyh")
-	private int rentMonyh;
+	@Column(name = "rent_month")
+	private Integer rentMonth;
 	
 	@Column(name = "rent_receipt")
 	private String rentReceipt;
@@ -75,20 +75,20 @@ public class RentEntity  implements java.io.Serializable{
 		this.rentId = rentId;
 	}
 
-	public int getRentYear() {
+	public Integer getRentYear() {
 		return rentYear;
 	}
 
-	public void setRentYear(int rentYear) {
+	public void setRentYear(Integer rentYear) {
 		this.rentYear = rentYear;
 	}
 
-	public int getRentMonyh() {
-		return rentMonyh;
+	public Integer getRentMonth() {
+		return rentMonth;
 	}
 
-	public void setRentMonyh(int rentMonyh) {
-		this.rentMonyh = rentMonyh;
+	public void setRentMonth(Integer rentMonth) {
+		this.rentMonth = rentMonth;
 	}
 
 	public String getRentReceipt() {

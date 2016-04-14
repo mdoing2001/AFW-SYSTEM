@@ -21,23 +21,23 @@ public class RentService {
 	
 	
 	@Transactional
-	public RentEntity findBranchById(Integer id){
+	public RentEntity findRentById(Integer id){
 		return rentDao.findRentById(id);
 	}
 	
 	@Transactional
-	public  void ins(RentEntity rent){
+	public void ins(RentEntity rent){
 		rentDao.insert(rent);
 	}
 	
 	@Transactional
-	public  void update(RentEntity rent){
+	public void update(RentEntity rent){
 		rentDao.update(rent);
 	}
 	
 	
 	@Transactional
-	public  void del(RentEntity rent){
+	public void del(RentEntity rent){
 		rentDao.delete(rent);
 	}
 

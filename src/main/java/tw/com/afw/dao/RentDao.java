@@ -3,8 +3,11 @@ package tw.com.afw.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+
 import org.springframework.stereotype.Repository;
+
 import tw.com.afw.entity.RentEntity;
 
 
@@ -16,7 +19,7 @@ public class RentDao {
 	
 	
 	public List<RentEntity> findAll() {
-		return (List<RentEntity>) em.createQuery("select c from rent c ", RentEntity.class).getResultList();
+		return (List<RentEntity>) em.createQuery("select r from RentEntity r ", RentEntity.class).getResultList();
 	}
 	
 	
@@ -25,8 +28,10 @@ public class RentDao {
 		try{
 			entity = (RentEntity) em.find(RentEntity.class, id);
             
+        } catch (NoResultException e) {
+            //e.printStackTrace();
         } catch (Exception e) {
-            e.printStackTrace();
+        	e.printStackTrace();
         }
 		return entity;
 	}
@@ -34,9 +39,9 @@ public class RentDao {
 	
     public void insert(RentEntity rent) {
 		try {
-			em.getTransaction().begin();
+			//em.getTransaction().begin();
 			em.persist(rent);
-			em.getTransaction().commit();
+			//em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -44,9 +49,9 @@ public class RentDao {
 	
 	public void update(RentEntity rent) {
 		try {
-			em.getTransaction().begin();
+			//em.getTransaction().begin();
 			em.merge(rent);
-			em.getTransaction().commit();
+			//em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
