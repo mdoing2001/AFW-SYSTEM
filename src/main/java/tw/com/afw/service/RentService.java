@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import tw.com.afw.dao.RentDao;
 import tw.com.afw.entity.RentEntity;
 
@@ -19,10 +20,13 @@ public class RentService {
 		return rentDao.findAll();
 	}
 	
-	
 	@Transactional
 	public RentEntity findRentById(Integer id){
 		return rentDao.findRentById(id);
+	}
+	@Transactional
+	public List<RentEntity> findRentByContractId(Integer id) {
+		return rentDao.findRentByContractId(id);
 	}
 	
 	@Transactional

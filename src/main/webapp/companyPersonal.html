@@ -163,6 +163,18 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            <!-- user login dropdown start-->
+            <ul class="nav navbar-nav navbar-right top-menu top-right-menu">
+	            <li class="dropdown text-center">
+	                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+	                    <img alt="" src="img/logo.png" class="img-circle profile-img thumb-sm">
+	                    <span class="username" id="userName">管理員</span> <span class="caret"></span>
+	                </a>
+	                <ul class="dropdown-menu pro-menu fadeInUp animated" tabindex="5003" style="overflow: hidden; outline: none;">
+	                    <li><a href="#" id="logOut"><i class="fa fa-sign-out"></i> Log Out</a></li>
+	                </ul>
+	            </li>
+            </ul>
         </header>
         <!-- Header Ends -->
 
@@ -208,22 +220,22 @@
 								        </tfoot>
                                  
                                         <tbody>
-                                            <tr>
-                                                <td><a class="company_link" href="companyProfile.html">全方位商務中心有限公司</a></td>
-                                                <td>微風店</td>
-                                                <td>301</td>
-                                                <td>葉碧霞小姐</td>
-                                                <td>租辦公室</td>
-                                                <td>11111台北市士林區德行東路358巷8弄11號1樓</td>
-                                            </tr>
-                                            <tr>
-                                                <td>聖萊斯會計師事務所</td>
-                                                <td>微風店</td>
-                                                <td>302</td>
-                                                <td>朱小姐</td>
-                                                <td>登記</td>
-                                                <td>10455北市中山區松江路22號8樓</td>
-                                            </tr>
+<!--                                             <tr> -->
+<!--                                                 <td><a class="company_link" href="companyProfile.html">全方位商務中心有限公司</a></td> -->
+<!--                                                 <td>微風店</td> -->
+<!--                                                 <td>301</td> -->
+<!--                                                 <td>葉碧霞小姐</td> -->
+<!--                                                 <td>租辦公室</td> -->
+<!--                                                 <td>11111台北市士林區德行東路358巷8弄11號1樓</td> -->
+<!--                                             </tr> -->
+<!--                                             <tr> -->
+<!--                                                 <td>聖萊斯會計師事務所</td> -->
+<!--                                                 <td>微風店</td> -->
+<!--                                                 <td>302</td> -->
+<!--                                                 <td>朱小姐</td> -->
+<!--                                                 <td>登記</td> -->
+<!--                                                 <td>10455北市中山區松江路22號8樓</td> -->
+<!--                                             </tr> -->
                                         </tbody>
                                     </table>
 
@@ -268,34 +280,157 @@
 
 <script>
 (function($){
-	//javascript by jquery
-	$('#datatable thead th').each(function() {
-        var title = $('#datatable tfoot th').eq($(this).index()).text();
-        $(this).html('<input type="text" style="width:100%; padding:3px; box-sizing:border-box;" placeholder="Search '+title+'" />');
-    } );
- 
-	//need to responsive
-    // DataTable
-    var table = $('#datatable').DataTable({
-    	responsive: true
-    });
- 
-    // Apply the search
-    table.columns().eq( 0 ).each( function ( colIdx ) {
-        $( 'input', table.column( colIdx ).header() ).on( 'keyup change', function () {
-            table
-                .column( colIdx )
-                .search( this.value )
-                .draw();
-        } );
-    });
+	var root = location.protocol + '//' + location.host;
     
-    //the search boxes on top without replacing the columns titles
-    var r = $('#datatable tfoot tr');
-    r.find('th').each(function(){
-      $(this).css('padding', 8);
-    });
-    $('#datatable thead').append(r);
+    var retriveCompanyAjax = function() {
+    	var table;
+    	$.ajax({
+			url:root + "/AFW-I-System/retrive/company/p",
+			type:'get',
+			dataType : 'json',
+			contentType: 'application/json',
+			success : function(response) {
+				//alert("success");
+				console.log("retriveCompanyAjax:" + response.message);
+				if(response.status == 'success') {
+					//console.log(response.message);
+					var data = jQuery.parseJSON(response.message);
+					
+					for(var i=0; i<data.length; i++) {
+						console.log(data[i]);
+					}
+					handleDataTable(data);
+					$('#userName').html(data.userCode);
+				}
+			},
+			error : function(e) {
+				alert("Something Error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+    }
+    
+    
+    var handleDataTable = function(data) {
+    	
+    	var table = $('#datatable').dataTable({
+			oLanguage: {
+				'sProcessing':'處理中...',
+				'sLengthMenu':'顯示 _MENU_ 項結果',
+				'sZeroRecords':'沒有匹配結果',
+				'sInfo':'顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項',
+				'sInfoEmpty':'顯示第 0 至 0 項結果，共 0 項',
+				'sInfoFiltered':'(從 _MAX_ 項結果過濾)',
+				'sInfoPostFix':'',
+				'sSearch':'搜索:',
+				'sUrl':'',
+				'oPaginate': {
+					'sFirst':'首頁',
+					'sPrevious':'上頁',
+					'sNext':'下頁',
+					'sLast':'尾頁'
+				}
+			},
+			'data': data,
+	        'columns': [
+					{"data": function(row, type, val, meta) {
+						if(row.officeNumber != null) {
+	        				return row.officeNumber;
+	        			} else {
+	        				return "";
+	        			}
+	        		}},
+	        		{"data": function(row, type, val, meta) {
+	        			return "<a class=\"company_link\" href=\"companyProfile.html?id="+ row.company.companyId +"\">" + row.company.companyName + "</a>";
+	        		}},
+	        		{"data": function(row, type, val, meta) {
+	        			return row.company.companyExecutive;
+	        		}},
+	        		{"data": function(row, type, val, meta) {
+	        			if(row.company.companyFax != null) {
+	        				return row.company.companyNumber;
+	        			} else {
+	        				return "";
+	        			}
+	        		}},
+	        		{"data": function(row, type, val, meta) {
+	        			if(row.company.companyLetterStatus != null) {
+	        				return row.company.companyLetterStatus;
+	        			} else {
+	        				return "";
+	        			}
+	        		}},
+	        		{"data": function(row, type, val, meta) {
+	        			if(row.company.companyRemark != null) {
+	        				return row.company.companyRemark;
+	        			} else {
+	        				return "";
+	        			}
+	        		}},
+	        ],
+	        
+	        "order": [[1, 'desc']]
+		});
+    	
+    	//javascript by jquery
+    	$('#datatable thead th').each(function() {
+            var title = $('#datatable tfoot th').eq($(this).index()).text();
+            $(this).html('<input type="text" style="width:100%; padding:3px; box-sizing:border-box;" placeholder="Search '+title+'" />');
+        } );
+    	
+    	var table = $('#datatable').DataTable();
+    	
+     	// Apply the search
+        table.columns().eq( 0 ).each( function ( colIdx ) {
+            $( 'input', table.column( colIdx ).header() ).on( 'keyup change', function () {
+                table
+                    .column( colIdx )
+                    .search( this.value )
+                    .draw();
+            } );
+        });
+     	
+        //the search boxes on top without replacing the columns titles
+        var r = $('#datatable tfoot tr');
+        r.find('th').each(function(){
+          $(this).css('padding', 8);
+        });
+        $('#datatable thead').append(r);
+    }
+    
+    $('#logOut').on('click', function() {
+    	logOut();
+    })
+    
+    var logOut = function() {
+    	$.ajax({
+			url:root + "/AFW-I-System/new/user/logout",
+			type:'get',
+			dataType : 'json',
+			contentType: 'application/json',
+			success : function(response) {
+				//alert("success");
+				if(response.status == 'success') {
+					window.location.href = root + "/AFW-I-System/login.html";
+				}
+			},
+			error : function(e) {
+				alert("error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+    }
+	
+	//page load
+    window.onload = function() {
+    	retriveCompanyAjax();
+	};
 })(jQuery);
 </script>
 </body>

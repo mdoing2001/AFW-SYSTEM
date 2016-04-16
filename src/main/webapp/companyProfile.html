@@ -1303,11 +1303,13 @@
 					$('#pcofficeNumc').val('');
 				}
 				
-				var date = new Date(contractData[i].contract.contractDate);
-    			var day = ("0" + date.getDate()).slice(-2);
-    			var month = ("0" + (date.getMonth() + 1)).slice(-2);
-    			var dateFormat = date.getFullYear()+"-"+month+"-"+day;
-    			$('#pcdatesign').attr('value', dateFormat);
+				if(contractData[i].contract.contractDate != null) {
+					var date = new Date(contractData[i].contract.contractDate);
+	    			var day = ("0" + date.getDate()).slice(-2);
+	    			var month = ("0" + (date.getMonth() + 1)).slice(-2);
+	    			var dateFormat = date.getFullYear()+"-"+month+"-"+day;
+	    			$('#pcdatesign').attr('value', dateFormat);
+				}
 				
 				var dateS = new Date(contractData[i].contract.contractStart);
 	        	var day = ("0" + dateS.getDate()).slice(-2);

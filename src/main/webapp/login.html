@@ -120,8 +120,12 @@
 			dataType : 'json',
 			contentType: 'application/json',
 			success : function(data) {
-				alert(data.message);
 				console.log(data);
+				if(data.status == 'success') {
+					window.location.href = root + "/AFW-I-System/company.html";
+				} else {
+					alert(data.message);
+				}
 			},
 			error : function(e) {
 				alert("error");

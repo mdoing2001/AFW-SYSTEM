@@ -28,7 +28,7 @@ public class ContractDao {
 	}
 	
 	public List<ContractEntity> findContractByType(String contractType) {
-		return em.createQuery("select e from contract e where e.contract_type:contractType",ContractEntity.class).setParameter("contractType", contractType).getResultList();
+		return em.createQuery("select e from ContractEntity e where e.contractType = :contractType",ContractEntity.class).setParameter("contractType", contractType).getResultList();
 	
 	}
 	

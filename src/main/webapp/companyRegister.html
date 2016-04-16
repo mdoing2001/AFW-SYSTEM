@@ -96,7 +96,6 @@
 	                    <li class="active"><a href="companyRegister.html">登記</a></li>
 	                    <li><a href="companyCC.html">聯絡處 & 停業</a></li>
 	                    <li><a href="companyClose.html">退租</a></li>
-	                    <li><a href="companyProfile.html">客戶檔案</a></li>
 	                </ul>
 	            </li>
 				<li class="has-submenu"><a href="#"><i class="ion-grid"></i> <span class="nav-label">收租</span></a>
@@ -163,6 +162,18 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            <!-- user login dropdown start-->
+            <ul class="nav navbar-nav navbar-right top-menu top-right-menu">
+	            <li class="dropdown text-center">
+	                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+	                    <img alt="" src="img/logo.png" class="img-circle profile-img thumb-sm">
+	                    <span class="username" id="userName">管理員</span> <span class="caret"></span>
+	                </a>
+	                <ul class="dropdown-menu pro-menu fadeInUp animated" tabindex="5003" style="overflow: hidden; outline: none;">
+	                    <li><a href="#" id="logOut"><i class="fa fa-sign-out"></i> Log Out</a></li>
+	                </ul>
+	            </li>
+            </ul>
         </header>
         <!-- Header Ends -->
 
@@ -296,6 +307,7 @@
 						console.log(data[i]);
 					}
 					handleDataTable(data);
+					$('#userName').html(data.userCode);
 				}
 			},
 			error : function(e) {
@@ -410,6 +422,36 @@
           $(this).css('padding', 8);
         });
         $('#datatable thead').append(r);
+    }
+    
+    $('#logOut').on('click', function() {
+    	logOut();
+    })
+    
+    var logOut = function() {
+    	$.ajax({
+			url:root + "/AFW-I-System/new/user/logout",
+			type:'get',
+			dataType : 'json',
+			contentType: 'application/json',
+			success : function(response) {
+				//alert("success");
+				if(response.status == 'success') {
+					window.location.href = root + "/AFW-I-System/login.html";
+				}
+			},
+			error : function(e) {
+				alert("error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+    }
+    
+    var setUserName = function() {
+    	
     }
 	
 	//page load

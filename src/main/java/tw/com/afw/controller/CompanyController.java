@@ -198,19 +198,20 @@ public class CompanyController {
 						String officeNum = null;
 						JSONObject obj = new JSONObject();
 						List<ContractEntity> contractArr = contractService.findContractByCompanyId(entity.getCompanyId());
-						
-						for(ContractEntity contract : contractArr) {
-							Date date = new Date();
-							if(null != contract.getContractType() && contract.getContractType().equalsIgnoreCase("o")) {
-								if(contract.getContractEnd().after(date)) {
-									System.out.println(officeService.findOffByContract(contract.getContractId()).toString());
-									officeNum = officeService.findOffByContract(contract.getContractId()).getOfficeNumber();
-									date = contract.getContractEnd();
-								}
-							}
-						}
+						//TODO:logic 需要修改 辦公室跟個人座位都有辦公室號碼
+//						for(ContractEntity contract : contractArr) {
+//							Date date = new Date();
+//							if(null != contract.getContractType() && (contract.getContractType().equalsIgnoreCase("o") || contract.getContractType().equalsIgnoreCase("p"))) {
+//								if(contract.getContractEnd().after(date)) {
+//									System.err.println(contract.getContractId());
+//									System.out.println(officeService.findOffByContract(contract.getContractId()).toString());
+//									officeNum = officeService.findOffByContract(contract.getContractId()).getOfficeNumber();
+//									date = contract.getContractEnd();
+//								}
+//							}
+//						}
 						obj.put("company", entity);
-						obj.put("officeNumber", officeNum);
+						//obj.put("officeNumber", officeNum);
 						arr.add(obj);
 					}
 					
@@ -257,12 +258,15 @@ public class CompanyController {
 					List<ContractEntity> contractArr = contractService.findContractByCompanyId(entity.getCompanyId());
 					for(ContractEntity contract : contractArr) {
 						Date date = new Date();
+						//TODO: logic need to reDesign
 						if(null != contract.getContractType() && contract.getContractType().equalsIgnoreCase(type)) {
-							if(type.equalsIgnoreCase("o")) {
-								if(contract.getContractEnd().after(date)) {
+							if(type.equalsIgnoreCase("o") || type.equalsIgnoreCase("p")) {
+								System.err.println(contract.getContractId());
+								//if(contract.getContractEnd().after(date)) {
 									officeNum = officeService.findOffByContract(contract.getContractId()).getOfficeNumber();
+									System.out.println(officeNum);
 									date = contract.getContractEnd();
-								}
+								//}
 							}
 							
 							obj.put("company", entity);

@@ -5,9 +5,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
+import tw.com.afw.entity.ContractEntity;
 import tw.com.afw.entity.RentEntity;
 
 
@@ -36,6 +38,22 @@ public class RentDao {
 		return entity;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<RentEntity> findRentByContractId(Integer id) {
+		List<RentEntity> entity = null;
+		
+		try {
+			Query query = em.createQuery("select r from RentEntity r where r.contractId.contractId = :ID", RentEntity.class);
+			query.setParameter("ID", id);
+			entity = query.getResultList();
+		} catch (NoResultException e) {
+			//e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return entity;
+	}
 	
     public void insert(RentEntity rent) {
 		try {

@@ -49,6 +49,7 @@ public class LoginController {
 					request.getSession().setAttribute("usercode", code);
 					results.put("status", "success");
 					results.put("message", "success");
+					results.put("userCode", code);
 				}else{
 					results.put("status", "error");
 					results.put("message", "密碼 或 分店 有誤");

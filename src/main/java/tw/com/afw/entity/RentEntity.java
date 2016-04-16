@@ -23,7 +23,6 @@ public class RentEntity  implements java.io.Serializable{
 	@Column(name = "rent_id" ,nullable = false)
 	private int rentId;
 	
-	
 	@Column(name = "rent_year")
 	private Integer rentYear;
 		
@@ -64,8 +63,8 @@ public class RentEntity  implements java.io.Serializable{
 	private double rentShortage;
 	
 	@ManyToOne	
-	@JoinColumn(name="company_id")
-	private CompanyEntity companyId;
+	@JoinColumn(name="contract_id")
+	private ContractEntity contractId;
 
 	public int getRentId() {
 		return rentId;
@@ -179,15 +178,12 @@ public class RentEntity  implements java.io.Serializable{
 		this.rentShortage = rentShortage;
 	}
 
-	public CompanyEntity getCompanyId() {
-		return companyId;
+	public ContractEntity getContractId() {
+		return contractId;
 	}
 
-	public void setCompanyId(CompanyEntity companyId) {
-		this.companyId = companyId;
+	public void setContractId(ContractEntity contractId) {
+		this.contractId = contractId;
 	}
-	
-	
-	
 
 }
