@@ -100,52 +100,10 @@
 	            </li>
 				<li class="has-submenu"><a href="#"><i class="ion-grid"></i> <span class="nav-label">收租</span></a>
 	                <ul class="list-unstyled">
+	                	<li><a href="searchRentTable.html">搜尋</a></li>
 	                    <li><a href="rentTable.html">收租表</a></li>
 	                </ul>
 	            </li>
-<!-- 	            <li class="has-submenu"><a href="#"><i class="ion-stats-bars"></i> <span class="nav-label">Charts</span><span class="badge bg-purple">1</span></a> -->
-<!-- 	                <ul class="list-unstyled"> -->
-<!-- 	                    <li><a href="morris-chart.html">Morris Chart</a></li> -->
-<!-- 	                    <li><a href="chartjs.html">Chartjs</a></li> -->
-<!-- 	                    <li><a href="flot-chart.html">Flot Chart</a></li> -->
-<!-- 	                    <li><a href="rickshaw-chart.html">Rickshaw Chart</a></li> -->
-<!-- 	                    <li><a href="peity-chart.html">Peity Chart</a></li> -->
-<!-- 	                    <li><a href="c3-chart.html">C3 Chart</a></li> -->
-<!-- 	                    <li><a href="other-chart.html">Other Chart</a></li> -->
-<!-- 	                </ul> -->
-<!-- 	            </li> -->
-	
-<!-- 	            <li class="has-submenu"><a href="#"><i class="ion-email"></i> <span class="nav-label">Mail</span></a> -->
-<!-- 	                <ul class="list-unstyled"> -->
-<!-- 	                    <li><a href="inbox.html">Inbox</a></li> -->
-<!-- 	                    <li><a href="email-compose.html">Compose Mail</a></li> -->
-<!-- 	                    <li><a href="email-read.html">View Mail</a></li> -->
-<!-- 	                    <li><a href="email-templates.html">Email Templates</a></li> -->
-<!-- 	                </ul> -->
-<!-- 	            </li> -->
-	
-<!-- 	            <li class="has-submenu"><a href="#"><i class="ion-location"></i> <span class="nav-label">Maps</span></a> -->
-<!-- 	                <ul class="list-unstyled"> -->
-<!-- 	                    <li><a href="gmap.html"> Google Map</a></li> -->
-<!-- 	                    <li><a href="vector-map.html"> Vector Map</a></li> -->
-<!-- 	                </ul> -->
-<!-- 	            </li> -->
-<!-- 	            <li class="has-submenu"><a href="#"><i class="ion-document"></i> <span class="nav-label">Pages</span><span class="badge bg-pink">5</span></a> -->
-<!-- 	                <ul class="list-unstyled"> -->
-<!-- 	                    <li class=""><a href="profile.html">Profile</a></li> -->
-<!-- 	                    <li><a href="timeline.html">Timeline</a></li> -->
-<!-- 	                    <li><a href="invoice.html">Invoice</a></li> -->
-<!-- 	                    <li><a href="contact.html">Contact-list</a></li> -->
-<!-- 	                    <li><a href="login.html">Login</a></li> -->
-<!-- 	                    <li><a href="register.html">Register</a></li> -->
-<!-- 	                    <li><a href="recoverpw.html">Recover Password</a></li> -->
-<!-- 	                    <li><a href="lock-screen.html">Lock Screen</a></li> -->
-<!-- 	                    <li><a href="blank.html">Blank Page</a></li> -->
-<!-- 	                    <li><a href="404.html">404 Error</a></li> -->
-<!-- 	                    <li><a href="404_alt.html">404 alt</a></li> -->
-<!-- 	                    <li><a href="500.html">500 Error</a></li> -->
-<!-- 	                </ul> -->
-<!-- 	            </li> -->
 	        </ul>
 	    </nav> 
 	</aside>
@@ -167,7 +125,7 @@
 	            <li class="dropdown text-center">
 	                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 	                    <img alt="" src="img/logo.png" class="img-circle profile-img thumb-sm">
-	                    <span class="username" id="userName">管理員</span> <span class="caret"></span>
+	                    <span class="username" id="userName">AFW</span> <span class="caret"></span>
 	                </a>
 	                <ul class="dropdown-menu pro-menu fadeInUp animated" tabindex="5003" style="overflow: hidden; outline: none;">
 	                    <li><a href="#" id="logOut"><i class="fa fa-sign-out"></i> Log Out</a></li>
@@ -193,6 +151,20 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">辦公室</h3>
                         </div>
+                        <div id="branchSelection" style="width:25%; display:none;">
+							<div class="form-group">
+								<label for="sel1">分店</label>
+								<select class="form-control" id="branchOffice">
+								    <option value="-1">請選擇</option>
+	                          		<option value="221">微風店</option>
+	                          		<option value="169">敦化店</option>
+	                          		<option value="222">大安店</option>
+	                          		<option value="295">忠孝店</option>
+	                          		<option value="201">復興店</option>
+	                          		<option value="189">南京店</option>
+								</select>
+							</div>
+						</div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -215,23 +187,7 @@
                                                 <th>備註</th>
 								            </tr>
 								        </tfoot>
-                                 
-                                        <tbody>
-<!--                                             <tr> -->
-<!--                                                 <td><a class="company_link" href="companyProfile.html">全方位商務中心有限公司</a></td> -->
-<!--                                                 <td>微風店</td> -->
-<!--                                                 <td>301</td> -->
-<!--                                                 <td>葉碧霞小姐</td> -->
-<!--                                                 <td>租辦公室</td> -->
-<!--                                             </tr> -->
-<!--                                             <tr> -->
-<!--                                                 <td>聖萊斯會計師事務所</td> -->
-<!--                                                 <td>微風店</td> -->
-<!--                                                 <td>302</td> -->
-<!--                                                 <td>朱小姐</td> -->
-<!--                                                 <td>登記</td> -->
-<!--                                             </tr> -->
-                                        </tbody>
+                                        <tbody></tbody>
                                     </table>
 
                                 </div>
@@ -275,12 +231,13 @@
 
 <script>
 (function($){
-var root = location.protocol + '//' + location.host;
-    
-    var retriveCompanyAjax = function() {
+	var root = location.protocol + '//' + location.host;
+	
+    var retriveCompanyAjax = function(selectBranch) {
+    	
     	var table;
     	$.ajax({
-			url:root + "/AFW-I-System/retrive/company/o",
+			url:root + "/AFW-I-System/retrive/company/o/" + selectBranch,
 			type:'get',
 			dataType : 'json',
 			contentType: 'application/json',
@@ -294,7 +251,12 @@ var root = location.protocol + '//' + location.host;
 					for(var i=0; i<data.length; i++) {
 						console.log(data[i]);
 					}
+					
+					if(response.user == 'AA') {
+						$('#branchSelection').css('display', 'block');
+					}
 					handleDataTable(data);
+					$('#branchOffice').val(selectBranch);
 				}
 			},
 			error : function(e) {
@@ -360,7 +322,7 @@ var root = location.protocol + '//' + location.host;
 	        		}},
 	        ],
 	        
-	        "order": [[1, 'desc']]
+	        "order": [[0, 'asc']]
 		});
     	
     	//javascript by jquery
@@ -388,6 +350,26 @@ var root = location.protocol + '//' + location.host;
         });
         $('#datatable thead').append(r);
     }
+    
+    $("#branchOffice").change(function() {
+    	var selectBranch = $('#branchOffice').val();
+    	window.location.href = root + "/AFW-I-System/companyOffice.html?branch=" + selectBranch;
+    });
+    
+    var getUrlParameter = function getUrlParameter(sParam) {
+	    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+	        sURLVariables = sPageURL.split('&'),
+	        sParameterName,
+	        i;
+
+	    for (i = 0; i < sURLVariables.length; i++) {
+	        sParameterName = sURLVariables[i].split('=');
+
+	        if (sParameterName[0] === sParam) {
+	            return sParameterName[1] === undefined ? true : sParameterName[1];
+	        }
+	    }
+	};
     
     $('#logOut').on('click', function() {
     	logOut();
@@ -417,7 +399,11 @@ var root = location.protocol + '//' + location.host;
 	
 	//page load
     window.onload = function() {
-    	retriveCompanyAjax();
+    	var branch = getUrlParameter('branch');
+    	if(branch === undefined) {
+    		branch = '-1';
+    	}
+    	retriveCompanyAjax(branch);
 	};
 })(jQuery);
 </script>

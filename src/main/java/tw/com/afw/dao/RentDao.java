@@ -8,8 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
-
-import tw.com.afw.entity.ContractEntity;
 import tw.com.afw.entity.RentEntity;
 
 
@@ -39,13 +37,32 @@ public class RentDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<RentEntity> findRentByContractId(Integer id) {
+	public List<RentEntity> findRentByContractIdAndYear(Integer id, Integer year) {
 		List<RentEntity> entity = null;
 		
 		try {
-			Query query = em.createQuery("select r from RentEntity r where r.contractId.contractId = :ID", RentEntity.class);
+			Query query = em.createQuery("select r from RentEntity r where r.contractId.contractId = :ID AND r.rentYear = :YEAR", RentEntity.class);
 			query.setParameter("ID", id);
+			query.setParameter("YEAR", year);
 			entity = query.getResultList();
+		} catch (NoResultException e) {
+			//e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return entity;
+	}
+	
+	public RentEntity findRentByYearAndMonthContractId(Integer id,Integer year, Integer month) {
+		RentEntity entity = null;
+		
+		try {
+			Query query = em.createQuery("select r from RentEntity r where r.contractId.contractId = :ID AND r.rentYear = :YEAR AND r.rentMonth = :MONTH", RentEntity.class);
+			query.setParameter("ID", id);
+			query.setParameter("YEAR", year);
+			query.setParameter("MONTH", month);
+			entity = (RentEntity) query.getSingleResult();
 		} catch (NoResultException e) {
 			//e.printStackTrace();
 		} catch (Exception e) {

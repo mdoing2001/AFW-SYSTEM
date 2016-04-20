@@ -1,5 +1,6 @@
 package tw.com.afw.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -20,6 +21,8 @@ import com.google.gson.Gson;
 import tw.com.afw.entity.ContractEntity;
 import tw.com.afw.entity.RentEntity;
 import tw.com.afw.service.CompanyService;
+import tw.com.afw.service.ContractService;
+import tw.com.afw.service.OfficeService;
 import tw.com.afw.service.RentService;
 
 
@@ -31,31 +34,52 @@ public class RentController {
 	
 	@Autowired
 	private CompanyService companyService;
+	
+	@Autowired
+	private ContractService contractService;
+	
+	@Autowired
+	private OfficeService officeService;
 	 
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/new/rent/add", method = RequestMethod.POST, produces = {"application/json; charset=UTF-8"})
-	public String createRent(@RequestBody String newRentStr) {
+	@RequestMapping(value = "/rent/merge/{id}", method = RequestMethod.POST, produces = {"application/json; charset=UTF-8"})
+	public String createRent(@PathVariable("id") Integer id, @RequestBody String rentStr) {
 		JSONObject result = new JSONObject();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		try {
-			JSONObject rentObj = (JSONObject) new JSONParser().parse(newRentStr);
-			
-			RentEntity rentEntity = new RentEntity();
-			
-			//目前只存年份月份發票號碼備註
-			rentEntity.setRentYear(!rentObj.get("rentYear").toString().isEmpty() ? Integer.valueOf(rentObj.get("rentYear").toString()) : null);
-			rentEntity.setRentMonth(!rentObj.get("rentMonth").toString().isEmpty() ? Integer.valueOf(rentObj.get("rentMonth").toString()) : null);
-			rentEntity.setRentReceipt(!rentObj.get("rentMonth").toString().isEmpty() ? rentObj.get("rentMonth").toString() : null);
-			rentEntity.setRentRemark(!rentObj.get("rentRemark").toString().isEmpty() ? rentObj.get("rentRemark").toString() : null);
-			//rentEntity.setCompanyId(null != rentObj.get("companyId") ? companyService.findCompanyById(Integer.parseInt(rentObj.get("companyId").toString())) : null);
+			JSONObject rentObj = (JSONObject) new JSONParser().parse(rentStr);
+			Integer year = Integer.valueOf(rentObj.get("rentYear").toString());
+			Integer month = Integer.valueOf(rentObj.get("rentMonth").toString());
+			Integer contractId = id;
 			
 			
-//			remitEntity.setRemitAccount(null != remitObj.get("remitAccount") ? remitObj.get("remitAccount").toString() : null);
-//			//remitEntity.setRemitDeposit(null != remitObj.get("remitDeposit") ? remitObj.get("remitDeposit").toString() : null);
-//			remitEntity.setRemitMode(null != remitObj.get("remitMode") ? remitObj.get("remitMode").toString() : null);
-//			remitEntity.setCompanyId(null != remitObj.get("companyId") ? companyService.findCompanyById(Integer.parseInt(remitObj.get("companyId").toString())) : null);
-//			
-			rentService.ins(rentEntity);
+			RentEntity rentEntity = rentService.findRentByYearAndMonthContractId(contractId, year, month);
+			if(rentEntity == null) {
+				RentEntity newRent = new RentEntity();
+				
+				//目前只存年份月份發票號碼備註
+				newRent.setRentYear(year);
+				newRent.setRentMonth(month);
+				newRent.setRentReceipt(!rentObj.get("rentReceipt").toString().isEmpty() ? rentObj.get("rentReceipt").toString() : null);
+				newRent.setRentRemark(!rentObj.get("rentRemark").toString().isEmpty() ? rentObj.get("rentRemark").toString() : null);
+				newRent.setRentShortage(!rentObj.get("rentShortage").toString().isEmpty() ? Double.valueOf(rentObj.get("rentShortage").toString()) : 0);
+				newRent.setRentDate(!rentObj.get("rentDate").toString().isEmpty() ? sdf.parse(rentObj.get("rentDate").toString()) : null);
+				newRent.setContractId(contractService.findContracById(contractId));
+				
+				rentService.ins(newRent);
+			} else {
+				rentEntity.setRentYear(year);
+				rentEntity.setRentMonth(month);
+				rentEntity.setRentReceipt(!rentObj.get("rentReceipt").toString().isEmpty() ? rentObj.get("rentReceipt").toString() : null);
+				rentEntity.setRentRemark(!rentObj.get("rentRemark").toString().isEmpty() ? rentObj.get("rentRemark").toString() : null);
+				rentEntity.setRentShortage(!rentObj.get("rentShortage").toString().isEmpty() ? Double.valueOf(rentObj.get("rentShortage").toString()) : 0);
+				rentEntity.setRentDate(!rentObj.get("rentDate").toString().isEmpty() ? sdf.parse(rentObj.get("rentDate").toString()) : null);
+				rentEntity.setContractId(contractService.findContracById(contractId));
+				
+				rentService.update(rentEntity);
+			}
+			
 			result.put("status", "success");
 			result.put("message", "success");
 			
@@ -63,40 +87,6 @@ public class RentController {
 			e.printStackTrace();
 			result.put("status", "error");
 	    	result.put("message", "insert error");
-		}
-		
-		return result.toJSONString();
-	}
-	
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/rent/update/{id}", method = RequestMethod.PUT, produces = {"application/json; charset=UTF-8"})
-	public String updateRent(@PathVariable("id") Integer id, @RequestBody String rentStr) {
-		JSONObject result = new JSONObject();
-		
-		try {
-			JSONObject rentObj = (JSONObject) new JSONParser().parse(rentStr);
-			
-			RentEntity rentEntity = rentService.findRentById(id);
-			
-			if(rentEntity != null) {
-				//目前只能修改年份月份發票號碼備註
-				rentEntity.setRentYear(!rentObj.get("rentYear").toString().isEmpty() ? Integer.valueOf(rentObj.get("rentYear").toString()) : null);
-				rentEntity.setRentMonth(!rentObj.get("rentMonth").toString().isEmpty() ? Integer.valueOf(rentObj.get("rentMonth").toString()) : null);
-				rentEntity.setRentReceipt(!rentObj.get("rentReceipt").toString().isEmpty() ? rentObj.get("rentReceipt").toString() : null);
-				rentEntity.setRentRemark(!rentObj.get("rentRemark").toString().isEmpty() ? rentObj.get("rentRemark").toString() : null);
-						
-				rentService.update(rentEntity);
-				result.put("status", "success");
-				result.put("message", "success");
-			} else {
-				result.put("status", "error");
-		    	result.put("message", "更新有誤 請重新操作");
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			result.put("status", "error");
-	    	result.put("message", "update error");
 		}
 		
 		return result.toJSONString();
@@ -115,7 +105,7 @@ public class RentController {
 			List<ContractEntity> contractArr = companyService.findContractByType(type);
 			for(ContractEntity contractEntity : contractArr) {
 				JSONObject obj2 = new JSONObject();
-				
+				System.err.println(contractEntity.toString());
 				if(userCode.equals("AA")) {
 					if(contractEntity.getContractEnd().after(Calendar.getInstance().getTime())) {
 						System.out.println(contractEntity.getContractEnd());
@@ -124,6 +114,7 @@ public class RentController {
 						calendar.setTimeInMillis(endTimeStamp);
 
 						int eYear = calendar.get(Calendar.YEAR);
+						System.out.println(":"+eYear);
 						if(year <= eYear) {
 							obj2.put("companyId", contractEntity.getCompanyId().getCompanyId());
 							obj2.put("companyName", contractEntity.getCompanyId().getCompanyName());
@@ -132,7 +123,14 @@ public class RentController {
 							obj2.put("end", contractEntity.getContractEnd());
 							obj2.put("rent", contractEntity.getContractRent());
 							obj2.put("deposit", contractEntity.getContractDeposit());
-							obj2.put("rentArr", rentService.findRentByContractId(contractEntity.getContractId()));
+							obj2.put("rentArr", rentService.findRentByContractIdAndYear(contractEntity.getContractId(), year));
+							obj2.put("contractId", contractEntity.getContractId());
+							if(contractEntity.getContractType().equalsIgnoreCase("o") || contractEntity.getContractType().equalsIgnoreCase("p")) {
+								obj2.put("officeNum", officeService.findOffByContract(contractEntity.getContractId()).getOfficeNumber());
+							} else {
+								obj2.put("officeNum", "");
+							}
+							
 							arr.add(obj2);
 						}
 					}
@@ -155,7 +153,13 @@ public class RentController {
 								obj2.put("end", contractEntity.getContractEnd());
 								obj2.put("rent", contractEntity.getContractRent());
 								obj2.put("deposit", contractEntity.getContractDeposit());
-								obj2.put("rentArr", rentService.findRentByContractId(contractEntity.getContractId()));
+								obj2.put("rentArr", rentService.findRentByContractIdAndYear(contractEntity.getContractId(), year));
+								obj2.put("contractId", contractEntity.getContractId());
+								if(contractEntity.getContractType().equalsIgnoreCase("o") || contractEntity.getContractType().equalsIgnoreCase("p")) {
+									obj2.put("officeNum", officeService.findOffByContract(contractEntity.getContractId()).getOfficeNumber());
+								} else {
+									obj2.put("officeNum", "");
+								}
 								arr.add(obj2);
 							}
 						}

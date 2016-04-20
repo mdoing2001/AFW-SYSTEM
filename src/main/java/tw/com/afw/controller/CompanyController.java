@@ -85,6 +85,8 @@ public class CompanyController {
 				companyEntity.setCompanyExecutive(null != companyObj.get("companyExecutive") ? companyObj.get("companyExecutive").toString() : null);
 				companyEntity.setCompanyBitrhday(!companyObj.get("companyBitrhday").toString().isEmpty() ? sdf.parse(companyObj.get("companyBitrhday").toString()) : null);
 				companyEntity.setCompanyNumber(null != companyObj.get("companyNumber") ? companyObj.get("companyNumber").toString() : null);
+				companyEntity.setCompanyNumber2(null != companyObj.get("companyNumber2") ? companyObj.get("companyNumber2").toString() : null);
+				companyEntity.setCompanyLine(null != companyObj.get("companyLine") ? companyObj.get("companyLine").toString() : null);
 				companyEntity.setCompanyFax(null != companyObj.get("companyFax") ? companyObj.get("companyFax").toString() : null);
 				companyEntity.setCompanyAddress(null != companyObj.get("companyAddress") ? companyObj.get("companyAddress").toString() : null);
 				companyEntity.setCompanyAddress2(null != companyObj.get("companyAddress2") ? companyObj.get("companyAddress2").toString() : null);
@@ -234,8 +236,8 @@ public class CompanyController {
 	    //取回不同contract type(租辦公室 個人座位....)的資料 一樣不同分店取的分店資料不一樣 管理員取回全部資料, id:使用者id
 	    //TODO:224, 236行上線前需要調整
 	    @SuppressWarnings("unchecked")
-		@RequestMapping(value = "/retrive/company/{type}", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
-	    public String selectCompanyByType(@PathVariable("type") String type  , HttpServletRequest request) {
+		@RequestMapping(value = "/retrive/company/{type}/{branch}", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
+	    public String selectCompanyByType(@PathVariable("type") String type, @PathVariable("branch") String branch, HttpServletRequest request) {
 	    	Gson gson = new Gson();
 	    	JSONObject result = new JSONObject();
 	     	try {
@@ -244,9 +246,12 @@ public class CompanyController {
 				List<CompanyEntity> companyArr = null;
 				JSONArray arr = new JSONArray();
 				
-				if(usercode.equals("AA")) {
-					System.out.println(usercode);			
+				if(usercode.equals("AA") && branch.equalsIgnoreCase("-1")) {
+					System.out.println(usercode);
 					companyArr = companyService.findAll();
+				} else if(usercode.equals("AA") && !branch.equalsIgnoreCase("-1")){
+					System.out.println(usercode + ":" + branch);
+					companyArr = companyService.findCompanyByCode(branch);
 				} else {
 					System.out.println(usercode);
 					companyArr = companyService.findCompanyByCode(usercode);
@@ -278,6 +283,7 @@ public class CompanyController {
 				
 				result.put("status", "success");
 				result.put("message", gson.toJson(arr));
+				result.put("user", usercode);
 			} catch (Exception e) {
 				e.printStackTrace();
 				result.put("status", "error");
@@ -365,6 +371,8 @@ public class CompanyController {
 					companyEntity.setCompanyExecutive(null != companyObj.get("companyExecutive") ? companyObj.get("companyExecutive").toString() : null);
 					companyEntity.setCompanyBitrhday(!companyObj.get("companyBitrhday").toString().isEmpty() ? sdf.parse(companyObj.get("companyBitrhday").toString()) : null);
 					companyEntity.setCompanyNumber(null != companyObj.get("companyNumber") ? companyObj.get("companyNumber").toString() : null);
+					companyEntity.setCompanyNumber2(null != companyObj.get("companyNumber2") ? companyObj.get("companyNumber2").toString() : null);
+					companyEntity.setCompanyLine(null != companyObj.get("companyLine") ? companyObj.get("companyLine").toString() : null);
 					companyEntity.setCompanyFax(null != companyObj.get("companyFax") ? companyObj.get("companyFax").toString() : null);
 					companyEntity.setCompanyAddress(null != companyObj.get("companyAddress") ? companyObj.get("companyAddress").toString() : null);
 					companyEntity.setCompanyAddress2(null != companyObj.get("companyAddress2") ? companyObj.get("companyAddress2").toString() : null);

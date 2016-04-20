@@ -1,5 +1,7 @@
 package tw.com.afw.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -61,6 +63,9 @@ public class RentEntity  implements java.io.Serializable{
 	
 	@Column(name = "rent_shortage")
 	private double rentShortage;
+	
+	@Column(name = "rent_date")
+	private Date rentDate;
 	
 	@ManyToOne	
 	@JoinColumn(name="contract_id")
@@ -185,5 +190,27 @@ public class RentEntity  implements java.io.Serializable{
 	public void setContractId(ContractEntity contractId) {
 		this.contractId = contractId;
 	}
+
+	public Date getRentDate() {
+		return rentDate;
+	}
+
+	public void setRentDate(Date rentDate) {
+		this.rentDate = rentDate;
+	}
+
+	@Override
+	public String toString() {
+		return "RentEntity [rentId=" + rentId + ", rentYear=" + rentYear
+				+ ", rentMonth=" + rentMonth + ", rentReceipt=" + rentReceipt
+				+ ", rentMode=" + rentMode + ", rentMoney=" + rentMoney
+				+ ", rentManagement=" + rentManagement + ", rentPower="
+				+ rentPower + ", rentAdsl=" + rentAdsl + ", rentBusiness="
+				+ rentBusiness + ", rentOther=" + rentOther + ", rentList="
+				+ rentList + ", rentRemark=" + rentRemark + ", rentShortage="
+				+ rentShortage + ", rentDate=" + rentDate + ", contractId="
+				+ contractId + "]";
+	}
+	
 
 }

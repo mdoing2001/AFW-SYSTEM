@@ -106,52 +106,10 @@
 	            </li>
 	            <li class="has-submenu active"><a href="#"><i class="ion-grid"></i> <span class="nav-label">收租</span></a>
 	                <ul class="list-unstyled">
+	                    <li><a href="searchRentTable.html">搜尋</a></li>
 	                    <li class="active"><a href="rentTable.html">收租表</a></li>
 	                </ul>
 	            </li>
-<!-- 	            <li class="has-submenu"><a href="#"><i class="ion-stats-bars"></i> <span class="nav-label">Charts</span><span class="badge bg-purple">1</span></a> -->
-<!-- 	                <ul class="list-unstyled"> -->
-<!-- 	                    <li><a href="morris-chart.html">Morris Chart</a></li> -->
-<!-- 	                    <li><a href="chartjs.html">Chartjs</a></li> -->
-<!-- 	                    <li><a href="flot-chart.html">Flot Chart</a></li> -->
-<!-- 	                    <li><a href="rickshaw-chart.html">Rickshaw Chart</a></li> -->
-<!-- 	                    <li><a href="peity-chart.html">Peity Chart</a></li> -->
-<!-- 	                    <li><a href="c3-chart.html">C3 Chart</a></li> -->
-<!-- 	                    <li><a href="other-chart.html">Other Chart</a></li> -->
-<!-- 	                </ul> -->
-<!-- 	            </li> -->
-	
-<!-- 	            <li class="has-submenu"><a href="#"><i class="ion-email"></i> <span class="nav-label">Mail</span></a> -->
-<!-- 	                <ul class="list-unstyled"> -->
-<!-- 	                    <li><a href="inbox.html">Inbox</a></li> -->
-<!-- 	                    <li><a href="email-compose.html">Compose Mail</a></li> -->
-<!-- 	                    <li><a href="email-read.html">View Mail</a></li> -->
-<!-- 	                    <li><a href="email-templates.html">Email Templates</a></li> -->
-<!-- 	                </ul> -->
-<!-- 	            </li> -->
-	
-<!-- 	            <li class="has-submenu"><a href="#"><i class="ion-location"></i> <span class="nav-label">Maps</span></a> -->
-<!-- 	                <ul class="list-unstyled"> -->
-<!-- 	                    <li><a href="gmap.html"> Google Map</a></li> -->
-<!-- 	                    <li><a href="vector-map.html"> Vector Map</a></li> -->
-<!-- 	                </ul> -->
-<!-- 	            </li> -->
-<!-- 	            <li class="has-submenu"><a href="#"><i class="ion-document"></i> <span class="nav-label">Pages</span><span class="badge bg-pink">5</span></a> -->
-<!-- 	                <ul class="list-unstyled"> -->
-<!-- 	                    <li class=""><a href="profile.html">Profile</a></li> -->
-<!-- 	                    <li><a href="timeline.html">Timeline</a></li> -->
-<!-- 	                    <li><a href="invoice.html">Invoice</a></li> -->
-<!-- 	                    <li><a href="contact.html">Contact-list</a></li> -->
-<!-- 	                    <li><a href="login.html">Login</a></li> -->
-<!-- 	                    <li><a href="register.html">Register</a></li> -->
-<!-- 	                    <li><a href="recoverpw.html">Recover Password</a></li> -->
-<!-- 	                    <li><a href="lock-screen.html">Lock Screen</a></li> -->
-<!-- 	                    <li><a href="blank.html">Blank Page</a></li> -->
-<!-- 	                    <li><a href="404.html">404 Error</a></li> -->
-<!-- 	                    <li><a href="404_alt.html">404 alt</a></li> -->
-<!-- 	                    <li><a href="500.html">500 Error</a></li> -->
-<!-- 	                </ul> -->
-<!-- 	            </li> -->
 	        </ul>
 	    </nav> 
 	</aside>
@@ -173,7 +131,7 @@
 	            <li class="dropdown text-center">
 	                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 	                    <img alt="" src="img/logo.png" class="img-circle profile-img thumb-sm">
-	                    <span class="username" id="userName">管理員</span> <span class="caret"></span>
+	                    <span class="username" id="userName">AFW</span> <span class="caret"></span>
 	                </a>
 	                <ul class="dropdown-menu pro-menu fadeInUp animated" tabindex="5003" style="overflow: hidden; outline: none;">
 	                    <li><a href="#" id="logOut"><i class="fa fa-sign-out"></i> Log Out</a></li>
@@ -199,60 +157,41 @@
 	                    <h3 class="panel-title">收租表</h3>
 	                </div>
 	                <div>
-	                	<div class="col-md-3">
+	                	<div class="col-md-4">
 							<div class="form-group">
 								<label for="sel1">類型</label>
-								<select class="form-control" id="sel1">
+								<select class="form-control" id="contractType">
 								    <option value="-1">請選擇</option>
-                              		<option value="o">租辦公室</option>
+                              		<option value="o">辦公室</option>
                               		<option value="p">個人座位</option>
-                              		<option value="r" selected>登記</option>
+                              		<option value="r">登記</option>
                               		<option value="c">聯絡處</option>
                               		<option value="s">停業</option>
                               		<option value="other">其他</option>
 								</select>
 							</div>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-3">
 							<div class="form-group">
 								<label for="sel1">年份</label>
-								<select class="form-control" id="sel1">
-								    <option>2015</option>
-								    <option selected >2016</option>
-								    <option>2017</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-md-2">
-							<div class="form-group">
-								<label for="sel1">月份</label>
-								<select class="form-control" id="sel1">
+								<select class="form-control" id="year">
 									<option value="-1">請選擇</option>
-								    <option>1</option>
-								    <option>2</option>
-								    <option>3</option>
-								    <option>4</option>
-								    <option>5</option>
-								    <option>6</option>
-								    <option>7</option>
-								    <option>8</option>
-								    <option>9</option>
-								    <option>10</option>
-								    <option>11</option>
-								    <option>12</option>
+								    <option value="2015">2015</option>
+								    <option value="2016">2016</option>
+								    <option value="2017">2017</option>
 								</select>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
 								<label for="sel1">公司名稱</label>
-								<input class="form-control"/>
+								<input class="form-control" disabled>
 							</div>
 						</div>
 						<div class="col-md-2">
 							<div class="form-group">
 								<label for="sel1"></label>
-								<button class="btn btn-primary pull-right" data-toggle="modal" data-target="#rem-close-modal">搜尋</button>
+								<button class="btn btn-primary pull-right" id="searchRent">搜尋</button>
 							</div>
 						</div>
 						
@@ -280,7 +219,7 @@
 					                                    <th rowspan="2" style="vertical-align:middle"><div>9</div></th>
 					                                    <th rowspan="2" style="vertical-align:middle"><div>10</div></th>
 					                                    <th rowspan="2" style="vertical-align:middle"><div>11</div></th>
-					                                    <th rowspan="2" style="vertical-align:middle" data-priority="1"><div>12</div></th>
+					                                    <th rowspan="2" style="vertical-align:middle"><div>12</div></th>
 					                                </tr>
 					                                <tr>
 					                                	<th>統一編號</th>
@@ -288,77 +227,7 @@
 					                                    <th>租金</th>
 					                                </tr>
 					                            </thead>
-					                            <tbody id="rentTbody">
-<!-- 					                            	<tr> -->
-<!-- 					                            		<td rowspan="2" style="vertical-align:middle">1</td> -->
-<!-- 					                            		<td align="center">運益企業股份有限公司</td> -->
-<!-- 					                            		<td align="center">2015-01-01</td> -->
-<!-- 					                            		<td>15000</td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td style="vertical-align:middle"><span class="label label-primary popupButton" id="2_3" style="width:30px">3/1</span></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            	</tr> -->
-<!-- 					                            	<tr> -->
-<!-- 					                            		<td>1</td> -->
-<!-- 					                            		<td>2</td> -->
-<!-- 					                            		<td>5</td> -->
-<!-- 					                            		<td>543304</td> -->
-<!-- 					                            		<td>2</td> -->
-<!-- 					                            		<td title="這是備註">543304</td> -->
-<!-- 					                            		<td>4</td> -->
-<!-- 					                            		<td>5</td> -->
-<!-- 					                            		<td>2</td> -->
-<!-- 					                            		<td>2</td> -->
-<!-- 					                            		<td>3</td> -->
-<!-- 					                            		<td>4</td> -->
-<!-- 					                            		<td>5</td> -->
-<!-- 					                            		<td>2</td> -->
-<!-- 					                            		<td>2</td> -->
-<!-- 					                            	</tr><tr> -->
-<!-- 					                            		<td rowspan="2" style="vertical-align:middle">2</td> -->
-<!-- 					                            		<td>2</td> -->
-<!-- 					                            		<td>4</td> -->
-<!-- 					                            		<td>5</td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info popupButton" id="1_2">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info popupButton" id="2">Save</button></td> -->
-<!-- 					                            		<td align="center" style="vertical-align:middle"><span class="label label-primary popupButton" id="1_3">3/1</span></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            		<td><button type="button" class="btn btn-info" id="">Save</button></td> -->
-<!-- 					                            	</tr> -->
-<!-- 					                            	<tr> -->
-<!-- 					                            		<td>54330400</td> -->
-<!-- 					                            		<td>2</td> -->
-<!-- 					                            		<td>5</td> -->
-<!-- 					                            		<td title="這是備註">543304</td> -->
-<!-- 					                            		<td>2</td> -->
-<!-- 					                            		<td title="這是備註">543304</td> -->
-<!-- 					                            		<td>4</td> -->
-<!-- 					                            		<td>5</td> -->
-<!-- 					                            		<td>2</td> -->
-<!-- 					                            		<td>2</td> -->
-<!-- 					                            		<td>3</td> -->
-<!-- 					                            		<td>4</td> -->
-<!-- 					                            		<td>5</td> -->
-<!-- 					                            		<td>2</td> -->
-<!-- 					                            		<td>2</td> -->
-<!-- 					                            	</tr> -->
-					                            </tbody>
+					                            <tbody id="rentTbody"></tbody>
 					                        </table>
                   						</div>
 									</div>
@@ -408,8 +277,8 @@
                         </div>
                     </div> 
 		            <div class="modal-footer"> 
-		                <button type="button" class="btn btn-info" id="remitSave">Save</button>
-		                <button type="button" class="btn btn-white" data-dismiss="modal" id="remitClose">Close</button>
+		                <button type="button" class="btn btn-info" id="rentSave">Save</button>
+		                <button type="button" class="btn btn-white" data-dismiss="modal" id="rentClose">Close</button>
 		            </div> 
 				</div> 
 			</div>
@@ -469,9 +338,19 @@
 <!-- responsive-table--> 
 <script src="assets/responsive-table/rwd-table.min.js" type="text/javascript"></script>
 
+<script src="assets/sweet-alert/sweet-alert.min.js"></script>
+<script src="assets/sweet-alert/sweet-alert.init.js"></script>
+
 <script>
 (function($){
+	var companyId = 0;
+	var contractId = 0;
+	var month = 0;
+	var type;
+	var year;
+	var dataArr;
 	var root = location.protocol + '//' + location.host;
+	
 	$("#rentDate").datepicker({
        	format: 'yyyy-mm-dd',
        	autoclose: true
@@ -480,49 +359,75 @@
 	window.clickInfoButton = function(e) {
 		var id = e.target.id;
 		var ids = id.split("_");
-		var companyId = ids[0];
-		var month = ids[1];
-		//hard code
+		companyId = ids[0];
+		contractId = ids[1];
+		month = ids[2];
+		
 		$('#rentDate').val('');
-		$('#rentReceipt').val('');
-		$('#rentShortage').val('');
-		$('#rentRemark').val('');
-		if(companyId == 1 && month == 3) {
-			$('#rentDate').val('2015-03-15');
-			$('#rentReceipt').val(69584);
-			$('#rentShortage').val(1000);
-			$('#rentRemark').val('缺繳1000');
+ 		$('#rentReceipt').val('');
+ 		$('#rentShortage').val('');
+ 		$('#rentRemark').val('');
+		
+		for(var i =0; i<dataArr.length; i++) {
+			var contractId2 = dataArr[i].contractId;
+			if(contractId == contractId2) {
+				var rentArr = dataArr[i].rentArr;
+				for(var j =0; j<rentArr.length; j++) {
+					var date = new Date(rentArr[j].rentDate);
+		        	var day = ("0" + date.getDate()).slice(-2);
+		        	var month2 = ("0" + (date.getMonth() + 1)).slice(-2);
+		        	var dateFormat = date.getFullYear()+"-"+month2+"-"+day;
+		        	
+		        	var shortAge = rentArr[j].rentShortage;
+		        	var remark = rentArr[j].rentRemark;
+		        	var rentReceipt = rentArr[j].rentReceipt;
+		        	
+		        	if(date.getMonth() + 1 == month) {
+						//$('#rentDate').html(dateFormat);
+						$('#rentDate').val(dateFormat);
+		         		$('#rentReceipt').val(rentReceipt);
+		         		$('#rentShortage').val(shortAge);
+		         		$('#rentRemark').val(remark);
+		        	}
+				}
+			}
 		}
+		
 	    $('#myModal').modal('show');
 	}
 	
+	$('#rentSave').on('click', function() {
+		if(contractId == 0 || month == 0) {
+			alert("請重新操作");
+		} else {
+			createOrUpdateRent(contractId, month);
+		}
+	})
 	
-	
-	var createOrUpdateRent = function(companyId, month) {
+	var createOrUpdateRent = function(contractId, month) {
 		var companyId = "";
 		var rent = {
-			//hardcode:到時候會從select item抓
-			//rentYear : $('#nRentYear'+companyId).val(),
-			rentYear : 2016,
+			rentYear : $('#year').val(),
 			rentMonth : month,
+			rentDate : $('#rentDate').val(),
 			rentReceipt : $('#rentReceipt').val(),
 			rentShortage : $('#rentShortage').val(),
 			rentRemark : $('#rentRemark').val(),
-			companyId : companyId
 		}
 		
 		console.log(JSON.stringify(rent));
 		$.ajax({
-			url:root + "/AFW-I-System/rent/merge",
+			url:root + "/AFW-I-System/rent/merge/" + contractId,
 			type:'post',
 			data : JSON.stringify(rent),
 			dataType : 'json',
 			contentType: 'application/json; charset=UTF-8',
 			success : function(data) {
-				console.log(jQuery.parseJSON(data));
+				console.log(data);
 				if(data.status == 'success') {
-					$('#remitClose').click();
+					$('#rentClose').click();
 					swal("修改成功!", "", "success");
+					retriveDataByTypeAndYear(type, year);
 					
 				} else {
 					alert(data.message);
@@ -538,9 +443,9 @@
 		});
 	}
 	
-	var retriveDataByTypeAndYear = function() {
+	var retriveDataByTypeAndYear = function(type, year) {
 		$.ajax({
-			url:root + "/AFW-I-System/retrive/rent/" + "r/" + 2016,
+			url:root + "/AFW-I-System/retrive/rent/" + type +"/"+year,
 			type:'get',
 			dataType : 'json',
 			contentType: 'application/json; charset=UTF-8',
@@ -548,7 +453,7 @@
 				console.log(jQuery.parseJSON(data.message));
 				//console.log(data.message);
 				if(data.status == 'success') {
-					var dataArr = jQuery.parseJSON(data.message);
+					dataArr = jQuery.parseJSON(data.message);
 					setData(dataArr);
 					
 				} else {
@@ -569,6 +474,7 @@
 		var str = "";
 		for(var i=0; i<dataArr.length; i++) {
 			var companyId = dataArr[i].companyId;
+			var contractId = dataArr[i].contractId;
 			var name = dataArr[i].companyName;
 			var ein = dataArr[i].ein;
 			var rent = dataArr[i].rent;
@@ -586,44 +492,60 @@
         	var dateFormatE = dateE.getFullYear()+"-"+month+"-"+day;
 			var end = dateFormatE;
 			
-			var order = i+1;
-			str = str + "<tr>" +
-	               		"<td rowspan=\"2\" style=\"vertical-align:middle\">"+ order + "</td>" +
-	               		"<td><a class=\"company_link\" href=\"companyProfile.html?id="+ companyId +"\">" + name + "</a></td>" +
-	               		"<td>"+ start + "</td>" +
-	               		"<td>"+ deposit + "</td>" +
-	               		"<td style=\"vertical-align:middle\"><span class=\"label" + " label-primary"+ " popupButton\" id=" + companyId+"_1" + ">01-01</span></td>" +
-	               		"<td style=\"vertical-align:middle\"><span class=\"label" + " label-primary"+ " popupButton\" id=" + companyId+"_2" + ">02-01</span></td>" +
-	               		"<td style=\"vertical-align:middle\"><span title=\"缺繳1000\" onclick=\"clickInfoButton(event);\" class=\"label" + " label-danger"+ " popupButton\" id=" + companyId+"_3" + ">03-15</span></td>" +
-	               		"<td style=\"vertical-align:middle\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-success"+ " popupButton\" id=" + companyId+"_4" + ">Save</span></td>" +
-	               		"<td style=\"vertical-align:middle\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-success"+ " popupButton\" id=" + companyId+"_5" + ">Save</span></td>" +
-	               		"<td style=\"vertical-align:middle\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-success"+ " popupButton\" id=" + companyId+"_6" + ">Save</span></td>" +
-	               		"<td style=\"vertical-align:middle\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-success"+ " popupButton\" id=" + companyId+"_7" + ">Save</span></td>" +
-	               		"<td style=\"vertical-align:middle\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-success"+ " popupButton\" id=" + companyId+"_8" + ">Save</span></td>" +
-	               		"<td style=\"vertical-align:middle\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-success"+ " popupButton\" id=" + companyId+"_9" + ">Save</span></td>" +
-	               		"<td style=\"vertical-align:middle\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-success"+ " popupButton\" id=" + companyId+"_10" + ">Save</span></td>" +
-	               		"<td style=\"vertical-align:middle\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-success"+ " popupButton\" id=" + companyId+"_11" + ">Save</span></td>" +
-	               		"<td style=\"vertical-align:middle\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-success"+ " popupButton\" id=" + companyId+"_12" + ">Save</span></td>" +
-						"</tr>" +
+			var order = dataArr[i].officeNum;
+			
+			var str1 =  "<tr>" +
+       					"<td rowspan=\"2\" style=\"vertical-align:middle\">"+ order + "</td>" +
+       					"<td><a class=\"company_link\" href=\"companyProfile.html?id="+ companyId +"\">" + name + "</a></td>" +
+       					"<td>"+ start + "</td>" +
+       					"<td>"+ deposit + "</td>";
+       		
+       		var str2 = "</tr>" +
 						"<tr>" +
-	               		"<td style=\"vertical-align:middle; border-bottom:1pt solid black\">"+ ein + "</td>" +
-	               		"<td style=\"border-bottom:1pt solid black\">"+ end + "</td>" +
-	               		"<td style=\"border-bottom:1pt solid black\">"+ rent + "</td>" +
-	               		"<td style=\"vertical-align:middle; border-bottom:1pt solid black\"><span class=\"label " + "label-info"+ " popupButton\" id=" + companyId+"_1" + ">98654</span></td>" +
-	               		"<td style=\"vertical-align:middle; border-bottom:1pt solid black\"><span class=\"label " + "label-info"+ " popupButton\" id=" + companyId+"_2" + ">85426</span></td>" +
-	               		"<td style=\"vertical-align:middle; border-bottom:1pt solid black\"><span class=\"label " + "label-info"+ " popupButton\" id=" + companyId+"_3" + ">69584</span></td>" +
-	               		"<td style=\"vertical-align:middle; border-bottom:1pt solid black\"><span class=\"label " + "label-info"+ " popupButton\" id=" + companyId+"_4" + "></span></td>" +
-	               		"<td style=\"vertical-align:middle; border-bottom:1pt solid black\"><span class=\"label " + "label-info"+ " popupButton\" id=" + companyId+"_5" + "></span></td>" +
-	               		"<td style=\"vertical-align:middle; border-bottom:1pt solid black\"><span class=\"label " + "label-info"+ " popupButton\" id=" + companyId+"_6" + "></span></td>" +
-	               		"<td style=\"vertical-align:middle; border-bottom:1pt solid black\"><span class=\"label " + "label-info"+ " popupButton\" id=" + companyId+"_7" + "></span></td>" +
-	               		"<td style=\"vertical-align:middle; border-bottom:1pt solid black\"><span class=\"label " + "label-info"+ " popupButton\" id=" + companyId+"_8" + "></span></td>" +
-	               		"<td style=\"vertical-align:middle; border-bottom:1pt solid black\"><span class=\"label " + "label-info"+ " popupButton\" id=" + companyId+"_9" + "></span></td>" +
-	               		"<td style=\"vertical-align:middle; border-bottom:1pt solid black\"><span class=\"label " + "label-info"+ " popupButton\" id=" + companyId+"_10" + "></span></td>" +
-	               		"<td style=\"vertical-align:middle; border-bottom:1pt solid black\"><span class=\"label " + "label-info"+ " popupButton\" id=" + companyId+"_11" + "></span></td>" +
-	               		"<td style=\"vertical-align:middle; border-bottom:1pt solid black\"><span class=\"label " + "label-info"+ " popupButton\" id=" + companyId+"_12" + "></span></td>" +
-						"</tr>";
+       					"<td style=\"vertical-align:middle; border-bottom:2pt solid black\">"+ ein + "</td>" +
+       					"<td style=\"border-bottom:2pt solid black\">"+ end + "</td>" +
+       					"<td style=\"border-bottom:2pt solid black\">"+ rent + "</td>";
+			
+			var rentStr = "";
+			var rentStr2 = ""; 
+			var rentArr = dataArr[i].rentArr;
+			
+			for(var k=1; k<13; k++) {
+				var exist = false;
+				for(var j = 0; j<rentArr.length; j++) {
+					var date = new Date(rentArr[j].rentDate);
+		        	var day = ("0" + date.getDate()).slice(-2);
+		        	var month = ("0" + (date.getMonth() + 1)).slice(-2);
+		        	var dateFormat = date.getFullYear()+"-"+month+"-"+day;
+		        	
+		        	var shortAge = rentArr[j].rentShortage;
+		        	var remark = rentArr[j].rentRemark;
+		        	var rentReceipt = rentArr[j].rentReceipt;
+		        	
+		        	if(k == month) {
+		        		exist = true;
+		        		if(day == '01' && shortAge == 0) {
+		        			rentStr = rentStr + "<td style=\"vertical-align:middle\"><span title=" + remark + " class=\"label" + " label-primary"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">"+ day +"</span></td>";
+			        	} else  if(day == '01' && shortAge != 0) {
+			        		rentStr = rentStr + "<td style=\"vertical-align:middle\"><span title=" + remark + " onclick=\"clickInfoButton(event);\" class=\"label" + " label-danger"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">"+ day +"</span></td>";
+			        	} else if(day != '01' && shortAge == 0) {
+			        		rentStr = rentStr + "<td style=\"vertical-align:middle\"><span title=" + remark + " class=\"label" + " label-primary"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">"+ month + "-" + day +"</span></td>";
+			        	} else {
+			        		rentStr = rentStr + "<td style=\"vertical-align:middle\"><span title=" + remark + " onclick=\"clickInfoButton(event);\" class=\"label" + " label-danger"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">"+ month + "-" + day +"</span></td>";
+			        	}
+		        		
+		        		rentStr2 = rentStr2 +　"<td style=\"vertical-align:middle; border-bottom:2pt solid black\"><span class=\"label " + "label-info"+ " popupButton\" id=" + companyId+"_1" + ">" + rentReceipt + " </span></td>";
+		        	}
+				}
+				if(!exist) {
+					rentStr = rentStr + "<td style=\"vertical-align:middle\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-success"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+k + ">Save</span></td>";
+					rentStr2 = rentStr2 + "<td style=\"vertical-align:middle; border-bottom:2pt solid black\"></td>"
+				}
+			}
+			
+			str = str + str1 + rentStr + str2 + rentStr2;
 		}
-		console.log(str);
+		
 		$('#rentTbody').html(str);
 		
 	}
@@ -653,9 +575,21 @@
 			}
 		});
     }
+	
+	$('#searchRent').on('click', function() {
+		type = $('#contractType').val();
+		year = $('#year').val();
+		if(type != -1 && year != -1) {
+			retriveDataByTypeAndYear(type, year);
+		} else {
+			alert('請選擇公司類型及年份');
+		}
+		
+	});
+	
+	
 	//page load
     window.onload = function() {
-    	retriveDataByTypeAndYear();
 	};
 })(jQuery);
 </script>

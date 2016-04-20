@@ -24,9 +24,15 @@ public class RentService {
 	public RentEntity findRentById(Integer id){
 		return rentDao.findRentById(id);
 	}
+	
 	@Transactional
-	public List<RentEntity> findRentByContractId(Integer id) {
-		return rentDao.findRentByContractId(id);
+	public List<RentEntity> findRentByContractIdAndYear(Integer id, Integer year) {
+		return rentDao.findRentByContractIdAndYear(id, year);
+	}
+	
+	@Transactional
+	public RentEntity findRentByYearAndMonthContractId(Integer id,Integer year, Integer month) {
+		return rentDao.findRentByYearAndMonthContractId(id, year, month);
 	}
 	
 	@Transactional

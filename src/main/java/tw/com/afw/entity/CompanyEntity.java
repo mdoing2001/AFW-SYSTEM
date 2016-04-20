@@ -56,6 +56,12 @@ public class CompanyEntity implements java.io.Serializable{
 	@Column(name = "company_number")
 	private String companyNumber;
 	
+	@Column(name = "company_number2")
+	private String companyNumber2;
+	
+	@Column(name = "company_line")
+	private String companyLine;
+	
 	@Column(name = "company_fax")
 	private String companyFax;
 	
@@ -222,6 +228,22 @@ public class CompanyEntity implements java.io.Serializable{
 		this.companyStatusChangeDate = companyStatusChangeDate;
 	}
 
+	public String getCompanyNumber2() {
+		return companyNumber2;
+	}
+
+	public void setCompanyNumber2(String companyNumber2) {
+		this.companyNumber2 = companyNumber2;
+	}
+
+	public String getCompanyLine() {
+		return companyLine;
+	}
+
+	public void setCompanyLine(String companyLine) {
+		this.companyLine = companyLine;
+	}
+
 	@Override
 	public String toString() {
 		return "CompanyEntity [companyId=" + companyId + ", companyType="
@@ -231,14 +253,12 @@ public class CompanyEntity implements java.io.Serializable{
 				+ companyExecutive + ", companyBitrhday=" + companyBitrhday
 				+ ", companyEin=" + companyEin + ", companyAddress="
 				+ companyAddress + ", companyAddress2=" + companyAddress2
-				+ ", companyNumber=" + companyNumber + ", companyFax="
-				+ companyFax + ", companyMail=" + companyMail + ", accId="
-				+ accId + ", companyRemark=" + companyRemark
+				+ ", companyNumber=" + companyNumber + ", companyNumber2="
+				+ companyNumber2 + ", companyLine=" + companyLine
+				+ ", companyFax=" + companyFax + ", companyMail=" + companyMail
+				+ ", accId=" + accId + ", companyRemark=" + companyRemark
 				+ ", companyPayStatus=" + companyPayStatus
 				+ ", companyLetterStatus=" + companyLetterStatus
 				+ ", companyCode=" + companyCode + "]";
 	}
-
-	
-
 }
