@@ -414,8 +414,10 @@
 <script src="js/jquery.app.js"></script>
 
 <script src="assets/timepicker/bootstrap-datepicker.js"></script>
+<script src="js/common.js"></script>
 
 <script type="text/javascript">
+
 (function($){
 // 	$('#companySave').on('click', function() {
 // 	    $("#company2-form").valid();
@@ -683,20 +685,22 @@
 				.attr("value", 'acc').text("會計師"));
     }
     
-    $('#logOut').on('click', function() {
-    	logOut();
-    })
-    
-    var logOut = function() {
-    	$.ajax({
-			url:root + "/AFW-I-System/new/user/logout",
+    var checkSession = function() {
+		$.ajax({
+			url:root + "/AFW-I-System/session/user/check",
 			type:'get',
 			dataType : 'json',
 			contentType: 'application/json',
 			success : function(response) {
 				//alert("success");
 				if(response.status == 'success') {
-					window.location.href = root + "/AFW-I-System/login.html";
+					if(response.message == false) {
+						alert("請重新登入");
+						window.location.href = root + "/AFW-I-System/login.html";
+						return false;
+					} else {
+						getAllUserAjax();
+					}
 				}
 			},
 			error : function(e) {
@@ -707,11 +711,14 @@
 				console.log("DONE");
 			}
 		});
-    }
+		
+		return true;
+	};
     
     //page load
     window.onload = function() {
-		getAllUserAjax();
+    	checkSession();
+		
 	};
 })(jQuery);
 </script>

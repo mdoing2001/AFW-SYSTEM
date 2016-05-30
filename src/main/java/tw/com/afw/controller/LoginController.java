@@ -82,5 +82,28 @@ public class LoginController {
 		 return results.toJSONString();
 	 }
 	 
+	 @SuppressWarnings("unchecked")
+	 @RequestMapping(value = "/session/user/check", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
+	 public String checkSession(HttpServletRequest request) {
+		 JSONObject results = new JSONObject();
+		 
+		 try {
+			 String userCode = (String) request.getSession().getAttribute("usercode");
+			 if(userCode != null) {
+				 results.put("status", "success");
+				 results.put("message", true);
+			 } else {
+				 results.put("status", "success");
+				 results.put("message", false);
+			 }
+			 
+		 } catch (Exception e) {
+			 e.printStackTrace();
+			 results.put("status", "error");
+			 results.put("message", e);
+		 }
+		 return results.toJSONString();
+	 }
+	 
 
 }

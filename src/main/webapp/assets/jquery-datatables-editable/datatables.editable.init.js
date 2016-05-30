@@ -174,10 +174,10 @@
 				data;
 
 			data = this.datatable.row( $row.get(0) ).data();
-
+			console.log(data);
 			$row.children( 'td' ).each(function( i ) {
 				var $this = $( this );
-
+				console.log($this);
 				if ( $this.hasClass('actions') ) {
 					_self.rowSetActionsEditing( $row );
 				} else if(!$this.hasClass('accountReadable')){

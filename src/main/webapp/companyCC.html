@@ -231,6 +231,7 @@
 <script src="assets/datatables/dataTables.responsive.min.js"></script>
 <script src="assets/datatables/dataTables.bootstrap.js"></script>
 
+<script src="js/common.js"></script>
 <script>
 (function($){
 	var root = location.protocol + '//' + location.host;
@@ -384,20 +385,26 @@
 	    }
 	};
     
-    $('#logOut').on('click', function() {
-    	logOut();
-    })
-    
-    var logOut = function() {
-    	$.ajax({
-			url:root + "/AFW-I-System/new/user/logout",
+	var checkSession = function() {
+		$.ajax({
+			url:root + "/AFW-I-System/session/user/check",
 			type:'get',
 			dataType : 'json',
 			contentType: 'application/json',
 			success : function(response) {
 				//alert("success");
 				if(response.status == 'success') {
-					window.location.href = root + "/AFW-I-System/login.html";
+					if(response.message == false) {
+						alert("請重新登入");
+						window.location.href = root + "/AFW-I-System/login.html";
+						return false;
+					} else {
+						var branch = getUrlParameter('branch');
+				    	if(branch === undefined) {
+				    		branch = '-1';
+				    	}
+				    	retriveCompanyAjax(branch);
+					}
 				}
 			},
 			error : function(e) {
@@ -408,15 +415,14 @@
 				console.log("DONE");
 			}
 		});
-    }
+		
+		return true;
+	};
 	
 	//page load
     window.onload = function() {
-    	var branch = getUrlParameter('branch');
-    	if(branch === undefined) {
-    		branch = '-1';
-    	}
-    	retriveCompanyAjax(branch);
+    	checkSession();
+    	
 	};
 })(jQuery);
 </script>

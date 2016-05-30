@@ -26,7 +26,7 @@
 
     //Success Message
     $('#sa-success').click(function(){
-        swal("Good job!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat, tincidunt vitae ipsum et, pellentesque maximus enim. Mauris eleifend ex semper, lobortis purus sed, pharetra felis", "success")
+        swal("更新成功!", "", "success");
     });
 
     //Warning Message

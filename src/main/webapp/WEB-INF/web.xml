@@ -8,7 +8,7 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>
 			/WEB-INF/afw-servlet.xml
-			/WEB-INF/afw-securityspring.xml
+<!-- 			/WEB-INF/afw-securityspring.xml -->
     </param-value>
   </context-param>
   <servlet>

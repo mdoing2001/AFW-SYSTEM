@@ -8,11 +8,11 @@ $.notify.addStyle("metro", {
             "</div>" +
         "</div>",
     classes: {
-        default: {
-            "color": "#fafafa !important",
-            "background-color": "#ABB7B7",
-            "border": "1px solid #ABB7B7"
-        },
+//        default: {
+//            "color": "#fafafa !important",
+//            "background-color": "#ABB7B7",
+//            "border": "1px solid #ABB7B7"
+//        },
         error: {
             "color": "#fafafa !important",
             "background-color": "rgba(203, 42, 42, 0.8)",
