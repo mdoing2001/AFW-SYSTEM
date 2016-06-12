@@ -33,6 +33,7 @@
 	<link href="css/style.css" rel="stylesheet">
 	<link href="css/helper.css" rel="stylesheet">
 	
+	<link href="css/common.css" rel="stylesheet">
 	
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
 	<!--[if lt IE 9]>
@@ -235,6 +236,7 @@
 	var root = location.protocol + '//' + location.host;
     
     var retriveCompanyAjax = function(selectBranch) {
+    	console.log(selectBranch);
     	var table;
     	$.ajax({
 			url:root + "/AFW-I-System/retrive/company/p/" + selectBranch,

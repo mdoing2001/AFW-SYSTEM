@@ -1,5 +1,7 @@
 package tw.com.afw.controller;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -116,7 +118,10 @@ public class CompanyController {
 					
 					//TODO:塞office(辦公室號碼 不一定每張合約都有)("office":{"officeNumber":""})
 					OfficeEntity officeEntity = new OfficeEntity();
-					officeEntity.setOfficeNumber(null != officeObj.get("officeNumber") ? officeObj.get("officeNumber").toString() :null );				
+					if(contractObj.get("contractType").toString().equalsIgnoreCase("o") || contractObj.get("contractType").toString().equalsIgnoreCase("p")) {
+						officeEntity.setOfficeNumber(null != officeObj.get("officeNumber") ? officeObj.get("officeNumber").toString() : "0");
+					}
+					
 					
 					//塞accountancy("acc":{"accName":"","accContact":"","accPhone":"","accAddress":""})
 					AccountancyEntity accountancyEntity = new AccountancyEntity();
@@ -128,7 +133,7 @@ public class CompanyController {
 					CompanyEntity nCompanyEntity = companyService.findCompanyById(companyId);
 					//System.out.println(nCompanyEntity.toString());
 					//(辦公室號碼 不一定每張合約都有)
-					if(!contractObj.get("contractType").toString().isEmpty() && contractObj.get("contractType").toString().equalsIgnoreCase("o")) {
+					if(!contractObj.get("contractType").toString().isEmpty() && (contractObj.get("contractType").toString().equalsIgnoreCase("o") || contractObj.get("contractType").toString().equalsIgnoreCase("p"))) {
 						nCompanyEntity.setAccId(accountancyEntity);
 						companyService.upd(nCompanyEntity);
 						contractEntity.setCompanyId(nCompanyEntity);
@@ -285,9 +290,15 @@ public class CompanyController {
 				result.put("message", gson.toJson(arr));
 				result.put("user", usercode);
 			} catch (Exception e) {
+				StringWriter stringWriter = new StringWriter();
+				String stackTrace = null;
+				e.printStackTrace(new PrintWriter(stringWriter));
+
+				// get the stackTrace as String...
+				stackTrace = stringWriter.toString();
 				e.printStackTrace();
 				result.put("status", "error");
-				result.put("message", e);
+				result.put("message", stackTrace);
 			}
 	    	return result.toJSONString();
 	    }

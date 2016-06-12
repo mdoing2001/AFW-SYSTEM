@@ -67,9 +67,14 @@ public class ContractController {
 			contractEntity.setContractRemarks(null != contractObj.get("contractRemarks") ? contractObj.get("contractRemarks").toString() : null);
 			contractEntity.setContractDel(null != contractObj.get("contractDel") ? contractObj.get("contractDel").toString() : null);
 			
-			if(!contractObj.get("officeNumber").toString().isEmpty() && contractObj.get("contractType").toString().equalsIgnoreCase("o")) {
-				officeEntity.setOfficeNumber(contractObj.get("officeNumber").toString());
-				officeEntity.setContractId(contractEntity);
+			if(contractObj.get("contractType").toString().equalsIgnoreCase("o") || contractObj.get("contractType").toString().equalsIgnoreCase("p")) {
+				if(!contractObj.get("officeNumber").toString().isEmpty()) {
+					officeEntity.setOfficeNumber(contractObj.get("officeNumber").toString());
+					officeEntity.setContractId(contractEntity);
+				} else {
+					officeEntity.setOfficeNumber("0");
+					officeEntity.setContractId(contractEntity);
+				}
 				officeService.ins(officeEntity);
 			} else {
 				contractService.ins(contractEntity);
@@ -114,7 +119,7 @@ public class ContractController {
 				
 				contractService.update(contractEntity);
 				
-				if(!contractObj.get("contractType").toString().isEmpty() && contractObj.get("contractType").toString().equalsIgnoreCase("o")) {
+				if(contractObj.get("contractType").toString().equalsIgnoreCase("o") || contractObj.get("contractType").toString().equalsIgnoreCase("p")) {
 					OfficeEntity officeEntity = officeService.findOffByContract(id);
 					if(officeEntity != null) {
 						officeEntity.setOfficeNumber(contractObj.get("officeNumber").toString());
@@ -129,15 +134,12 @@ public class ContractController {
 		    	result.put("message", "更新有誤 請重新操作");
 			}
 			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			result.put("status", "error");
 	    	result.put("message", "update error");
 		}
 	  	
-		
-		
 		return result.toJSONString();
 	}
 
