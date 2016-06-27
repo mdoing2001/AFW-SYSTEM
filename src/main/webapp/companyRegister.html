@@ -63,31 +63,6 @@
 	    <!-- Navbar Start -->
 	    <nav class="navigation">
 	        <ul class="list-unstyled">
-<!-- 	            <li><a href="index.html"><i class="ion-home"></i> <span class="nav-label">Dashboard</span></a></li> -->
-<!-- 	            <li class="has-submenu"><a href="#"><i class="ion-flask"></i> <span class="nav-label">UI Elements</span></a> -->
-<!-- 	                <ul class="list-unstyled"> -->
-<!-- 	                    <li><a href="typography.html">Typography</a></li> -->
-<!-- 	                    <li><a href="buttons.html">Buttons</a></li> -->
-<!-- 	                    <li><a href="icons.html">Icons</a></li> -->
-<!-- 	                    <li><a href="panels.html">Panels</a></li> -->
-<!-- 	                    <li><a href="tabs-accordions.html">Tabs &amp; Accordions</a></li> -->
-<!-- 	                    <li><a href="modals.html">Modals</a></li> -->
-<!-- 	                    <li><a href="bootstrap-ui.html">BS Elements</a></li> -->
-<!-- 	                    <li><a href="progressbars.html">Progress Bars</a></li> -->
-<!-- 	                    <li><a href="notification.html">Notification</a></li> -->
-<!-- 	                    <li><a href="sweet-alert.html">Sweet-Alert</a></li> -->
-<!-- 	                </ul> -->
-<!-- 	            </li> -->
-<!-- 	            <li class="has-submenu"><a href="#"><i class="ion-settings"></i> <span class="nav-label">Components</span><span class="badge bg-success">New</span></a> -->
-<!-- 	                <ul class="list-unstyled"> -->
-<!-- 	                    <li><a href="grid.html">Grid</a></li> -->
-<!-- 	                    <li><a href="portlets.html">Portlets</a></li> -->
-<!-- 	                    <li><a href="widgets.html">Widgets</a></li> -->
-<!-- 	                    <li><a href="nestable-list.html">Nesteble</a></li> -->
-<!-- 	                    <li><a href="calendar.html">Calendar</a></li> -->
-<!-- 	                    <li><a href="ui-sliders.html">Range Slider</a></li> -->
-<!-- 	                </ul> -->
-<!-- 	            </li> -->
 	            <li class="has-submenu active"><a href="#"><i class="ion-compose"></i> <span class="nav-label">客戶資料</span></a>
 	                <ul class="list-unstyled">
 	                    <li><a href="addCompany.html">新增客戶合約</a></li>
@@ -103,6 +78,14 @@
 	                <ul class="list-unstyled">
 	                	<li><a href="searchRentTable.html">搜尋</a></li>
 	                    <li><a href="rentTable.html">收租表</a></li>
+	                    <li><a href="rentListTable.html">收費清單</a></li>
+	                </ul>
+	            </li>
+	            <li class="has-submenu" id="adminReconciliation" style="display:none">
+	            	<a href="#"><i class="ion-stats-bars"></i> <span class="nav-label">對帳報表</span></a>
+	                <ul class="list-unstyled">
+	                    <li class="active"><a href="reconciliationTable.html">對帳</a></li>
+	                    <li><a href="404.html">營收報表</a></li>
 	                </ul>
 	            </li>
 	        </ul>
@@ -172,6 +155,7 @@
                                     <table id="datatable" class="table table-striped table-bordered" style="width: 100%;">
                                         <thead>
 											<tr>
+												<th>id</th>
                                                 <th>公司名稱</th>
                                                 <th>負責人</th>
                                                 <th>電話</th>
@@ -182,18 +166,6 @@
                                                 <th>備註</th>
 											</tr>
                                         </thead>
-										<tfoot>
-								            <tr>
-								                <th>公司名稱</th>
-                                                <th>負責人</th>
-                                                <th>電話</th>
-                                                <th>傳真</th>
-                                                <th>Email</th>
-                                                <th>寄件方式</th>
-                                                <th>轉寄地址</th>
-                                                <th>備註</th>
-								            </tr>
-								        </tfoot>
                                         <tbody></tbody>
                                     </table>
                                 </div>
@@ -304,6 +276,9 @@
 // 	        		'defaultContent': ''
 // 	        		},
 					{"data": function(row, type, val, meta) {
+	        			return row.company.companyId;
+	        		},"visible": false},
+					{"data": function(row, type, val, meta) {
 	        			return "<a class=\"company_link\" href=\"companyProfile.html?id="+ row.company.companyId +"\">" + row.company.companyName + "</a>";
 	        		}},
 	        		{"data": function(row, type, val, meta) {
@@ -349,33 +324,33 @@
 	        		}},
 	        ],
 	        
-	        "order": [[1, 'desc']]
+	        "order": [[0, 'asc']]
 		});
     	
     	//javascript by jquery
-    	$('#datatable thead th').each(function() {
-            var title = $('#datatable tfoot th').eq($(this).index()).text();
-            $(this).html('<input type="text" style="width:100%; padding:3px; box-sizing:border-box;" placeholder="Search '+title+'" />');
-        } );
+//     	$('#datatable thead th').each(function() {
+//             var title = $('#datatable tfoot th').eq($(this).index()).text();
+//             $(this).html('<input type="text" style="width:100%; padding:3px; box-sizing:border-box;" placeholder="Search '+title+'" />');
+//         } );
     	
-    	var table = $('#datatable').DataTable();
+//     	var table = $('#datatable').DataTable();
     	
-     	// Apply the search
-        table.columns().eq( 0 ).each( function ( colIdx ) {
-            $( 'input', table.column( colIdx ).header() ).on( 'keyup change', function () {
-                table
-                    .column( colIdx )
-                    .search( this.value )
-                    .draw();
-            } );
-        });
+//      	// Apply the search
+//         table.columns().eq( 0 ).each( function ( colIdx ) {
+//             $( 'input', table.column( colIdx ).header() ).on( 'keyup change', function () {
+//                 table
+//                     .column( colIdx )
+//                     .search( this.value )
+//                     .draw();
+//             } );
+//         });
      	
-        //the search boxes on top without replacing the columns titles
-        var r = $('#datatable tfoot tr');
-        r.find('th').each(function(){
-          $(this).css('padding', 8);
-        });
-        $('#datatable thead').append(r);
+//         //the search boxes on top without replacing the columns titles
+//         var r = $('#datatable tfoot tr');
+//         r.find('th').each(function(){
+//           $(this).css('padding', 8);
+//         });
+//         $('#datatable thead').append(r);
     }
     
     $("#branchOffice").change(function() {
@@ -417,6 +392,8 @@
 				    		branch = '-1';
 				    	}
 				    	retriveCompanyAjax(branch);
+				    	setUserInfoNavBar(response.userCode);
+				    	hiddenInfo(response.userCode);
 					}
 				}
 			},
@@ -430,6 +407,26 @@
 		});
 		
 		return true;
+	};
+	
+	var setUserInfoNavBar = function(userCode) {
+    	var name = '';
+    	switch(userCode) {
+	    	case 'AA': name = '管理員'; break;
+	    	case '189': name = '南京店'; break;
+	    	case '201': name = '復興店'; break;
+	    	case '221': name = '微風店'; break;
+	    	case '222': name = '大安店'; break;
+	    	case '169': name = '敦化店'; break;
+	    	case '295': name = '忠孝店'; break;
+    	}
+    	$('#userName').text(name);
+    }
+	
+	var hiddenInfo = function(userCode) {
+		if(userCode == 'AA') {
+			$('#adminReconciliation').css('display', 'block');
+		}
 	};
 	
 	//page load

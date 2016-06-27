@@ -45,6 +45,8 @@ public class BranchService {
 		branchDao.delete(branch);
 	}
 	
-	
-
+	@Transactional
+	public BranchEntity findBranchByBranchCode(String code) {
+		return branchDao.findBranchByBranchCode(code);
+	}
 }

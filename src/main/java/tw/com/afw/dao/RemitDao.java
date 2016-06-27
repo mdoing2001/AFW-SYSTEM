@@ -78,6 +78,20 @@ public class RemitDao {
 		}
 	}
 	
+	public RemitEntity findRemitByAccount5(Integer account5) {
+		RemitEntity results = null;
+		
+		try{
+			results = em.createQuery("select r from RemitEntity r where r.remitAccount LIKE :account5", RemitEntity.class)
+					.setParameter("account5", "%"+account5).getSingleResult();
+        } catch (NoResultException ne) {
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+		
+		return results;
+	}
+	
 	
 
 }

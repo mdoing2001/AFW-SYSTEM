@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="shortcut icon" href="img/logo.png">
+	
+	<title>Afw Reconciliation Page</title>
+	
+	      <!-- Bootstrap core CSS -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-reset.css" rel="stylesheet">
+	
+	<!--Animation css-->
+	<link href="css/animate.css" rel="stylesheet">
+	
+	<!-- sweet alerts -->
+	<link href="assets/sweet-alert/sweet-alert.min.css" rel="stylesheet">
+	
+	<!--Icon-fonts css-->
+	<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+	<link href="assets/ionicon/css/ionicons.min.css" rel="stylesheet" />
+	
+	<!-- DataTables -->
+	<link rel="stylesheet" href="assets/magnific-popup/magnific-popup.css" />
+	<link rel="stylesheet" href="assets/jquery-datatables-editable/datatables.css" />
+	
+	<!-- Custom styles for this template -->
+	<link href="css/style.css" rel="stylesheet">
+	<link href="css/helper.css" rel="stylesheet">
+	
+	<!-- Responsive-table -->
+    <link href="assets/responsive-table/rwd-table.min.css" rel="stylesheet" type="text/css" media="screen"/>
+	
+	<link href="css/common.css" rel="stylesheet">
+	
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+	<!--[if lt IE 9]>
+	  <script src="js/html5shiv.js"></script>
+	  <script src="js/respond.min.js"></script>
+	<![endif]-->
+<style>
+.company_link:hover {
+    text-decoration: underline;
+}
+.label {
+	font-size:100%;
+}
+.form-control {
+	color:black;
+}
+</style>
+</head>
+<body>
+	<!-- Aside Start-->
+ 	<aside class="left-panel">
+
+	    <!-- brand -->
+	    <div class="logo">
+	        <a href="index.html" class="logo-expanded">
+<!-- 	            <img src="img/logo.png" alt="logo"> -->
+				<i class="ion-social-buffer"></i>
+				<span class="nav-label">AFW_SYSTEM</span>
+	        </a>
+	    </div>
+	    <!-- / brand -->
+	
+	    <!-- Navbar Start -->
+	    <nav class="navigation">
+	        <ul class="list-unstyled">
+	            <li class="has-submenu"><a href="#"><i class="ion-compose"></i> <span class="nav-label">客戶資料</span></a>
+	                <ul class="list-unstyled">
+	                    <li><a href="addCompany.html">新增客戶合約</a></li>
+	                    <li><a href="company.html">全部客戶</a></li>
+	                    <li><a href="companyOffice.html">辦公室</a></li>
+	                    <li><a href="companyPersonal.html">個人座位</a></li>
+	                    <li><a href="companyRegister.html">登記</a></li>
+	                    <li><a href="companyCC.html">聯絡處 & 停業</a></li>
+	                    <li><a href="companyClose.html">退租</a></li>
+	                </ul>
+	            </li>
+	            <li class="has-submenu"><a href="#"><i class="ion-grid"></i> <span class="nav-label">收租</span></a>
+	                <ul class="list-unstyled">
+	                    <li><a href="searchRentTable.html">搜尋</a></li>
+	                    <li><a href="rentTable.html">收租表</a></li>
+	                    <li><a href="rentListTable.html">收費清單</a></li>
+	                </ul>
+	            </li>
+	            <li class="has-submenu active" id="adminReconciliation">
+	            	<a href="#"><i class="ion-stats-bars"></i> <span class="nav-label">對帳報表</span></a>
+	                <ul class="list-unstyled">
+	                    <li class="active"><a href="reconciliationTable.html">對帳</a></li>
+	                    <li><a href="404.html">營收報表</a></li>
+	                </ul>
+	            </li>
+	        </ul>
+	    </nav> 
+	</aside>
+	<!-- Aside Ends-->
+	
+	<!--Main Content Start -->
+    <section class="content">
+        <!-- Header -->
+        <header class="top-head container-fluid">
+        	<button type="button" class="navbar-toggle pull-left">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- user login dropdown start-->
+            <ul class="nav navbar-nav navbar-right top-menu top-right-menu">
+	            <li class="dropdown text-center">
+	                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+	                    <img alt="" src="img/logo.png" class="img-circle profile-img thumb-sm">
+	                    <span class="username" id="userName">AFW</span> <span class="caret"></span>
+	                </a>
+	                <ul class="dropdown-menu pro-menu fadeInUp animated" tabindex="5003" style="overflow: hidden; outline: none;">
+	                    <li><a href="#" id="logOut"><i class="fa fa-sign-out"></i> Log Out</a></li>
+	                </ul>
+	            </li>
+            </ul>
+        </header>
+        <!-- Header Ends -->
+
+
+        <!-- Page Content Start -->
+        <!-- ================== -->
+
+        <div class="wraper container-fluid">
+			<div class="page-title"> 
+                <h3 class="title"></h3> 
+            </div>
+
+			<!-- 根據不同權限看到不同分公司的客戶 table動態產生 thead也動態產生 目前先show admin的畫面-->
+            <div class="panel">
+                <div class="panel-body">
+                	<div class="panel-heading">
+	                 	<h3 class="panel-title">對帳</h3>
+	                </div>
+                	<div class="row">
+	                    <div class="col-sm-6">
+	                        <div class="m-b-30">
+	                            <button id="addRecord" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
+	                        </div>
+	                    </div>
+ 					</div>
+	                
+	                <div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="sel1">分店</label>
+								<select class="form-control" id="branchOffice">
+								    <option value="-1">請選擇</option>
+	                          		<option value="221">微風店</option>
+	                          		<option value="169">敦化店</option>
+	                          		<option value="222">大安店</option>
+	                          		<option value="295">忠孝店</option>
+	                          		<option value="201">復興店</option>
+	                          		<option value="189">南京店</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label for="sel1">年份</label>
+								<select class="form-control" id="tYear">
+									<option value="-1">請選擇</option>
+								    <option value="2016" selected>2016</option>
+								    <option value="2017">2017</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label for="sel1">月份</label>
+								<select class="form-control" id="tMonth">
+									<option value="-1">請選擇</option>
+								    <option value="1">1</option>
+								    <option value="2">2</option>
+								    <option value="3">3</option>
+								    <option value="4">4</option>
+								    <option value="5">5</option>
+								    <option value="6">6</option>
+								    <option value="7">7</option>
+								    <option value="8">8</option>
+								    <option value="9">9</option>
+								    <option value="10">10</option>
+								    <option value="11">11</option>
+								    <option value="12">12</option>
+								</select>
+							</div>
+						</div>
+<!-- 						<div class="col-md-3"> -->
+<!-- 							<div class="form-group"> -->
+<!-- 								<label for="sel1">帳號末五碼或公司名稱</label> -->
+<!-- 								<input class="form-control" id="account5"> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+						<div class="col-md-2">
+							<div class="form-group">
+								<button class="btn btn-primary pull-right" id="searchRent">搜尋</button>
+							</div>
+						</div>
+					</div>
+                       	<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="table-responsive">
+								<table id="" class="table table-hover">
+		                            <thead>
+		                                <tr>
+		                                	<th>日期</th>
+		                                    <th>匯款方式</th>
+		                                    <th>金額</th>
+		                                    <th>帳戶資料</th>
+		                                    <th>類型</th>
+		                                    <th>月份</th>
+		                                    <th>公司名稱</th>
+		                                    <th></th>
+		                                </tr>
+		                            </thead>
+	                            	<tbody id="rentTbody"></tbody>
+	                        	</table>
+              				</div>
+       					</div>
+       				</div>
+        		</div>
+            </div>
+        </div>
+        <!-- Page Content Ends -->
+        <!-- ================== -->
+        
+        <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+			<div class="modal-dialog"> 
+				<div class="modal-content"> 
+	                <div class="modal-header"> 
+	                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+	                    <h4 class="modal-title">Rent</h4> 
+	                </div> 
+                    <div class="modal-body"> 
+						<div class="row">
+                           <div class="col-md-6"> 
+								<div class="form-group"> 
+                                  	<label for="rentDateO" class="control-label">日期</label>
+             						<input class=" form-control" id="rentDateO" name="rentDateO" type="text" value=""> 
+                               	</div>
+                           </div>
+                           <div class="col-md-6"> 
+								<div class="form-group"> 
+                                  	<label for="rentDateOAdd" class="control-label">填表日期</label>
+             						<input class=" form-control" id="rentDateOAdd" name="rentDateOAdd" type="text" value=""> 
+                               	</div> 
+                           </div>
+                           <div class="col-md-6"> 
+                               	<div class="form-group"> 
+                                  	<label for="rentPayTypeO" class="control-label">匯款方式</label>
+             						<input class=" form-control" id="rentPayTypeO" name="rentPayTypeO" type="text" value=""> 
+                               	</div> 
+                           </div>
+                           <div class="col-md-6"> 
+                               	<div class="form-group"> 
+                                  	<label for="rentMoneyO" class="control-label">金額</label>
+             						<input class=" form-control" id="rentMoneyO" name="rentMoneyO" type="text" value=""> 
+                               	</div> 
+                           </div>
+                           <div class="col-md-12"> 
+                               	<div class="form-group"> 
+                                  	<label for="rentRemarkO" class="control-label">備註</label>
+             						<input class=" form-control" id="rentRemarkO" name="rentRemarkO" type="text" value=""> 
+                               	</div> 
+                           </div>
+                        </div>
+                    </div> 
+		            <div class="modal-footer"> 
+		                <button type="button" class="btn btn-info" id="rentSave">Save</button>
+		                <button type="button" class="btn btn-white" data-dismiss="modal" id="rentClose">Close</button>
+		            </div> 
+				</div> 
+			</div>
+		</div><!-- /.modal -->
+		
+		<div id="myModal2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+			<div class="modal-dialog"> 
+				<div class="modal-content"> 
+	                <div class="modal-header"> 
+	                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+	                    <h4 class="modal-title">New</h4> 
+	                </div> 
+                    <div class="modal-body"> 
+						<div class="row">
+							<div class="col-md-10">
+								<div class="form-group">
+									<label for="sel1">帳號末五碼或公司名稱</label>
+									<input class="form-control" id="account5" autofocus>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label style="visibility:hidden">帳號</label>
+									<button type="button" class="btn btn-info" id="searchCompany">Search</button>
+								</div>
+							</div>
+						</div>
+						<div id="addPanel" class="row" style="display:none">
+							<div class="col-md-4"> 
+								<div class="form-group"> 
+                                  	<label for="rentCompanyName" class="control-label">公司名稱  : </label>
+             						<span id="rentCompanyName"></span>
+                               	</div> 
+                           	</div>
+                           	<div class="col-md-4"> 
+								<div class="form-group"> 
+                                  	<label for="rentContractType" class="control-label">類型 : </label>
+             						<span id="rentContractType"></span>
+                               	</div> 
+                           	</div>
+                           	<div class="col-md-4"> 
+								<div class="form-group"> 
+                                  	<label for="rentRent" class="control-label">租金 : </label>
+             						<span id="rentRent"></span>
+                               	</div> 
+                           	</div>
+                           	<div class="col-md-6"> 
+								<div class="form-group"> 
+                                  	<label for="rentDate" class="control-label">日期</label>
+             						<input class=" form-control" id="rentDate" name="rentDate" type="text" value=""> 
+                               	</div> 
+                           	</div>
+                           	<div class="col-md-6"> 
+								<div class="form-group"> 
+                                  	<label for="rentDateAdd" class="control-label">填表日期</label>
+             						<input class=" form-control" id="rentDateAdd" name="rentDateAdd" type="text" value=""> 
+                               	</div> 
+                           	</div>
+                           	<div class="col-md-6"> 
+                               	<div class="form-group"> 
+                                  	<label for="rentPayType" class="control-label">匯款方式</label>
+             						<input class=" form-control" id="rentPayType" name="rentPayType" type="text" value=""> 
+                               	</div> 
+                           	</div>
+                           	<div class="col-md-6"> 
+                               	<div class="form-group"> 
+                                  	<label for="rentMoney" class="control-label">金額</label>
+             						<input class=" form-control" id="rentMoney" name="rentMoney" type="text" value=""> 
+                               	</div> 
+                           	</div>
+                           	<div class="col-md-12"> 
+                               	<div class="form-group"> 
+                                  	<label for="rentRemark" class="control-label">備註</label>
+             						<input class=" form-control" id="rentRemark" name="rentRemark" type="text" value=""> 
+                               	</div> 
+                           	</div>
+                        </div>
+                    </div> 
+		            <div id="rentSaveDiv" class="modal-footer" style="display:none"> 
+		                <button type="button" class="btn btn-info" id="rentCreat">Save</button>
+		                <button type="button" class="btn btn-white" data-dismiss="modal" id="rentClose">Close</button>
+		            </div>
+				</div> 
+			</div>
+		</div><!-- /.modal -->
+
+        <!-- Footer Start -->
+        <footer class="footer">
+            2016 © AFW.
+        </footer>
+        <!-- Footer Ends -->
+
+
+    </section>
+    <!-- Main Content Ends -->
+    
+    <!-- MODAL -->
+	<div id="dialog" class="modal-block mfp-hide">
+	    <section class="panel panel-info panel-color">
+	        <header class="panel-heading">
+	            <h2 class="panel-title">Are you sure?</h2>
+	        </header>
+	        <div class="panel-body">
+	            <div class="modal-wrapper">
+	                <div class="modal-text">
+	                    <p>Are you sure that you want to delete this row?</p>
+	                </div>
+	            </div>
+	
+	            <div class="row m-t-20">
+	                <div class="col-md-12 text-right">
+	                    <button id="dialogConfirm" class="btn btn-primary">Confirm</button>
+	                    <button id="dialogCancel" class="btn btn-default">Cancel</button>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+	</div>
+
+
+
+
+<!-- js placed at the end of the document so the pages load faster -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/pace.min.js"></script>
+<script src="js/modernizr.min.js"></script>
+<script src="js/wow.min.js"></script>
+<script src="js/jquery.scrollTo.min.js"></script>
+<script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+<script src="js/jquery.app.js"></script>
+
+<script src="assets/magnific-popup/magnific-popup.js"></script>
+<script src="assets/jquery-datatables-editable/jquery.dataTables.js"></script> 
+<script src="assets/datatables/dataTables.bootstrap.js"></script>
+<script src="assets/jquery-datatables-editable/datatables.editable.init.js"></script>
+<script src="assets/timepicker/bootstrap-datepicker.js"></script>
+<!-- responsive-table--> 
+<script src="assets/responsive-table/rwd-table.min.js" type="text/javascript"></script>
+
+<script src="assets/sweet-alert/sweet-alert.min.js"></script>
+<script src="assets/sweet-alert/sweet-alert.init.js"></script>
+
+<script src="js/common.js"></script>
+<script>
+(function($){
+	var companyId = 0;
+	var contractId = 0;
+	var updateRentId = 0;
+	var month = 0;
+	var branch;
+	var year;
+	var account;
+	var dataArr;
+	var root = location.protocol + '//' + location.host;
+	
+	$("#rentDate").datepicker({
+       	format: 'yyyy-mm-dd',
+       	autoclose: true
+   	});
+	
+	$("#rentDateAdd").datepicker({
+       	format: 'yyyy-mm-dd',
+       	autoclose: true
+   	});
+	
+	$("#rentDateO").datepicker({
+       	format: 'yyyy-mm-dd',
+       	autoclose: true
+   	});
+	
+	$("#rentDateOAdd").datepicker({
+       	format: 'yyyy-mm-dd',
+       	autoclose: true
+   	});
+	
+	$('#rentSave').on('click', function() {
+		if(updateRentId == 0) {
+			alert("請重新操作");
+		} else {
+			updateRent(updateRentId);
+		}
+	});
+	
+	var updateRent = function(updateRentId) {
+		
+		var rent = {
+			rentDateO : $('#rentDateO').val(),
+			rentDateOAdd : $('#rentDateOAdd').val(),
+			rentPayTypeO : $('#rentPayTypeO').val(),
+			rentMoneyO : $('#rentMoneyO').val(),
+			rentRemarkO : $('#rentRemarkO').val(),
+		}
+		if($('#rentDateO').val() == '' || $('#rentDateOAdd').val() == '' || $('#rentMoneyO').val() == '') {
+			alert("日期跟金額不得為空");
+			return false;
+		}
+		
+		console.log(JSON.stringify(rent));
+		$.ajax({
+			url:root + "/AFW-I-System/reRent/merge/" + updateRentId,
+			type:'post',
+			data : JSON.stringify(rent),
+			dataType : 'json',
+			contentType: 'application/json; charset=UTF-8',
+			success : function(data) {
+				console.log(data);
+				if(data.status == 'success') {
+					$('#rentClose').click();
+					swal("修改成功!", "", "success");
+					getReRentByBranchYearMonth(branch, month);
+					return false;
+					
+				} else {
+					alert(data.message);
+					return false;
+				}
+			},
+			error : function(e) {
+				alert("something error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+	}
+	
+	//根據公司名稱或帳號搜尋公司
+	$('#searchCompany').on('click', function() {
+		year = $('#tYear').val();
+		account = $('#account5').val();
+		console.log(account);
+		if(account != '' && account != null) {
+			retriveDataByAccountOrNameAndYear(account, year);
+		} else {
+			alert('請填入帳號末五碼或公司名稱');
+		}
+	});
+	
+	var retriveDataByAccountOrNameAndYear = function(account, year) {
+		$.ajax({
+			url:root + "/AFW-I-System/retrive/rent/company/"+ account +"/"+year,
+			type:'get',
+			dataType : 'json',
+			contentType: 'application/json; charset=UTF-8',
+			success : function(data) {
+				if(data.status == 'success') {
+					console.log(jQuery.parseJSON(data.message));
+ 					dataS = jQuery.parseJSON(data.message);
+ 					if(dataS.length != 0) {
+ 						$('#addPanel').css('display', 'block');
+ 	 					$('#rentSaveDiv').css('display', 'block');
+ 	 					setCompanyData(dataS[0]);
+ 					} else {
+ 						alert('請確認有無輸入錯誤');
+ 						return false;
+ 					}
+ 					
+				} else if(data.message == false) {
+					alert('請重新登入');
+					window.location.href = root + "/AFW-I-System/login.html";
+					return false;
+				} else {
+					alert(data.message);
+					return false;
+				}
+			},
+			error : function(e) {
+				alert("something error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+	}
+	
+	$('#rentCreat').on('click', function() {
+		var date = $('#rentDate').val();
+		var money = $('#rentMoney').val()
+		if(date == '' || money == '') {
+			alert('金額或日期未填寫');
+		} else {
+			addNewRent();
+		}
+	});
+	
+	var addNewRent = function() {
+		var rent = {
+			rentDate : $('#rentDate').val(),
+			rentMoney : $('#rentMoney').val(),
+			rentPayType : $('#rentPayType').val(),
+			rentRemark : $('#rentRemark').val(),
+			rentDateAdd : $('#rentDateAdd').val(),
+		}
+		
+		console.log(JSON.stringify(rent));
+		$.ajax({
+			url:root + "/AFW-I-System/rent/list/create/"+ year +"/" +contractId,
+			type:'post',
+			data : JSON.stringify(rent),
+			dataType : 'json',
+			contentType: 'application/json; charset=UTF-8',
+			success : function(data) {
+				console.log(data);
+				if(data.status == 'success') {
+					$('#rentClose').click();
+					swal("新增成功!", "", "success");
+					//retriveDataByAccountOrNameAndYear(account5, year);
+					
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function(e) {
+				alert("something error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+	}
+	
+	
+	var setCompanyData = function(data) {
+		//console.log(data.companyName);
+		contractId = data.contractId;
+		$('#rentCompanyName').html(data.companyName);
+		$('#rentRent').html(data.rent);
+		var contractType = data.contractType;
+		switch(contractType) {
+			case 'o':contractType = '辦公室'; break;
+			case 'p':contractType = '個人座位'; break;
+			case 'r':contractType = '登記'; break;
+			case 'c':contractType = '聯絡處'; break;
+			case 's':contractType = '停業'; break;
+			case 'other':contractType = '其他'; break;
+		}
+		
+		$('#rentContractType').html(contractType);
+	}
+	
+	$('#searchRent').on('click', function() {
+		branch = $('#branchOffice').val();
+		year = $('#tYear').val();
+		month = $('#tMonth').val();
+		if(branch == -1 || month == -1) {
+			alert("請選擇分店及月分");
+		} else {
+			getReRentByBranchYearMonth(branch, month);
+		}
+	});
+	
+	var getReRentByBranchYearMonth = function(branch, month) {
+		$.ajax({
+			url:root + "/AFW-I-System/retrive/reRent/"+branch+"/"+year+"/"+month,
+			type:'get',
+			dataType : 'json',
+			contentType: 'application/json; charset=UTF-8',
+			success : function(data) {
+				console.log(data);
+				if(data.status == 'success') {
+					console.log(jQuery.parseJSON(data.message));
+// 					swal("修改成功!", "", "success");
+// 					retriveDataByAccountOrNameAndYear(account5, year);
+					 dataArr = jQuery.parseJSON(data.message);
+					setReData(dataArr, month)
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function(e) {
+				alert("something error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+	}
+	
+	window.clickUpdateButton = function(e) {
+		var id = e.target.id;
+		updateRentId = id;
+		
+		$('#rentDateO').val('');
+ 		$('#rentDateOAdd').val('');
+ 		$('#rentPayTypeO').val('');
+ 		$('#rentMoneyO').val('');
+ 		$('#rentRemarkO').val('');
+		
+		for(var i =0; i<dataArr.length; i++) {
+			var rentId2 = dataArr[i].rentId;
+			if(updateRentId == rentId2) {
+				var addDate = new Date(dataArr[i].addDate);
+	        	var day = ("0" + addDate.getDate()).slice(-2);
+	        	var month = ("0" + (addDate.getMonth() + 1)).slice(-2);
+	        	var addDateFormat = addDate.getFullYear()+"-"+month+"-"+day;
+	        	
+	        	var date = new Date(dataArr[i].date);
+	        	var day2 = ("0" + date.getDate()).slice(-2);
+	        	var month2 = ("0" + (date.getMonth() + 1)).slice(-2);
+	        	var dateFormat = date.getFullYear()+"-"+month2+"-"+day2;
+	        	
+	        	var rentPayType = (undefined === dataArr[i].rentPayType) ? "" : dataArr[i].rentPayType;
+	        	var remark = (undefined === dataArr[i].remark) ? "" : dataArr[i].remark;
+	        	
+	        	var money = dataArr[i].money;
+	        	
+	        	$('#rentDateO').val(dateFormat);
+	     		$('#rentDateOAdd').val(addDateFormat);
+	     		$('#rentPayTypeO').val(rentPayType);
+	     		$('#rentMoneyO').val(money);
+	     		$('#rentRemarkO').val(remark);
+			}
+		}
+		
+	    $('#myModal').modal('show');
+	}
+	
+	var setReData = function(dataArr, month) {
+		var str = "";
+		var dayType = 0;
+    	if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+    		dayType = 32
+    	} else {
+    		dayType = 31;
+    	}
+    	
+    	for(var i=1; i<dayType; i++) {
+    		console.log(i)
+    		var strStartDate = ""
+    		var strData = "";
+    		var exist = false;
+    		
+    		for(var k=0; k<dataArr.length; k++) {
+    			var addDate = new Date(dataArr[k].addDate);
+            	var day = ("0" + addDate.getDate()).slice(-2);
+            	var month = ("0" + (addDate.getMonth() + 1)).slice(-2);
+            	var addDateFormat = addDate.getFullYear()+"-"+month+"-"+day;
+            	var errorRe = '';
+            	var rentShotrage = dataArr[k].rentShortage;
+            	if(rentShotrage != undefined && rentShotrage != 0) {
+            		errorRe = 'warning';
+            	}
+            	if(day == "0" + i || day == i) {
+            		strStartDate = "<tr class=\"success\"> <td colspan=\"8\" style=\"text-align:center\">"+ addDateFormat +"</td></tr>";
+            		
+            		exist = true;
+            		var rentId = dataArr[k].rentId;
+        			var name = dataArr[k].companyName;
+        			var contractType = dataArr[k].type;
+        			var payType = (undefined === dataArr[k].rentPayType) ? "" : dataArr[k].rentPayType;
+        			
+        			switch(contractType) {
+        				case 'o':contractType = '辦公室'; break;
+        				case 'p':contractType = '個人座位'; break;
+        				case 'r':contractType = '登記'; break;
+        				case 'c':contractType = '聯絡處'; break;
+        				case 's':contractType = '停業'; break;
+        				case 'other':contractType = '其他'; break;
+        			}
+        			
+        			var money = dataArr[k].money;
+        			
+        			
+        			var date = new Date(dataArr[k].date);
+                	var day = ("0" + date.getDate()).slice(-2);
+                	//TODO 如果有兩筆一樣 月份需要調整
+                	var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                	var dateFormat = date.getFullYear()+"-"+month+"-"+day;
+                	
+                	var strDataEach = "<tr class=\""+ errorRe +"\"><td>"+dateFormat+"</td><td>"+payType+"</td><td>"+money+"</td><td>"+'None'+"</td><td>"+contractType+"</td><td>" +
+                		month+"</td><td>"+name+"</td><td><button id=" + rentId+ " class=\"btn btn-danger btn-sm\" onclick=\"clickUpdateButton(event);\">Update</button></td>";
+        			
+                	strData = strData + strDataEach;
+                	
+            	}
+     		}
+    		if(exist) {
+    			strStartDate = strStartDate + strData;
+    			str = str + strStartDate;
+    		}
+    	}
+		
+		$('#rentTbody').html(str);
+	}
+	
+	//新增按鈕
+	$('#addRecord').on('click', function() {
+		//clean value
+		$('#addPanel').css('display', 'none');
+		$('#rentSaveDiv').css('display', 'none');
+		$('#account5').val('');
+		
+		$('#myModal2').modal('show');
+		$('#myModal2').on('shown.bs.modal', function () {
+			$('#account5').focus();
+		});
+	});
+	
+	//common function--------------------------------------------------------------
+	
+	var checkSession = function() {
+		$.ajax({
+			url:root + "/AFW-I-System/session/user/check",
+			type:'get',
+			dataType : 'json',
+			contentType: 'application/json',
+			success : function(response) {
+				//alert("success");
+				if(response.status == 'success') {
+					if(response.message == false) {
+						alert("請重新登入");
+						window.location.href = root + "/AFW-I-System/login.html";
+						return false;
+					} else {
+						setUserInfoNavBar(response.userCode);
+					}
+				}
+			},
+			error : function(e) {
+				alert("error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+		
+		return true;
+	};
+	
+	var setUserInfoNavBar = function(userCode) {
+    	var name = '';
+    	switch(userCode) {
+	    	case 'AA': name = '管理員'; break;
+	    	case '189': name = '南京店'; break;
+	    	case '201': name = '復興店'; break;
+	    	case '221': name = '微風店'; break;
+	    	case '222': name = '大安店'; break;
+	    	case '169': name = '敦化店'; break;
+	    	case '295': name = '忠孝店'; break;
+    	}
+    	$('#userName').text(name);
+    }
+	
+	//page load
+    window.onload = function() {
+    	checkSession();
+	};
+})(jQuery);
+</script>
+</body>
+</html>

@@ -92,6 +92,7 @@ public class LoginController {
 			 if(userCode != null) {
 				 results.put("status", "success");
 				 results.put("message", true);
+				 results.put("userCode", userCode);
 			 } else {
 				 results.put("status", "success");
 				 results.put("message", false);

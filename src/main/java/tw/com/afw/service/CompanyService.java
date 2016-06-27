@@ -115,5 +115,10 @@ public class CompanyService {
 		}
 	}
 	
+	@Transactional
+	public List<CompanyEntity> findCompanyByCompanyName(String companyName) {
+		return dao.findCompanyByCompanyName(companyName);
+	}
+	
 
 }

@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import tw.com.afw.entity.CompanyEntity;
+import tw.com.afw.entity.RemitEntity;
 
 
 
@@ -74,6 +75,20 @@ public class CompanyDao {
             e.printStackTrace();
         }
 		return entity;
+	}
+	
+	public List<CompanyEntity> findCompanyByCompanyName(String companyName) {
+		List<CompanyEntity> results = null;
+		
+		try{
+			results = em.createQuery("select c from CompanyEntity c where c.companyName LIKE :companyName", CompanyEntity.class)
+					.setParameter("companyName", "%"+companyName+"%").getResultList();
+        } catch (NoResultException ne) {
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+		
+		return results;
 	}
 		
 		

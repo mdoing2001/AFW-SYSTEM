@@ -100,5 +100,20 @@ public class ContractDao {
 		return entity;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<ContractEntity> findContractByBranchId(Integer id) {
+		List<ContractEntity> entity = null;
+		
+		try {
+			Query query = em.createQuery("select c from ContractEntity c where c.branchId.branchId = :ID", ContractEntity.class);
+			query.setParameter("ID", id);
+			entity = query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return entity;
+	}
+	
 
 }

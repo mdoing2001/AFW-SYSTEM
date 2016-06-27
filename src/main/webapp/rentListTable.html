@@ -9,7 +9,7 @@
 
     <link rel="shortcut icon" href="img/logo.png">
 	
-	<title>Afw Rental Page</title>
+	<title>Afw Rental List Page</title>
 	
 	      <!-- Bootstrap core CSS -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
@@ -86,8 +86,8 @@
 	            <li class="has-submenu active"><a href="#"><i class="ion-grid"></i> <span class="nav-label">收租</span></a>
 	                <ul class="list-unstyled">
 	                    <li><a href="searchRentTable.html">搜尋</a></li>
-	                    <li class="active"><a href="rentTable.html">收租表</a></li>
-	                    <li><a href="rentListTable.html">收費清單</a></li>
+	                    <li><a href="rentTable.html">收租表</a></li>
+	                    <li class="active"><a href="rentListTable.html">收費清單</a></li>
 	                </ul>
 	            </li>
 	            <li class="has-submenu" id="adminReconciliation" style="display:none">
@@ -141,7 +141,7 @@
             <div class="panel">
                 <div class="panel-body">
 	                <div class="panel-heading">
-	                    <h3 class="panel-title">收租表</h3>
+	                    <h3 class="panel-title">收費清單</h3>
 	                </div>
 	                <div>
 	                	<div class="col-md-4">
@@ -151,10 +151,6 @@
 								    <option value="-1">請選擇</option>
                               		<option value="o">辦公室</option>
                               		<option value="p">個人座位</option>
-                              		<option value="r">登記</option>
-                              		<option value="c">聯絡處</option>
-                              		<option value="s">停業</option>
-                              		<option value="other">其他</option>
 								</select>
 							</div>
 						</div>
@@ -190,27 +186,20 @@
                                     		<table id="tech-companies-1" class="table table-small-font table-bordered table-striped">
 					                            <thead>
 					                                <tr>
-					                                	<th rowspan="2" style="vertical-align:middle">NO.</th>
+					                                	<th style="vertical-align:middle">NO.</th>
 					                                	<th>公司名稱</th>
-					                                    <th>起租</th>
-					                                    <th>押金</th>
-					                                    <th rowspan="2" style="vertical-align:middle"><div>1</div></th>
-					                                    <th rowspan="2" style="vertical-align:middle"><div>2</div></th>
-					                                    <th rowspan="2" style="vertical-align:middle"><div>3</div></th>
-					                                    <th rowspan="2" style="vertical-align:middle"><div>4</div></th>
-					                                    <th rowspan="2" style="vertical-align:middle"><div>5</div></th>
-					                                    <th rowspan="2" style="vertical-align:middle"><div>6</div></th>
-					                                    <th rowspan="2" style="vertical-align:middle"><div>7</div></th>
-					                                    <th rowspan="2" style="vertical-align:middle"><div>8</div></th>
-					                                    <th rowspan="2" style="vertical-align:middle"><div>9</div></th>
-					                                    <th rowspan="2" style="vertical-align:middle"><div>10</div></th>
-					                                    <th rowspan="2" style="vertical-align:middle"><div>11</div></th>
-					                                    <th rowspan="2" style="vertical-align:middle"><div>12</div></th>
-					                                </tr>
-					                                <tr>
-					                                	<th>統一編號</th>
-					                                    <th>退租</th>
-					                                    <th>租金</th>
+					                                    <th style="vertical-align:middle"><div>1</div></th>
+					                                    <th style="vertical-align:middle"><div>2</div></th>
+					                                    <th style="vertical-align:middle"><div>3</div></th>
+					                                    <th style="vertical-align:middle"><div>4</div></th>
+					                                    <th style="vertical-align:middle"><div>5</div></th>
+					                                    <th style="vertical-align:middle"><div>6</div></th>
+					                                    <th style="vertical-align:middle"><div>7</div></th>
+					                                    <th style="vertical-align:middle"><div>8</div></th>
+					                                    <th style="vertical-align:middle"><div>9</div></th>
+					                                    <th style="vertical-align:middle"><div>10</div></th>
+					                                    <th style="vertical-align:middle"><div>11</div></th>
+					                                    <th style="vertical-align:middle"><div>12</div></th>
 					                                </tr>
 					                            </thead>
 					                            <tbody id="rentTbody"></tbody>
@@ -222,6 +211,7 @@
         				</div>
         			</div>
         		</div>
+        
         </div>
         <!-- Page Content Ends -->
         <!-- ================== -->
@@ -231,57 +221,52 @@
 				<div class="modal-content"> 
 	                <div class="modal-header"> 
 	                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
-	                    <h4 class="modal-title">Rent</h4> 
+	                    <h4 class="modal-title">Rent List</h4> 
 	                </div> 
                     <div class="modal-body"> 
 						<div class="row">
-							<div class="col-md-6"> 
+                           <div class="col-md-4"> 
 								<div class="form-group"> 
-                                  	<label for="rentMoney" class="control-label">入帳金額</label>
-<!--              						<input class=" form-control" id="rentMoney" name="rentMoney" type="text" value="" disabled> -->
-             						<input class=" form-control" id="rentMoney" name="rentMoney" type="text" value="">
+                                  	<label for="rentDate" class="control-label">租金</label>
+             						<input class=" form-control" id="rentPrice" name="rentPrice" type="text" value="" disabled> 
                                	</div> 
-                           	</div>
-                           	<div class="col-md-6"> 
+                           </div>
+                           <div class="col-md-4"> 
+                               	<div class="form-group"> 
+                                  	<label for="rentReceipt" class="control-label">管理費</label>
+             						<input class=" form-control" id="rentManager" name="rentManager" type="text" value=""> 
+                               	</div> 
+                           </div>
+                           <div class="col-md-4"> 
+                               	<div class="form-group"> 
+                                  	<label for="rentShortage" class="control-label">電費</label>
+             						<input class=" form-control" id="rentPower" name="rentPower" type="text" value=""> 
+                               	</div> 
+                           </div>
+                           <div class="col-md-4"> 
 								<div class="form-group"> 
-                                  	<label for="rentDate" class="control-label">日期</label>
-             						<input class=" form-control" id="rentDate" name="rentDate" type="text" value=""> 
+                                  	<label for="rentDate" class="control-label">網路費</label>
+             						<input class=" form-control" id="rentAdsl" name="rentAdsl" type="text" value=""> 
                                	</div> 
-                           	</div>
-                           	<div class="col-md-6"> 
+                           </div>
+                           <div class="col-md-4"> 
                                	<div class="form-group"> 
-                                  	<label for="rentReceipt" class="control-label">發票號碼</label>
-             						<input class=" form-control" id="rentReceipt" name="rentReceipt" type="text" value=""> 
+                                  	<label for="rentReceipt" class="control-label">營業稅</label>
+             						<input class=" form-control" id="rentBusiness" name="rentBusiness" type="text" value=""> 
                                	</div> 
-                           	</div>
-                           	<div class="col-md-6"> 
+                           </div>
+                           <div class="col-md-4"> 
                                	<div class="form-group"> 
-                                  	<label for="rentShortage" class="control-label">租金缺繳</label>
-             						<input class=" form-control" id="rentShortage" name="rentShortage" type="text" value=""> 
+                                  	<label for="rentShortage" class="control-label">其他</label>
+             						<input class=" form-control" id="rentOther" name="rentOther" type="text" value=""> 
                                	</div> 
-                           	</div>
-                           	<div class="col-md-12"> 
+                           </div>
+                           <div class="col-md-12"> 
                                	<div class="form-group"> 
-                                  	<label for="rentRemark" class="control-label">備註</label>
-             						<input class=" form-control" id="rentRemark" name="rentRemark" type="text" value=""> 
+                                  	<label for="rentRemark" class="control-label">總和</label>
+             						<input class=" form-control" id="rentTotal" name="rentTotal" type="text" value="" disabled> 
                                	</div> 
-                           	</div>
-                           	<div class="col-md-12">
-                           		<div class="form-group">
-                           			<label class="control-label">新增</label>
-                           			<div class="radio">
-  										<label><input type="radio" id="addReRentTrue" name="addReRent">True</label>
-  										<label><input type="radio" id="addReRentFalse" name="addReRent" checked>False</label>
-  									</div>
-								</div>
-                           	</div>
-                           	<div class="col-md-4" id="reMonth" style="display:none">
-                           		<div class="form-group">
-	                               	<label for="addReRentMonth">月份</label>
-									<select class="form-control" id="addReRentMonth">
-									</select>
-								</div>
-                           	</div>
+                           </div>
                         </div>
                     </div> 
 		            <div class="modal-footer"> 
@@ -359,7 +344,6 @@
 	var year;
 	var dataArr;
 	var root = location.protocol + '//' + location.host;
-	var userCode;
 	
 	$("#rentDate").datepicker({
        	format: 'yyyy-mm-dd',
@@ -373,14 +357,13 @@
 		contractId = ids[1];
 		month = ids[2];
 		
-		$('#rentDate').val('');
- 		$('#rentReceipt').val('');
- 		$('#rentShortage').val('');
- 		$('#rentRemark').val('');
- 		$('#rentMoney').val('');
- 		$('#addReRentFalse').prop("checked", true);
- 		$("#addReRentMonth option").remove();
- 		$('#reMonth').css('display','none');
+		$('#rentPrice').val('');
+ 		$('#rentManager').val('');
+ 		$('#rentPower').val('');
+ 		$('#rentAdsl').val('');
+ 		$('#rentBusiness').val('');
+ 		$('#rentOther').val('');
+ 		$('#rentTotal').val('');
 		
 		for(var i =0; i<dataArr.length; i++) {
 			var contractId2 = dataArr[i].contractId;
@@ -392,43 +375,29 @@
 		        	var month2 = ("0" + (date.getMonth() + 1)).slice(-2);
 		        	var dateFormat = date.getFullYear()+"-"+month2+"-"+day;
 		        	
-		        	var shortAge = rentArr[j].rentShortage;
-		        	var remark = rentArr[j].rentRemark;
-		        	var rentReceipt = rentArr[j].rentReceipt;
-		        	var rentMoney = rentArr[j].rentMoney;
+		        	var management = rentArr[j].rentManagement;
+		        	var power = rentArr[j].rentPower;
+		        	var adsl = rentArr[j].rentAdsl;
+		        	var business = rentArr[j].rentBusiness;
+		        	var other = rentArr[j].rentOther;
 		        	
 		        	if(rentArr[j].rentMonth == month) {
-		        		if(userCode != 'AA') {
-		        			$('#rentDate').prop( "disabled", true);
-		        			$('#rentShortage').prop( "disabled", true);
-		        			$('#addReRentTrue').prop( "disabled", true);
-		        			$('#addReRentFalse').prop( "disabled", true);
-		        		} else {
-		        			var newMonth = parseInt(month) + 1;
-		        			if(newMonth == 13) { newMonth = 1;}
-		        			$('#addReRentMonth').append($("<option></option>").attr("value", -1).text('請選擇'));
-			         		$('#addReRentMonth').append($("<option></option>").attr("value", newMonth).text(newMonth));
-		        		}
-		        		$('#rentMoney').val(rentMoney);
-						$('#rentDate').val(dateFormat);
-		         		$('#rentReceipt').val(rentReceipt);
-		         		$('#rentShortage').val(shortAge);
-		         		$('#rentRemark').val(remark);
+		         		$('#rentManager').val(management);
+		         		$('#rentPower').val(power);
+		         		$('#rentAdsl').val(adsl);
+		         		$('#rentBusiness').val(business);
+		         		$('#rentOther').val(other);
+		         		$('#rentTotal').val(dataArr[i].rent + management + power + adsl + business + other);
 		        	}
 				}
 			}
+			
+			$('#rentPrice').val(dataArr[i].rent);
+			
 		}
 		
 	    $('#myModal').modal('show');
-	};
-	
-	$('#addReRentTrue').on('click', function() {
-		$('#reMonth').css('display','block');
-	});
-	
-	$('#addReRentFalse').on('click', function() {
-		$('#reMonth').css('display','none');
-	});
+	}
 	
 	$('#rentSave').on('click', function() {
 		if(contractId == 0 || month == 0) {
@@ -440,27 +409,19 @@
 	
 	var createOrUpdateRent = function(contractId, month) {
 		var companyId = "";
-		var addReRent = false;
-		//判斷有無新增
-		if($('#addReRentMonth').val() != -1) {
-			addReRent = true;
-		}
-		
 		var rent = {
-			//
-			rentMoney : $('#rentMoney').val(),
 			rentYear : $('#year').val(),
 			rentMonth : month,
-			rentDate : $('#rentDate').val(),
-			rentReceipt : $('#rentReceipt').val(),
-			rentShortage : $('#rentShortage').val(),
-			rentRemark : $('#rentRemark').val(),
-			addReRent : addReRent
+			rentManagement : $('#rentManager').val(),
+			rentPower : $('#rentPower').val(),
+			rentAdsl : $('#rentAdsl').val(),
+			rentBusiness : $('#rentBusiness').val(),
+			rentOther : $('#rentOther').val()
 		}
 		
 		console.log(JSON.stringify(rent));
 		$.ajax({
-			url:root + "/AFW-I-System/rent/merge/" + contractId,
+			url:root + "/AFW-I-System/rent/list/merge/" + contractId,
 			type:'post',
 			data : JSON.stringify(rent),
 			dataType : 'json',
@@ -519,38 +480,15 @@
 			var companyId = dataArr[i].companyId;
 			var contractId = dataArr[i].contractId;
 			var name = dataArr[i].companyName;
-			var ein = dataArr[i].ein;
 			var rent = dataArr[i].rent;
-			var deposit = dataArr[i].deposit;
-			
-			var dateS = new Date(dataArr[i].start);
-        	var day = ("0" + dateS.getDate()).slice(-2);
-        	var month = ("0" + (dateS.getMonth() + 1)).slice(-2);
-        	var dateFormatS = dateS.getFullYear()+"-"+month+"-"+day;
-			var start = dateFormatS;
-			
-			var dateE = new Date(dataArr[i].end);
-        	var day = ("0" + dateE.getDate()).slice(-2);
-        	var month = ("0" + (dateE.getMonth() + 1)).slice(-2);
-        	var dateFormatE = dateE.getFullYear()+"-"+month+"-"+day;
-			var end = dateFormatE;
 			
 			var order = dataArr[i].officeNum;
 			
 			var str1 =  "<tr>" +
-       					"<td rowspan=\"2\" style=\"vertical-align:middle\">"+ order + "</td>" +
-       					"<td><a class=\"company_link\" href=\"companyProfile.html?id="+ companyId +"\">" + name + "</a></td>" +
-       					"<td>"+ start + "</td>" +
-       					"<td>"+ deposit + "</td>";
-       		
-       		var str2 = "</tr>" +
-						"<tr>" +
-       					"<td style=\"vertical-align:middle; border-bottom:2pt solid black\">"+ ein + "</td>" +
-       					"<td style=\"border-bottom:2pt solid black\">"+ end + "</td>" +
-       					"<td style=\"border-bottom:2pt solid black\">"+ rent + "</td>";
+       					"<td style=\"vertical-align:middle\">"+ order + "</td>" +
+       					"<td><a class=\"company_link\" href=\"companyProfile.html?id="+ companyId +"\">" + name + "</a></td>";
 			
 			var rentStr = "";
-			var rentStr2 = ""; 
 			var rentArr = dataArr[i].rentArr;
 			
 			for(var k=1; k<13; k++) {
@@ -565,44 +503,26 @@
 		        	var shortAge = rentArr[j].rentShortage;
 		        	var remark = rentArr[j].rentRemark;
 		        	var rentReceipt = rentArr[j].rentReceipt;
-		        	//缺繳 == null 表示還沒對帳
-		        	if(k == rentArr[j].rentMonth) {
+		        	
+		        	if(k == month) {
 		        		exist = true;
-		        		//一號 無缺繳 day == '01' 要改
-		        		if(day == '01' && shortAge == 0) {
-		        			rentStr = rentStr + "<td style=\"vertical-align:middle\"><span title=\"" + remark + "\" onclick=\"clickInfoButton(event);\" class=\"label" + " label-primary"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">"+ day +"</span></td>";
-			        	} else  if(day == '01' && shortAge != 0) {
-			        		rentStr = rentStr + "<td style=\"vertical-align:middle\"><span title=\"" + remark + "\" onclick=\"clickInfoButton(event);\" class=\"label" + " label-danger"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">"+ day +"</span></td>";
-			        	} else if(day != '01' && shortAge == 0) {
-			        		rentStr = rentStr + "<td style=\"vertical-align:middle\"><span title=\"" + remark + "\" onclick=\"clickInfoButton(event);\" class=\"label" + " label-primary"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">"+ month + "-" + day +"</span></td>";
-			        	} else {
-			        		rentStr = rentStr + "<td style=\"vertical-align:middle\"><span title=\"" + remark + "\" onclick=\"clickInfoButton(event);\" class=\"label" + " label-danger"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">"+ month + "-" + day +"</span></td>";
-			        	}
-		        		
-		        		if(undefined == rentReceipt) {
-		        			rentStr2 = rentStr2 + "<td style=\"vertical-align:middle; border-bottom:2pt solid black\"></td>"
-		        		} else {
-		        			rentStr2 = rentStr2 +　"<td style=\"vertical-align:middle; border-bottom:2pt solid black\"><span class=\"label " + "label-info"+ " popupButton\" id=" + companyId+"_1" + ">" + rentReceipt + " </span></td>";
-		        		}
-		        		
+			        	rentStr = rentStr + "<td style=\"vertical-align:middle\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-danger"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">Set</span></td>";
 		        	}
 				}
 				if(!exist) {
-					if(userCode != 'AA') {
-						rentStr = rentStr + "<td></td>";
-					} else {
-						rentStr = rentStr + "<td style=\"vertical-align:middle\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-success"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+k + ">Save</span></td>";
-						//rentStr = rentStr + "<td></td>";
-					}
-					
-					rentStr2 = rentStr2 + "<td style=\"vertical-align:middle; border-bottom:2pt solid black\"></td>"
+					rentStr = rentStr + "<td style=\"vertical-align:middle\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-success"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+k + ">Save</span></td>";
 				}
 			}
 			
-			str = str + str1 + rentStr + str2 + rentStr2;
+			str = str + str1 + rentStr;
 		}
 		
 		$('#rentTbody').html(str);
+		
+	}
+	
+	//TODO year auto check
+	var checkYear = function() {
 		
 	}
 	
@@ -615,16 +535,13 @@
 			success : function(response) {
 				//alert("success");
 				if(response.status == 'success') {
-					
 					if(response.message == false) {
 						alert("請重新登入");
 						window.location.href = root + "/AFW-I-System/login.html";
 						return false;
 					} else {
-						//console.log(response.userCode);
-						userCode = response.userCode;
-						setUserInfoNavBar(userCode);
-						hiddenInfo(userCode);
+						setUserInfoNavBar(response.userCode);
+						hiddenInfo(response.userCode);
 					}
 				}
 			},

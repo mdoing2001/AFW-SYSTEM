@@ -17,14 +17,10 @@ public class RemitService {
 	@Autowired
 	private RemitDao remitDao;
 	
-	
-	
-	
 	@Transactional
 	public  List<RemitEntity>findAll(){
 		return remitDao.findAll();
 	}
-	
 	
 	@Transactional
 	public RemitEntity findRemitById(Integer id){
@@ -41,7 +37,6 @@ public class RemitService {
 		remitDao.update(remit);
 	}
 	
-	
 	@Transactional
 	public  void del(RemitEntity remit){
 		remitDao.delete(remit);
@@ -51,5 +46,10 @@ public class RemitService {
 	public List<RemitEntity> findRemitByCompanyId(Integer companyId) {
 		return remitDao.findRemitByCompanyId(companyId);
 	}
-
+	
+	@Transactional
+	public RemitEntity findRemitByAccount5(Integer account5) {
+		return remitDao.findRemitByAccount5(account5);
+	}
+	
 }

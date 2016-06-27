@@ -38,34 +38,40 @@ public class RentEntity  implements java.io.Serializable{
 	private String rentMode;
 	
 	@Column(name = "rent_money")
-	private double rentMoney;
+	private Double rentMoney;
 	
 	@Column(name = "rent_management")
-	private double rentManagement;
+	private Double rentManagement;
 	
 	@Column(name = "rent_power")
-	private double rentPower;
+	private Double rentPower;
 	
 	@Column(name = "rent_adsl")
-	private double rentAdsl;
+	private Double rentAdsl;
 	
 	@Column(name = "rent_business")
-	private double rentBusiness;
+	private Double rentBusiness;
 	
 	@Column(name = "rent_other")
-	private double rentOther;
+	private Double rentOther;
 	
 	@Column(name = "rent_list")
-	private double rentList;
+	private Double rentList;
 	
 	@Column(name = "rent_remark")
 	private String rentRemark;
 	
 	@Column(name = "rent_shortage")
-	private double rentShortage;
+	private Double rentShortage;
 	
 	@Column(name = "rent_date")
 	private Date rentDate;
+	
+	@Column(name = "rent_add_date")
+	private Date rentAddDate;
+	
+	@Column(name = "rent_pay_type")
+	private String rentPayType;
 	
 	@ManyToOne	
 	@JoinColumn(name="contract_id")
@@ -111,59 +117,59 @@ public class RentEntity  implements java.io.Serializable{
 		this.rentMode = rentMode;
 	}
 
-	public double getRentMoney() {
+	public Double getRentMoney() {
 		return rentMoney;
 	}
 
-	public void setRentMoney(double rentMoney) {
+	public void setRentMoney(Double rentMoney) {
 		this.rentMoney = rentMoney;
 	}
 
-	public double getRentManagement() {
+	public Double getRentManagement() {
 		return rentManagement;
 	}
 
-	public void setRentManagement(double rentManagement) {
+	public void setRentManagement(Double rentManagement) {
 		this.rentManagement = rentManagement;
 	}
 
-	public double getRentPower() {
+	public Double getRentPower() {
 		return rentPower;
 	}
 
-	public void setRentPower(double rentPower) {
+	public void setRentPower(Double rentPower) {
 		this.rentPower = rentPower;
 	}
 
-	public double getRentAdsl() {
+	public Double getRentAdsl() {
 		return rentAdsl;
 	}
 
-	public void setRentAdsl(double rentAdsl) {
+	public void setRentAdsl(Double rentAdsl) {
 		this.rentAdsl = rentAdsl;
 	}
 
-	public double getRentBusiness() {
+	public Double getRentBusiness() {
 		return rentBusiness;
 	}
 
-	public void setRentBusiness(double rentBusiness) {
+	public void setRentBusiness(Double rentBusiness) {
 		this.rentBusiness = rentBusiness;
 	}
 
-	public double getRentOther() {
+	public Double getRentOther() {
 		return rentOther;
 	}
 
-	public void setRentOther(double rentOther) {
+	public void setRentOther(Double rentOther) {
 		this.rentOther = rentOther;
 	}
 
-	public double getRentList() {
+	public Double getRentList() {
 		return rentList;
 	}
 
-	public void setRentList(double rentList) {
+	public void setRentList(Double rentList) {
 		this.rentList = rentList;
 	}
 
@@ -175,11 +181,11 @@ public class RentEntity  implements java.io.Serializable{
 		this.rentRemark = rentRemark;
 	}
 
-	public double getRentShortage() {
+	public Double getRentShortage() {
 		return rentShortage;
 	}
 
-	public void setRentShortage(double rentShortage) {
+	public void setRentShortage(Double rentShortage) {
 		this.rentShortage = rentShortage;
 	}
 
@@ -198,6 +204,22 @@ public class RentEntity  implements java.io.Serializable{
 	public void setRentDate(Date rentDate) {
 		this.rentDate = rentDate;
 	}
+	
+	public String getRentPayType() {
+		return rentPayType;
+	}
+
+	public void setRentPayType(String rentPayType) {
+		this.rentPayType = rentPayType;
+	}
+	
+	public Date getRentAddDate() {
+		return rentAddDate;
+	}
+
+	public void setRentAddDate(Date rentAddDate) {
+		this.rentAddDate = rentAddDate;
+	}
 
 	@Override
 	public String toString() {
@@ -208,9 +230,9 @@ public class RentEntity  implements java.io.Serializable{
 				+ rentPower + ", rentAdsl=" + rentAdsl + ", rentBusiness="
 				+ rentBusiness + ", rentOther=" + rentOther + ", rentList="
 				+ rentList + ", rentRemark=" + rentRemark + ", rentShortage="
-				+ rentShortage + ", rentDate=" + rentDate + ", contractId="
-				+ contractId + "]";
+				+ rentShortage + ", rentDate=" + rentDate + ", rentAddDate="
+				+ rentAddDate + ", rentPayType=" + rentPayType
+				+ ", contractId=" + contractId + "]";
 	}
 	
-
 }

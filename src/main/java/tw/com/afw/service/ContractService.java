@@ -51,6 +51,10 @@ public class ContractService {
 		return contractDao.findContractByCompany(id);
 	}
 	
+	@Transactional
+	public List<ContractEntity> findContractByBranchId(Integer id) {
+		return contractDao.findContractByBranchId(id);
+	}
 	
 
 }

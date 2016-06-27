@@ -115,6 +115,7 @@ public class CompanyController {
 					contractEntity.setContractRented(!contractObj.get("contractRented").toString().isEmpty() ? Double.parseDouble(contractObj.get("contractRented").toString()) : 0);
 					contractEntity.setContractDeposited(!contractObj.get("contractDeposited").toString().isEmpty() ? Double.parseDouble(contractObj.get("contractDeposited").toString()): 0);
 					contractEntity.setContractRemarks(null != contractObj.get("contractRemarks") ? contractObj.get("contractRemarks").toString() : null);
+					contractEntity.setBranchId(branchService.findBranchByBranchCode(null != companyObj.get("companyCode") ? companyObj.get("companyCode").toString() : null));
 					
 					//TODO:塞office(辦公室號碼 不一定每張合約都有)("office":{"officeNumber":""})
 					OfficeEntity officeEntity = new OfficeEntity();

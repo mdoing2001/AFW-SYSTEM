@@ -41,7 +41,7 @@ public class ContractEntity implements java.io.Serializable{
 	@Column(name = "contract_rent")
 	private double contractRent;
 	
-	@ManyToOne(cascade=CascadeType.ALL)	
+	@ManyToOne(cascade=CascadeType.MERGE)	
 	@JoinColumn(name="branch_id")
 	private BranchEntity branchId;
 	
