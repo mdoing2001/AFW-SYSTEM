@@ -278,6 +278,7 @@ public class RentController {
 		return result.toJSONString();
 	}
 	
+	//收費清單
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/rent/list/merge/{id}", method = RequestMethod.POST, produces = {"application/json; charset=UTF-8"})
 	public String mergeRentListForOfficeAndPersonal(@PathVariable("id") Integer id, @RequestBody String rentStr) {
@@ -348,24 +349,26 @@ public class RentController {
 				if(cEntity != null) {
 					int maxMonth = 0;
 					int maxMonthLast = 0;
-					RentEntity maxMonthRentEntity = new RentEntity();
-					RentEntity maxMonthRentLastEntity = new RentEntity();
+					RentEntity maxNonePayMonthRentEntity = null;
+					RentEntity maxNonePayMonthRentLastEntity = null;
 					//今年
 					List<RentEntity> rentArr = rentService.findRentByContractIdAndYear(contractId, year);
 					if(rentArr != null && rentArr.size() != 0) {
 						//抓取exist最後一筆rent的月份
 						for(RentEntity entity : rentArr) {
-							if(entity.getRentDate().equals(date)) {
+							if(entity.getRentDate() != null && entity.getRentDate().equals(date)) {
 								result.put("status", "error");
 								result.put("message", "請檢查是否有重複輸入");
 								return result.toJSONString();
 							} else {
 								if(maxMonth == 0) {
 									maxMonth = entity.getRentMonth();
-									maxMonthRentEntity = entity;
 								} else if(maxMonth != 0 && maxMonth < entity.getRentMonth()) {
 									maxMonth = entity.getRentMonth();
-									maxMonthRentEntity = entity;
+								}
+								
+								if(maxMonth >= entity.getRentMonth() && (entity.getRentMoney() == null || entity.getRentMoney() == 0)) {
+									maxNonePayMonthRentEntity = entity;
 								}
 							}
 						}
@@ -384,10 +387,12 @@ public class RentController {
 							} else {
 								if(maxMonthLast == 0) {
 									maxMonthLast = entity.getRentMonth();
-									maxMonthRentLastEntity = entity;
 								} else if(maxMonthLast != 0 && maxMonthLast < entity.getRentMonth()) {
 									maxMonthLast = entity.getRentMonth();
-									maxMonthRentLastEntity = entity;
+								}
+								
+								if(maxMonth >= entity.getRentMonth() && (entity.getRentMoney() == null || entity.getRentMoney() == 0)) {
+									maxNonePayMonthRentLastEntity = entity;
 								}
 							}
 						}
@@ -402,22 +407,26 @@ public class RentController {
 						int month = cal.get(Calendar.MONTH)+1;
 						int rentMoney = (int) cEntity.getContractRent();
 						
-						//針對辦公室跟座位做處理??????????
+						//針對辦公室跟座位做處理
 						if(cEntity.getContractType().equalsIgnoreCase("o") || cEntity.getContractType().equalsIgnoreCase("p")) {
-							boolean checkMonth = (maxMonth == month || maxMonth == month-1) ? true : false;
-							if(maxMonth != 0) {
-								if(checkMonth && null == maxMonthRentEntity.getRentDate()) {
-									maxMonthRentEntity.setRentMoney(Double.valueOf(String.valueOf(money)));
-									maxMonthRentEntity.setRentDate(date);
-									maxMonthRentEntity.setRentPayType(payType);
-									maxMonthRentEntity.setRentRemark(reMark);
-								}
-								
+							if(maxNonePayMonthRentEntity == null) {
+								result.put("status", "error");
+								result.put("message", "請檢查收費清單是否有填寫");
+								return result.toJSONString();
 							}
 							
-							
-							
-							
+							if(maxMonth != 0) {
+								maxNonePayMonthRentEntity.setRentMoney(Double.valueOf(String.valueOf(money)));
+								maxNonePayMonthRentEntity.setRentDate(date);
+								maxNonePayMonthRentEntity.setRentPayType(payType);
+								maxNonePayMonthRentEntity.setRentRemark(reMark);
+								maxNonePayMonthRentEntity.setRentAddDate(rentDateAdd);
+								maxNonePayMonthRentEntity.setRentShortage(Double.valueOf(money-(rentMoney + rentService.allRentPriceByEntity(maxNonePayMonthRentEntity))));
+								rentService.update(maxNonePayMonthRentEntity);
+							//TODO 跨年度
+							} else {
+								
+							}
 							
 						} else {
 							
@@ -436,6 +445,7 @@ public class RentController {
 									newEntity.setRentRemark(reMark);
 									newEntity.setRentMonth(maxMonth+1);
 									newEntity.setRentMoney(cEntity.getContractRent());
+									newEntity.setRentShortage(0.00);
 									
 									newEntityTwo.setContractId(cEntity);
 									newEntityTwo.setRentPayType(payType);
@@ -445,6 +455,7 @@ public class RentController {
 									newEntityTwo.setRentRemark(reMark);
 									newEntityTwo.setRentMonth(maxMonth+2);
 									newEntityTwo.setRentMoney(cEntity.getContractRent());
+									newEntityTwo.setRentShortage(0.00);
 									
 									rentService.ins(newEntity);
 									rentService.ins(newEntityTwo);
@@ -457,6 +468,7 @@ public class RentController {
 									newEntity.setRentRemark(reMark);
 									newEntity.setRentMonth(maxMonth+1);
 									newEntity.setRentMoney(cEntity.getContractRent());
+									newEntity.setRentShortage(0.00);
 									
 									rentService.ins(newEntity);
 								} else {
@@ -485,6 +497,7 @@ public class RentController {
 									newEntity.setRentRemark(reMark);
 									newEntity.setRentMonth(maxMonth+1);
 									newEntity.setRentMoney(cEntity.getContractRent());
+									newEntity.setRentShortage(0.00);
 									
 									newEntityTwo.setContractId(cEntity);
 									newEntityTwo.setRentPayType(payType);
@@ -494,6 +507,7 @@ public class RentController {
 									newEntityTwo.setRentRemark(reMark);
 									newEntityTwo.setRentMonth(maxMonth+2);
 									newEntityTwo.setRentMoney(cEntity.getContractRent());
+									newEntityTwo.setRentShortage(0.00);
 									
 									rentService.ins(newEntity);
 									rentService.ins(newEntityTwo);
@@ -506,6 +520,7 @@ public class RentController {
 									newEntity.setRentRemark(reMark);
 									newEntity.setRentMonth(maxMonth+1);
 									newEntity.setRentMoney(cEntity.getContractRent());
+									newEntity.setRentShortage(0.00);
 									
 									rentService.ins(newEntity);
 								} else {
@@ -534,10 +549,10 @@ public class RentController {
 								
 								rentService.ins(newEntity);
 							}
-							
-							result.put("status", "success");
-							result.put("message", "success");
 						}
+						
+						result.put("status", "success");
+						result.put("message", "success");
 					}
 				}
 			//}
@@ -649,13 +664,16 @@ public class RentController {
 						//System.out.println(contractEntity.toString());
 						String contractType = contractEntity.getContractType();
 						String companyName = contractEntity.getCompanyId().getCompanyName();
-						JSONObject obj = new JSONObject();
+						
 						//TODO 跨年分必須處理
 						List<RentEntity> rentArr = rentService.findRentByContractIdAndYear(contractEntity.getContractId(), year);
 						for(RentEntity entity : rentArr) {
+							JSONObject obj = new JSONObject();
+							
 							Calendar cal = Calendar.getInstance();
 							cal.setTime(entity.getRentAddDate());
 							int month2 = cal.get(Calendar.MONTH) + 1;
+							
 							//收費清單的date 為 null 但還為對帳
 							if(null != entity.getRentDate() && month2 == month) {
 								obj.put("rentId", entity.getRentId());

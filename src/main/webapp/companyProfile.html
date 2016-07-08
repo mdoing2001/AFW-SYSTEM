@@ -91,7 +91,7 @@
 	            <li class="has-submenu" id="adminReconciliation" style="display:none">
 	            	<a href="#"><i class="ion-stats-bars"></i> <span class="nav-label">對帳報表</span></a>
 	                <ul class="list-unstyled">
-	                    <li class="active"><a href="reconciliationTable.html">對帳</a></li>
+	                    <li><a href="reconciliationTable.html">對帳</a></li>
 	                    <li><a href="404.html">營收報表</a></li>
 	                </ul>
 	            </li>
@@ -291,7 +291,7 @@
 			                                <div class="col-md-4">
 				                                <div class="form-group">
 				                                    <label for="pbirthday" class="">負責人生日</label>
-				                                    <input class="form-control" id="pbirthday" name="pbirthday" type="text" placeholder="yyyy-mm-dd">
+				                                    <input class="form-control" id="pbirthday" name="pbirthday" type="text" placeholder="yyyy-mm-dd(西元)">
 				                                </div>
 			                                </div>
 			                                <div class="col-md-4">
@@ -513,11 +513,11 @@
 			                                </div>
 			                                <div class="form-group">
 			                                    <label for="pcdatesign" class="col-lg-2">簽約日期</label>
-			                                    <input class="form-control" id="pcdatesign" name="pcdatesign" type="text" placeholder="yyyy-mm-dd">
+			                                    <input class="form-control" id="pcdatesign" name="pcdatesign" type="text" placeholder="yyyy-mm-dd(西元)">
 			                                </div>
 	                                        <div class="form-group">
 	                                            <label class="col-lg-2" for="pcdates">合約日期(起) *</label>
-	                                            <input type="text" id="pcdates" name="pcdates" class="form-control" placeholder="yyyy-mm-dd">
+	                                            <input type="text" id="pcdates" name="pcdates" class="form-control" placeholder="yyyy-mm-dd(西元)">
 <!--                                           		<div class="col-lg-12"> -->
 <!--                                            			<div class="input-group"> -->
 <!--                                            				<input type="text" id="pcdates" name="pcdates" class="form-control col-lg-2" placeholder='yyyy-mm-dd'> -->
@@ -527,7 +527,7 @@
 	                                        </div>
 	                                        <div class="form-group">
 	                                            <label class="col-lg-2" for="pcdatee">合約日期(終) *</label>
-	                                            <input type="text" id="pcdatee" name="pcdatee" class="form-control" placeholder="yyyy-mm-dd">
+	                                            <input type="text" id="pcdatee" name="pcdatee" class="form-control" placeholder="yyyy-mm-dd(西元)">
 <!--                                             	<div class="col-lg-12"> -->
 <!--                                            			<div class="input-group"> -->
 <!-- 	                                            		<input type="text" id="pcdatee" name="pcdatee" class="form-control" placeholder='yyyy-mm-dd'> -->
@@ -601,7 +601,7 @@
 	                                                    </div>
 	                                                    <div class="col-md-6">
 			                                    			<label for="pcNdatesign" class="control-label">簽約日期</label>
-			                                   				<input class="form-control" id="pcNdatesign" name="pcNdatesign" type="text" placeholder="yyyy-mm-dd">
+			                                   				<input class="form-control" id="pcNdatesign" name="pcNdatesign" type="text" placeholder="yyyy-mm-dd(西元)">
 			                                			</div>
 	                                                </div>
 	                                                <div class="row">
@@ -616,7 +616,7 @@
 	                                                    <div class="col-md-6"> 
 	                                                        <div class="form-group"> 
 	                                                            <label class="control-label" for="pcNDates">合約日期(起) *</label>
-	                                                            <input type="text" id="pcNDates" name="pcNDates" class="form-control" placeholder="yyyy-mm-dd">
+	                                                            <input type="text" id="pcNDates" name="pcNDates" class="form-control" placeholder="yyyy-mm-dd(西元)">
 <!-- 				                                          		<div class="col-lg-12"> -->
 <!-- 				                                           			<div class="input-group"> -->
 <!-- 				                                           				<input type="text" id="pcNDates" name="pcNDates" class="form-control col-lg-2" placeholder='yyyy-mm-dd' value=""> -->
@@ -628,7 +628,7 @@
 	                                                    <div class="col-md-6"> 
 	                                                        <div class="form-group"> 
 	                                                            <label class="control-label" for="pcNDatee">合約日期(終) *</label>
-	                                                            <input type="text" id="pcNDatee" name="pcNDatee" class="form-control" placeholder="yyyy-mm-dd">
+	                                                            <input type="text" id="pcNDatee" name="pcNDatee" class="form-control" placeholder="yyyy-mm-dd(西元)">
 <!-- 				                                            	<div class="col-lg-12"> -->
 <!-- 				                                           			<div class="input-group"> -->
 <!-- 					                                            		<input type="text" id="pcNDatee" name="pcNDatee" class="form-control" placeholder='yyyy-mm-dd' value=""> -->
@@ -1072,21 +1072,21 @@
     	//set status
     	switch(data.companyStatus) {
 		    case 'on': $('.updateStatus').html('營業'); $('.updateStatus').attr('id','on'); $('.updateStatus').addClass('btn-primary'); break;
-		    case 'off': $('.updateStatus').html('停業'); $('.updateStatus').attr('id','off'); $('.updateStatus').addClass('btn-danger'); break;
+		    case 'off': $('.updateStatus').html('停業'); $('.updateStatus').attr('id','off'); $('.updateStatus').addClass('btn-primary'); break;
 		    case 'discard': $('.updateStatus').html('註銷'); $('.updateStatus').attr('id','discard'); $('.updateStatus').addClass('btn-danger'); break;
 		    case 'change': $('.updateStatus').html('遷移'); $('.updateStatus').attr('id','change'); $('.updateStatus').addClass('btn-danger'); break;
 		    case 'nopay': $('.updateStatus').html('不繳費'); $('.updateStatus').attr('id','nopay'); $('.updateStatus').addClass('btn-danger'); break;
 		    case 'remove': $('.updateStatus').html('解散'); $('.updateStatus').attr('id','remove'); $('.updateStatus').addClass('btn-danger'); break;
 		}
     	
-    	if(data.companyStatusChangeDate != null && data.companyStatus == 'off') {
+    	if(data.companyStatusChangeDate != null && data.companyStatus != 'off' && data.companyStatus != 'on') {
     		var date = new Date(data.companyStatusChangeDate);
         	var day = ("0" + date.getDate()).slice(-2);
         	var month = ("0" + (date.getMonth() + 1)).slice(-2);
         	var dateFormat = date.getFullYear()+"-"+month+"-"+day;
         	$('#statusChangeDate').attr('value', dateFormat);
         	$('#offDate').html(dateFormat);
-        	$('#offDate').css("display","");
+        	$('#offDate').css("display","block");
     	}
     }
     

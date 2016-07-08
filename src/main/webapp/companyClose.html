@@ -84,7 +84,7 @@
 	            <li class="has-submenu" id="adminReconciliation" style="display:none">
 	            	<a href="#"><i class="ion-stats-bars"></i> <span class="nav-label">對帳報表</span></a>
 	                <ul class="list-unstyled">
-	                    <li class="active"><a href="reconciliationTable.html">對帳</a></li>
+	                    <li><a href="reconciliationTable.html">對帳</a></li>
 	                    <li><a href="404.html">營收報表</a></li>
 	                </ul>
 	            </li>
@@ -133,37 +133,37 @@
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">基本資料</h3>
+                            <h3 class="panel-title">退租</h3>
                         </div>
+                        <div id="branchSelection" style="width:25%; display:none;">
+							<div class="form-group">
+								<label for="sel1">分店</label>
+								<select class="form-control" id="branchOffice">
+								    <option value="-1">請選擇</option>
+	                          		<option value="221">微風店</option>
+	                          		<option value="169">敦化店</option>
+	                          		<option value="222">大安店</option>
+	                          		<option value="295">忠孝店</option>
+	                          		<option value="201">復興店</option>
+	                          		<option value="189">南京店</option>
+								</select>
+							</div>
+						</div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <table id="datatable" class="table table-striped table-bordered" style="width: 100%;">
                                         <thead>
                                             <tr>
-                                            	<th>辦公室 NO.</th>
                                                 <th>公司名稱</th>
-                                                <th>統編</th>
-                                                <th>登記地</th>
-                                                <th>負責人</th>
-                                                <th>公司類型</th>
-                                                <th>轉寄地址</th>
+                                                <th>租金</th>
+                                                <th>押金</th>
+                                                <th>合約到期日</th>
                                                 <th>備註</th>
+                                                <th>退押金</th>
                                             </tr>
                                         </thead>
-										<tfoot>
-								            <tr>
-								                <th>辦公室 NO.</th>
-                                                <th>公司名稱</th>
-                                                <th>統編</th>
-                                                <th>登記地</th>
-                                                <th>負責人</th>
-                                                <th>公司類型</th>
-                                                <th>轉寄地址</th>
-                                                <th>備註</th>
-								            </tr>
-								        </tfoot><tbody>
-                                        </tbody>
+								        <tbody></tbody>
                                     </table>
                                 </div>
                             </div>
@@ -173,6 +173,55 @@
 			</div> <!-- End Row -->
         </div>
         
+        <!-- modal -->
+        <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+			<div class="modal-dialog"> 
+				<div class="modal-content"> 
+	                <div class="modal-header"> 
+	                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+	                    <h4 class="modal-title">Deposite</h4> 
+	                </div> 
+                    <div class="modal-body"> 
+						<div class="row">
+                           <div class="col-md-6"> 
+								<div class="form-group"> 
+                                  	<label for="rentDateO" class="control-label">日期</label>
+             						<input class=" form-control" id="rentDateO" name="rentDateO" type="text" value=""> 
+                               	</div>
+                           </div>
+                           <div class="col-md-6"> 
+								<div class="form-group"> 
+                                  	<label for="rentDateOAdd" class="control-label">填表日期</label>
+             						<input class=" form-control" id="rentDateOAdd" name="rentDateOAdd" type="text" value=""> 
+                               	</div> 
+                           </div>
+                           <div class="col-md-6"> 
+                               	<div class="form-group"> 
+                                  	<label for="rentPayTypeO" class="control-label">匯款方式</label>
+             						<input class=" form-control" id="rentPayTypeO" name="rentPayTypeO" type="text" value=""> 
+                               	</div> 
+                           </div>
+                           <div class="col-md-6"> 
+                               	<div class="form-group"> 
+                                  	<label for="rentMoneyO" class="control-label">金額</label>
+             						<input class=" form-control" id="rentMoneyO" name="rentMoneyO" type="text" value=""> 
+                               	</div> 
+                           </div>
+                           <div class="col-md-12"> 
+                               	<div class="form-group"> 
+                                  	<label for="rentRemarkO" class="control-label">備註</label>
+             						<input class=" form-control" id="rentRemarkO" name="rentRemarkO" type="text" value=""> 
+                               	</div> 
+                           </div>
+                        </div>
+                    </div> 
+		            <div class="modal-footer"> 
+		                <button type="button" class="btn btn-info" id="rentSave">Save</button>
+		                <button type="button" class="btn btn-white" data-dismiss="modal" id="rentClose">Close</button>
+		            </div> 
+				</div> 
+			</div>
+		</div><!-- /.modal -->
         
         <!-- Page Content Ends -->
         <!-- ================== -->
@@ -207,45 +256,188 @@
 (function($){
 	var root = location.protocol + '//' + location.host;
 	
-	//javascript by jquery
-	$('#datatable thead th').each(function() {
-        var title = $('#datatable tfoot th').eq($(this).index()).text();
-        $(this).html('<input type="text" style="width:100%; padding:3px; box-sizing:border-box;" placeholder="Search '+title+'" />');
-    } );
- 
+	var retriveCompanyAjax = function(selectBranch) {
+    	var table;
+    	$.ajax({
+			url:root + "/AFW-I-System/retrive/close/company/" + selectBranch,
+			type:'get',
+			dataType : 'json',
+			contentType: 'application/json',
+			success : function(response) {
+				//alert("success");
+				console.log("retriveCompanyAjax:" + response.message);
+				if(response.status == 'success') {
+					console.log(response.message);
+					var data = jQuery.parseJSON(response.message);
+					
+					for(var i=0; i<data.length; i++) {
+						console.log(data[i]);
+					}
+					if(response.user == 'AA') {
+						$('#branchSelection').css('display', 'block');
+					}
+					handleDataTable(data);
+					$('#branchOffice').val(selectBranch);
+				}
+			},
+			error : function(e) {
+				alert("error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+    }
+	
 	//need to responsive
     // DataTable
-    var table = $('#datatable').DataTable({
-    	responsive: true
-    });
- 
-    // Apply the search
-    table.columns().eq( 0 ).each( function ( colIdx ) {
-        $( 'input', table.column( colIdx ).header() ).on( 'keyup change', function () {
-            table
-                .column( colIdx )
-                .search( this.value )
-                .draw();
-        } );
+    var handleDataTable = function(data) {
+	    var table = $('#datatable').dataTable({
+	    	"paging":   false,
+            "ordering": false,
+            "info":     false,
+	    	oLanguage: {
+				'sProcessing':'處理中...',
+				'sLengthMenu':'顯示 _MENU_ 項結果',
+				'sZeroRecords':'沒有匹配結果',
+				'sInfo':'顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項',
+				'sInfoEmpty':'顯示第 0 至 0 項結果，共 0 項',
+				'sInfoFiltered':'(從 _MAX_ 項結果過濾)',
+				'sInfoPostFix':'',
+				'sSearch':'搜索:',
+				'sUrl':'',
+				'oPaginate': {
+					'sFirst':'首頁',
+					'sPrevious':'上頁',
+					'sNext':'下頁',
+					'sLast':'尾頁'
+				}
+			},
+			'data': data,
+	        'columns': [
+// 					{"data": function(row, type, val, meta) {
+// 	        			return row.company.companyId;
+// 	        		},"visible": false},
+					{"data": function(row, type, val, meta) {
+	        			return "<a class=\"company_link\" href=\"companyProfile.html?id="+ row.companyId +"\">" + row.companyName + "</a>";
+	        		}},
+	        		{"data": function(row, type, val, meta) {
+	        			return row.contractRent;
+	        		}},
+
+	        		{"data": function(row, type, val, meta) {
+	        			return row.contractDeposit;
+	        		}},
+	        		{"data": function(row, type, val, meta) {
+	        			var date = new Date(row.contractEnd);
+	        			var day = ("0" + date.getDate()).slice(-2);
+	        			var month = ("0" + (date.getMonth() + 1)).slice(-2);
+	        			var dateFormat = date.getFullYear()+"-"+month+"-"+day;
+	        			
+	        			return dateFormat;
+	        		}},
+	        		{"data": function(row, type, val, meta) {
+	        			if(row.companyRemark != null) {
+	        				return row.companyRemark;
+	        			} else {
+	        				return "";
+	        			}
+	        		}},
+	        		{"data": function(row, type, val, meta) {
+	        			if(row.companyReturnDepositeDate == undefined) {
+	        				return "<button class=\"btn btn-danger btn-sm\" onclick=\"clickUpdateButton(event);\">未退</button>";
+	        			} else {
+	        				return "<button class=\"btn btn-success btn-sm\" \">已退</button>";
+	        			}
+	        			
+	        		}},
+	        ],
+	        
+	        "order": [[0, 'asc']],
+	    	responsive: true
+	    });
+	}
+    $("#branchOffice").change(function() {
+    	var selectBranch = $('#branchOffice').val();
+    	window.location.href = root + "/AFW-I-System/companyClose.html?branch=" + selectBranch;
     });
     
-    //the search boxes on top without replacing the columns titles
-    var r = $('#datatable tfoot tr');
-    r.find('th').each(function(){
-      $(this).css('padding', 8);
-    });
-    $('#datatable thead').append(r);
+    var getUrlParameter = function getUrlParameter(sParam) {
+	    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+	        sURLVariables = sPageURL.split('&'),
+	        sParameterName,
+	        i;
+
+	    for (i = 0; i < sURLVariables.length; i++) {
+	        sParameterName = sURLVariables[i].split('=');
+
+	        if (sParameterName[0] === sParam) {
+	            return sParameterName[1] === undefined ? true : sParameterName[1];
+	        }
+	    }
+	};
     
+	var checkSession = function() {
+		$.ajax({
+			url:root + "/AFW-I-System/session/user/check",
+			type:'get',
+			dataType : 'json',
+			contentType: 'application/json',
+			success : function(response) {
+				//alert("success");
+				if(response.status == 'success') {
+					if(response.message == false) {
+						alert("請重新登入");
+						window.location.href = root + "/AFW-I-System/login.html";
+						return false;
+					} else {
+						var branch = getUrlParameter('branch');
+				    	if(branch === undefined) {
+				    		branch = '-1';
+				    	}
+				    	retriveCompanyAjax(branch);
+				    	setUserInfoNavBar(response.userCode);
+				    	hiddenInfo(response.userCode);
+					}
+				}
+			},
+			error : function(e) {
+				alert("error");
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+		
+		return true;
+	};
+	
     var hiddenInfo = function(userCode) {
 		if(userCode == 'AA') {
 			$('#adminReconciliation').css('display', 'block');
 		}
 	};
+	
+	var setUserInfoNavBar = function(userCode) {
+    	var name = '';
+    	switch(userCode) {
+	    	case 'AA': name = '管理員'; break;
+	    	case '189': name = '南京店'; break;
+	    	case '201': name = '復興店'; break;
+	    	case '221': name = '微風店'; break;
+	    	case '222': name = '大安店'; break;
+	    	case '169': name = '敦化店'; break;
+	    	case '295': name = '忠孝店'; break;
+    	}
+    	$('#userName').text(name);
+    }
     
   	//page load
     window.onload = function() {
     	window.location.href = root + "/AFW-I-System/404.html";
-    	//retriveDataByTypeAndYear();
+    	//checkSession();
 	};
 })(jQuery);
 </script>

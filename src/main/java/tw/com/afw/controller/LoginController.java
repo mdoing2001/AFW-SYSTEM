@@ -47,6 +47,7 @@ public class LoginController {
 					request.getSession().setAttribute("branch", branch);
 					request.getSession().setAttribute("userid", user);
 					request.getSession().setAttribute("usercode", code);
+					request.getSession().setMaxInactiveInterval(3600);
 					results.put("status", "success");
 					results.put("message", "success");
 					results.put("userCode", code);

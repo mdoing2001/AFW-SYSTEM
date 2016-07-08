@@ -259,6 +259,9 @@
     var handleDataTable = function(data) {
     	
     	var table = $('#datatable').dataTable({
+    		"paging":   false,
+            "ordering": false,
+            "info":     false,
 			oLanguage: {
 				'sProcessing':'處理中...',
 				'sLengthMenu':'顯示 _MENU_ 項結果',

@@ -710,54 +710,80 @@
     		dayType = 31;
     	}
     	
+    	var removeClass = [];
+    	
     	for(var i=1; i<dayType; i++) {
-    		console.log(i)
     		var strStartDate = ""
     		var strData = "";
     		var exist = false;
     		
+    		var morePayCompanyName = "";
+    		var morePayMoney = "";
+    		var moreCount = 0;
+    		var moreStrData = "";
+    		var strDataEach = "";
     		for(var k=0; k<dataArr.length; k++) {
+    			
     			var addDate = new Date(dataArr[k].addDate);
             	var day = ("0" + addDate.getDate()).slice(-2);
             	var month = ("0" + (addDate.getMonth() + 1)).slice(-2);
             	var addDateFormat = addDate.getFullYear()+"-"+month+"-"+day;
             	var errorRe = '';
+            	
             	var rentShotrage = dataArr[k].rentShortage;
             	if(rentShotrage != undefined && rentShotrage != 0) {
-            		errorRe = 'warning';
+            		errorRe = ' warning';
             	}
+            	
             	if(day == "0" + i || day == i) {
             		strStartDate = "<tr class=\"success\"> <td colspan=\"8\" style=\"text-align:center\">"+ addDateFormat +"</td></tr>";
             		
             		exist = true;
             		var rentId = dataArr[k].rentId;
-        			var name = dataArr[k].companyName;
         			var contractType = dataArr[k].type;
         			var payType = (undefined === dataArr[k].rentPayType) ? "" : dataArr[k].rentPayType;
         			
         			switch(contractType) {
-        				case 'o':contractType = '辦公室'; break;
-        				case 'p':contractType = '個人座位'; break;
-        				case 'r':contractType = '登記'; break;
-        				case 'c':contractType = '聯絡處'; break;
-        				case 's':contractType = '停業'; break;
+        				case 'o'	:contractType = '辦公室'; break;
+        				case 'p'	:contractType = '個人座位'; break;
+        				case 'r'	:contractType = '登記'; break;
+        				case 'c'	:contractType = '聯絡處'; break;
+        				case 's'	:contractType = '停業'; break;
         				case 'other':contractType = '其他'; break;
         			}
         			
-        			var money = dataArr[k].money;
-        			
-        			
         			var date = new Date(dataArr[k].date);
                 	var day = ("0" + date.getDate()).slice(-2);
-                	//TODO 如果有兩筆一樣 月份需要調整
                 	var month = ("0" + (date.getMonth() + 1)).slice(-2);
                 	var dateFormat = date.getFullYear()+"-"+month+"-"+day;
                 	
-                	var strDataEach = "<tr class=\""+ errorRe +"\"><td>"+dateFormat+"</td><td>"+payType+"</td><td>"+money+"</td><td>"+'None'+"</td><td>"+contractType+"</td><td>" +
-                		month+"</td><td>"+name+"</td><td><button id=" + rentId+ " class=\"btn btn-danger btn-sm\" onclick=\"clickUpdateButton(event);\">Update</button></td>";
-        			
-                	strData = strData + strDataEach;
-                	
+                	strDataEach = "<tr class=\""+ rentId + errorRe +"\"><td>"+dateFormat+"</td><td>"+payType+"</td><td>"+dataArr[k].money+"</td><td>"+'None'+"</td><td>"+contractType+"</td><td>" +
+                		parseInt(month)+"</td><td>"+dataArr[k].companyName+"</td><td><button id=" + rentId+ " class=\"btn btn-danger btn-sm\" onclick=\"clickUpdateButton(event);\">Update</button></td></tr>";
+				
+    				
+            		if(morePayCompanyName == dataArr[k].companyName && morePayMoney == dataArr[k].money) {
+            			removeClass.push(rentId);
+            			moreCount++;
+            			var combineMoney = 0;
+            			var combineMonth = parseInt(month);
+            			if(moreCount != 0) {
+            				for(var j=0; j<moreCount; j++) {
+            					morePayMoney = morePayMoney + dataArr[k].money;
+            					//1,2,3,4.....
+            					combineMonth = combineMonth + "," + (parseInt(month)+j+1);
+            				}
+            			}
+            			strDataEach = "<tr class=\""+ rentId + errorRe +"\"><td>"+dateFormat+"</td><td>"+payType+"</td><td>"+morePayMoney+"</td><td>"+'None'+"</td><td>"+contractType+"</td><td>" +
+            				combineMonth+"</td><td>"+morePayCompanyName+"</td><td><button id=" + rentId+ " class=\"btn btn-danger btn-sm\" onclick=\"clickUpdateButton(event);\">Update</button></td></tr>";
+            			
+    					strData = strData + strDataEach;
+            			
+        			} else {
+        				strData = strData + strDataEach;	
+        			}
+            		
+            		morePayCompanyName = dataArr[k].companyName;
+            		morePayMoney = dataArr[k].money;
             	}
      		}
     		if(exist) {
@@ -767,6 +793,12 @@
     	}
 		
 		$('#rentTbody').html(str);
+		
+		for(var z=0; z<removeClass.length; z++) {
+			$('table tr.' + (parseInt(removeClass[z])-1)).remove();
+		}
+		
+		console.log(removeClass);
 	}
 	
 	//新增按鈕

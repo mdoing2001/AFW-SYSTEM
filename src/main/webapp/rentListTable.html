@@ -93,7 +93,7 @@
 	            <li class="has-submenu" id="adminReconciliation" style="display:none">
 	            	<a href="#"><i class="ion-stats-bars"></i> <span class="nav-label">對帳報表</span></a>
 	                <ul class="list-unstyled">
-	                    <li class="active"><a href="reconciliationTable.html">對帳</a></li>
+	                    <li><a href="reconciliationTable.html">對帳</a></li>
 	                    <li><a href="404.html">營收報表</a></li>
 	                </ul>
 	            </li>
@@ -388,15 +388,16 @@
 		         		$('#rentBusiness').val(business);
 		         		$('#rentOther').val(other);
 		         		$('#rentTotal').val(dataArr[i].rent + management + power + adsl + business + other);
+		         		$('#rentPrice').val(dataArr[i].rent);
 		        	}
 				}
 			}
-			
-			$('#rentPrice').val(dataArr[i].rent);
-			
 		}
 		
 	    $('#myModal').modal('show');
+	    $('#myModal').on('shown.bs.modal', function () {
+			$('#rentManager').focus();
+		});
 	}
 	
 	$('#rentSave').on('click', function() {
@@ -485,7 +486,7 @@
 			var order = dataArr[i].officeNum;
 			
 			var str1 =  "<tr>" +
-       					"<td style=\"vertical-align:middle\">"+ order + "</td>" +
+       					"<td align=\"center\">"+ order + "</td>" +
        					"<td><a class=\"company_link\" href=\"companyProfile.html?id="+ companyId +"\">" + name + "</a></td>";
 			
 			var rentStr = "";
@@ -506,11 +507,11 @@
 		        	
 		        	if(k == month) {
 		        		exist = true;
-			        	rentStr = rentStr + "<td style=\"vertical-align:middle\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-danger"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">Set</span></td>";
+			        	rentStr = rentStr + "<td align=\"center\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-danger"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">Set</span></td>";
 		        	}
 				}
 				if(!exist) {
-					rentStr = rentStr + "<td style=\"vertical-align:middle\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-success"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+k + ">Save</span></td>";
+					rentStr = rentStr + "<td align=\"center\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-success"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+k + ">Save</span></td>";
 				}
 			}
 			

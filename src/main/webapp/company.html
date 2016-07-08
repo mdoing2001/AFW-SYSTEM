@@ -84,7 +84,7 @@
 	            <li class="has-submenu" id="adminReconciliation" style="display:none">
 	            	<a href="#"><i class="ion-stats-bars"></i> <span class="nav-label">對帳報表</span></a>
 	                <ul class="list-unstyled">
-	                    <li class="active"><a href="reconciliationTable.html">對帳</a></li>
+	                    <li><a href="reconciliationTable.html">對帳</a></li>
 	                    <li><a href="404.html">營收報表</a></li>
 	                </ul>
 	            </li>
@@ -147,7 +147,6 @@
                                                 <th>統編</th>
                                                 <th>登記地</th>
                                                 <th>負責人</th>
-                                                <th>公司類型</th>
                                                 <th>轉寄地址</th>
                                                 <th>備註</th>
                                             </tr>
@@ -247,11 +246,14 @@
     var handleDataTable = function(data) {
     	
     	var table = $('#datatable').dataTable({
+    		"paging":   false,
+            "ordering": false,
+            "info":     false,
 			oLanguage: {
 				'sProcessing':'處理中...',
 				'sLengthMenu':'顯示 _MENU_ 項結果',
 				'sZeroRecords':'沒有匹配結果',
-				'sInfo':'顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項',
+				//'sInfo':'顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項',
 				'sInfoEmpty':'顯示第 0 至 0 項結果，共 0 項',
 				'sInfoFiltered':'(從 _MAX_ 項結果過濾)',
 				'sInfoPostFix':'',
@@ -294,9 +296,6 @@
 	        		}},
 	        		{"data": function(row, type, val, meta) {
 	        			return row.company.companyExecutive;
-	        		}},
-	        		{"data": function(row, type, val, meta) {
-	        			return row.company.companyType;
 	        		}},
 	        		{"data": function(row, type, val, meta) {
 	        			return row.company.companyAddress2;

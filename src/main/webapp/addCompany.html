@@ -84,7 +84,7 @@
 	            <li class="has-submenu" id="adminReconciliation" style="display:none">
 	            	<a href="#"><i class="ion-stats-bars"></i> <span class="nav-label">對帳報表</span></a>
 	                <ul class="list-unstyled">
-	                    <li class="active"><a href="reconciliationTable.html">對帳</a></li>
+	                    <li><a href="reconciliationTable.html">對帳</a></li>
 	                    <li><a href="404.html">營收報表</a></li>
 	                </ul>
 	            </li>
@@ -278,7 +278,7 @@
                                             <label class="col-lg-2 control-label " for="ccdatesign">簽約日期 *</label>
                                             <div class="col-lg-10">
                                             	<div class="input-group">
-                                            		<input type="text" id="ccdatesign" name="ccdatesign" class="form-control" placeholder="yyyy-mm-dd">
+                                            		<input type="text" id="ccdatesign" name="ccdatesign" class="form-control" placeholder="yyyy-mm-dd(西元)">
 													<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                             	</div>
 											</div>
@@ -287,7 +287,7 @@
                                             <label class="col-lg-2 control-label " for="ccdates">合約日期(起) *</label>
                                             <div class="col-lg-10">
                                             	<div class="input-group">
-                                            		<input type="text" id="ccdates" name="ccdates" class="form-control" placeholder="yyyy-mm-dd">
+                                            		<input type="text" id="ccdates" name="ccdates" class="form-control" placeholder="yyyy-mm-dd(西元)">
 													<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                             	</div>
 											</div>
@@ -296,7 +296,7 @@
                                             <label class="col-lg-2 control-label " for="ccdatee">合約日期(終) *</label>
                                             <div class="col-lg-10">
                                             	<div class="input-group">
-                                            		<input type="text" id="ccdatee" name="ccdatee" class="form-control" placeholder="yyyy-mm-dd">
+                                            		<input type="text" id="ccdatee" name="ccdatee" class="form-control" placeholder="yyyy-mm-dd(西元)">
 													<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                             	</div>
 											</div>
@@ -504,8 +504,6 @@
 	    	addAjax();
 	    }
 	});
-	
-	
 	
 	//validate endDate > startDate
 	var isAfterStartDate = function(startDateStr, endDateStr) {

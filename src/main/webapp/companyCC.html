@@ -84,7 +84,7 @@
 	            <li class="has-submenu" id="adminReconciliation" style="display:none">
 	            	<a href="#"><i class="ion-stats-bars"></i> <span class="nav-label">對帳報表</span></a>
 	                <ul class="list-unstyled">
-	                    <li class="active"><a href="reconciliationTable.html">對帳</a></li>
+	                    <li><a href="reconciliationTable.html">對帳</a></li>
 	                    <li><a href="404.html">營收報表</a></li>
 	                </ul>
 	            </li>
@@ -248,6 +248,9 @@
     var handleDataTable = function(data) {
     	
     	var table = $('#datatable').dataTable({
+    		"paging":   false,
+            "ordering": false,
+            "info":     false,
 			oLanguage: {
 				'sProcessing':'處理中...',
 				'sLengthMenu':'顯示 _MENU_ 項結果',

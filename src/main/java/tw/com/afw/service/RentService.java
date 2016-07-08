@@ -65,5 +65,19 @@ public class RentService {
 		}
 		return result;
 	}
+	
+	@Transactional
+	public Double allRentPriceByEntity(RentEntity entity) {
+		Double result = 0.00;
+		if(entity != null) {
+			Double managenment = null != entity.getRentManagement() ? entity.getRentManagement() : 0.00;
+			Double power = null != entity.getRentPower() ? entity.getRentPower() : 0.00;
+			Double adsl = null != entity.getRentAdsl() ? entity.getRentAdsl() : 0.00;
+			Double business = null != entity.getRentBusiness() ? entity.getRentBusiness() : 0.00;
+			Double other = null != entity.getRentOther() ? entity.getRentOther() : 0.00;
+			result = managenment + power + adsl + business + other;
+		}
+		return result;
+	}
 
 }

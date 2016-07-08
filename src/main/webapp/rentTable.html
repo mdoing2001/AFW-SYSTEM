@@ -93,7 +93,7 @@
 	            <li class="has-submenu" id="adminReconciliation" style="display:none">
 	            	<a href="#"><i class="ion-stats-bars"></i> <span class="nav-label">對帳報表</span></a>
 	                <ul class="list-unstyled">
-	                    <li class="active"><a href="reconciliationTable.html">對帳</a></li>
+	                    <li><a href="reconciliationTable.html">對帳</a></li>
 	                    <li><a href="404.html">營收報表</a></li>
 	                </ul>
 	            </li>
@@ -397,12 +397,12 @@
 		        	var rentReceipt = rentArr[j].rentReceipt;
 		        	var rentMoney = rentArr[j].rentMoney;
 		        	
-		        	if(rentArr[j].rentMonth == month) {
+		        	if(rentArr[j].rentMonth == month && undefined != shortAge) {
 		        		if(userCode != 'AA') {
-		        			$('#rentDate').prop( "disabled", true);
-		        			$('#rentShortage').prop( "disabled", true);
-		        			$('#addReRentTrue').prop( "disabled", true);
-		        			$('#addReRentFalse').prop( "disabled", true);
+		        			$('#rentDate').prop("disabled", true);
+		        			$('#rentShortage').prop("disabled", true);
+		        			$('#addReRentTrue').prop("disabled", true);
+		        			$('#addReRentFalse').prop("disabled", true);
 		        		} else {
 		        			var newMonth = parseInt(month) + 1;
 		        			if(newMonth == 13) { newMonth = 1;}
@@ -515,6 +515,8 @@
 	
 	var setData = function(dataArr) {
 		var str = "";
+		var sameRentReceiptMap = {};
+		
 		for(var i=0; i<dataArr.length; i++) {
 			var companyId = dataArr[i].companyId;
 			var contractId = dataArr[i].contractId;
@@ -552,8 +554,11 @@
 			var rentStr = "";
 			var rentStr2 = ""; 
 			var rentArr = dataArr[i].rentArr;
+			var rentReceipt = "";
+			var sameRentReceipt = [];
 			
 			for(var k=1; k<13; k++) {
+				
 				var exist = false;
 				for(var j = 0; j<rentArr.length; j++) {
 					var date = new Date(rentArr[j].rentDate);
@@ -563,26 +568,37 @@
 		        	var dateFormat = date.getFullYear()+"-"+month+"-"+day;
 		        	
 		        	var shortAge = rentArr[j].rentShortage;
-		        	var remark = rentArr[j].rentRemark;
-		        	var rentReceipt = rentArr[j].rentReceipt;
+		        	var remark = undefined != rentArr[j].rentRemark ? rentArr[j].rentRemark : "";
+		        	
+		        	
 		        	//缺繳 == null 表示還沒對帳
-		        	if(k == rentArr[j].rentMonth) {
+		        	if(k == rentArr[j].rentMonth && undefined != shortAge) {
 		        		exist = true;
+		        		//蒐集發票號碼一樣的rent 要combine
+		        		if(rentReceipt === rentArr[j].rentReceipt && undefined != rentReceipt) {
+		        			sameRentReceipt.push(month);
+		        			sameRentReceiptMap[contractId] = sameRentReceipt;
+			        		//sameRentReceipt.push(contractId + "_" + month);
+			        	}
+		        		rentReceipt = rentArr[j].rentReceipt;
+		        		
+		        		
 		        		//一號 無缺繳 day == '01' 要改
 		        		if(day == '01' && shortAge == 0) {
-		        			rentStr = rentStr + "<td style=\"vertical-align:middle\"><span title=\"" + remark + "\" onclick=\"clickInfoButton(event);\" class=\"label" + " label-primary"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">"+ day +"</span></td>";
+		        			rentStr = rentStr + "<td align=\"center\"><span title=\"" + remark + "\" onclick=\"clickInfoButton(event);\" class=\"label" + " label-primary"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">"+ day +"</span></td>";
 			        	} else  if(day == '01' && shortAge != 0) {
-			        		rentStr = rentStr + "<td style=\"vertical-align:middle\"><span title=\"" + remark + "\" onclick=\"clickInfoButton(event);\" class=\"label" + " label-danger"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">"+ day +"</span></td>";
+			        		rentStr = rentStr + "<td align=\"center\"><span title=\"" + remark + "\" onclick=\"clickInfoButton(event);\" class=\"label" + " label-danger"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">"+ day +"</span></td>";
 			        	} else if(day != '01' && shortAge == 0) {
-			        		rentStr = rentStr + "<td style=\"vertical-align:middle\"><span title=\"" + remark + "\" onclick=\"clickInfoButton(event);\" class=\"label" + " label-primary"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">"+ month + "-" + day +"</span></td>";
+			        		rentStr = rentStr + "<td align=\"center\"><span title=\"" + remark + "\" onclick=\"clickInfoButton(event);\" class=\"label" + " label-primary"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">"+ month + "-" + day +"</span></td>";
 			        	} else {
-			        		rentStr = rentStr + "<td style=\"vertical-align:middle\"><span title=\"" + remark + "\" onclick=\"clickInfoButton(event);\" class=\"label" + " label-danger"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">"+ month + "-" + day +"</span></td>";
+			        		rentStr = rentStr + "<td align=\"center\"><span title=\"" + remark + "\" onclick=\"clickInfoButton(event);\" class=\"label" + " label-danger"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+month + ">"+ month + "-" + day +"</span></td>";
 			        	}
 		        		
+		        		//發票號碼
 		        		if(undefined == rentReceipt) {
-		        			rentStr2 = rentStr2 + "<td style=\"vertical-align:middle; border-bottom:2pt solid black\"></td>"
+		        			rentStr2 = rentStr2 + "<td style=\"border-bottom:2pt solid black\"></td>"
 		        		} else {
-		        			rentStr2 = rentStr2 +　"<td style=\"vertical-align:middle; border-bottom:2pt solid black\"><span class=\"label " + "label-info"+ " popupButton\" id=" + companyId+"_1" + ">" + rentReceipt + " </span></td>";
+		        			rentStr2 = rentStr2 +　"<td style=\"border-bottom:2pt solid black\" align=\"center\" class=" + contractId+"_"+month + "><span class=\"label " + "label-info"+ " popupButton\" id=" + companyId+"_"+month + ">" + rentReceipt.trim() + "</span></td>";
 		        		}
 		        		
 		        	}
@@ -591,11 +607,11 @@
 					if(userCode != 'AA') {
 						rentStr = rentStr + "<td></td>";
 					} else {
-						rentStr = rentStr + "<td style=\"vertical-align:middle\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-success"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+k + ">Save</span></td>";
+						rentStr = rentStr + "<td align=\"center\"><span onclick=\"clickInfoButton(event);\" class=\"label" + " label-success"+ " popupButton\" id=" + companyId+"_"+contractId+"_"+k + ">Save</span></td>";
 						//rentStr = rentStr + "<td></td>";
 					}
 					
-					rentStr2 = rentStr2 + "<td style=\"vertical-align:middle; border-bottom:2pt solid black\"></td>"
+					rentStr2 = rentStr2 + "<td style=\"border-bottom:2pt solid black\" align=\"center\"></td>"
 				}
 			}
 			
@@ -603,7 +619,17 @@
 		}
 		
 		$('#rentTbody').html(str);
-		
+		var sameRentKey = Object.keys(sameRentReceiptMap);
+		console.log(sameRentKey);
+		for(var z=0; z<sameRentKey.length; z++) {
+			var sameRentValue = sameRentReceiptMap[sameRentKey[z]];
+			var small = sameRentValue[0];
+			for(var y=0; y<sameRentValue.length; y++) {
+				$('.'+sameRentKey[z]+"_"+sameRentValue[y]).remove();
+			}
+			$('.'+sameRentKey[z]+"_"+parseInt(small-1)).attr('colspan',sameRentValue.length+1);
+		}
+		console.log(sameRentReceiptMap);
 	}
 	
 	var checkSession = function() {

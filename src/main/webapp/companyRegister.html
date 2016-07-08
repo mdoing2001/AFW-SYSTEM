@@ -84,7 +84,7 @@
 	            <li class="has-submenu" id="adminReconciliation" style="display:none">
 	            	<a href="#"><i class="ion-stats-bars"></i> <span class="nav-label">對帳報表</span></a>
 	                <ul class="list-unstyled">
-	                    <li class="active"><a href="reconciliationTable.html">對帳</a></li>
+	                    <li><a href="reconciliationTable.html">對帳</a></li>
 	                    <li><a href="404.html">營收報表</a></li>
 	                </ul>
 	            </li>
@@ -159,8 +159,6 @@
                                                 <th>公司名稱</th>
                                                 <th>負責人</th>
                                                 <th>電話</th>
-                                                <th>傳真</th>
-                                                <th>Email</th>
                                                 <th>寄件方式</th>
                                                 <th>轉寄地址</th>
                                                 <th>備註</th>
@@ -250,6 +248,9 @@
     var handleDataTable = function(data) {
     	
     	var table = $('#datatable').dataTable({
+    		"paging":   false,
+            "ordering": false,
+            "info":     false,
 			oLanguage: {
 				'sProcessing':'處理中...',
 				'sLengthMenu':'顯示 _MENU_ 項結果',
@@ -288,20 +289,6 @@
 	        			return row.company.companyNumber;
 	        		}},
 	        		{"data": function(row, type, val, meta) {
-	        			if(row.company.companyFax != null) {
-	        				return row.company.companyFax;
-	        			} else {
-	        				return "";
-	        			}
-	        		}},
-	        		{"data": function(row, type, val, meta) {
-	        			if(row.company.companyMail != null) {
-	        				return row.company.companyMail;
-	        			} else {
-	        				return "";
-	        			}
-	        		}},
-	        		{"data": function(row, type, val, meta) {
 	        			if(row.company.companyLetterStatus != null) {
 	        				return row.company.companyLetterStatus;
 	        			} else {
@@ -324,7 +311,11 @@
 	        		}},
 	        ],
 	        
-	        "order": [[0, 'asc']]
+	        "order": [[0, 'asc']],
+	        columnDefs: [
+	                     { width: '20%', targets: 0 }
+	                 ],
+	                 fixedColumns: true
 		});
     	
     	//javascript by jquery

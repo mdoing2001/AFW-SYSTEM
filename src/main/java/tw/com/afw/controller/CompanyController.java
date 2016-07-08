@@ -3,6 +3,7 @@ package tw.com.afw.controller;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -269,8 +270,14 @@ public class CompanyController {
 					List<ContractEntity> contractArr = contractService.findContractByCompanyId(entity.getCompanyId());
 					for(ContractEntity contract : contractArr) {
 						Date date = new Date();
-						//TODO: logic need to reDesign
-						if(null != contract.getContractType() && contract.getContractType().equalsIgnoreCase(type)) {
+						if(null != contract.getContractType() && type.equalsIgnoreCase("c")) {
+							if(contract.getContractType().equalsIgnoreCase("s") || contract.getContractType().equalsIgnoreCase("c")) {
+								obj.put("company", entity);
+								obj.put("officeNumber", officeNum);
+								arr.add(obj);
+							}
+						} else if(null != contract.getContractType() && contract.getContractType().equalsIgnoreCase(type)) {
+							//TODO: logic need to reDesign
 							if(type.equalsIgnoreCase("o") || type.equalsIgnoreCase("p")) {
 								System.err.println(contract.getContractId());
 								//if(contract.getContractEnd().after(date)) {
@@ -450,4 +457,91 @@ public class CompanyController {
 	    	return result.toJSONString();
 	    }
 	    
+	    @SuppressWarnings("unchecked")
+		@RequestMapping(value = "/retrive/close/company/{branch}", method = RequestMethod.GET, produces = {"application/json; charset=UTF-8"})
+	    public String retriveCloseCompany(@PathVariable String branch, HttpServletRequest request) {
+	    	Gson gson = new Gson();
+	    	JSONObject result = new JSONObject();
+	   
+	    	try {
+	    		String userCode = (String) request.getSession().getAttribute("usercode");
+	    		List<CompanyEntity> companyArr = null;
+				JSONArray arr = new JSONArray();
+				
+				if(userCode != null) {
+					if(userCode.equals("AA") && branch.equalsIgnoreCase("-1")) {
+						companyArr = companyService.findAll();
+					} else if(userCode.equals("AA") && !branch.equalsIgnoreCase("-1")) {
+						companyArr = companyService.findCompanyByCode(branch);
+					} else {
+						companyArr = companyService.findCompanyByCode(userCode);
+					}
+					
+					for(CompanyEntity entity : companyArr) {
+						if(!entity.getCompanyStatus().equalsIgnoreCase("on") && !entity.getCompanyStatus().equalsIgnoreCase("off")) {
+							JSONObject obj = new JSONObject();
+							List<ContractEntity> contractArr = contractService.findContractByCompanyId(entity.getCompanyId());
+							for(ContractEntity contractEntity : contractArr) {
+								if(contractEntity.getContractEnd().after(Calendar.getInstance().getTime()) && contractEntity.getContractStart().before(Calendar.getInstance().getTime())) {
+									obj.put("companyId", entity.getCompanyId());
+									obj.put("companyName", entity.getCompanyName());
+									obj.put("companyRemark", entity.getCompanyRemark());
+									obj.put("contractRent", contractEntity.getContractRent());
+									obj.put("contractEnd", contractEntity.getContractEnd());
+									obj.put("contractDeposit", contractEntity.getContractDeposit());
+									obj.put("companyReturnDepositeDate", entity.getCompanyReturnDepositeDate());
+								}
+							}
+							//obj.put("officeNumber", officeNum);
+							arr.add(obj);
+						}
+					}
+					
+					result.put("status", "success");
+					result.put("message", gson.toJson(arr));
+					result.put("user", userCode);
+				} else {
+					result.put("status", "error");
+					result.put("message", "請重新登入");
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				result.put("status", "error");
+				result.put("message", e);
+			}
+	    	
+	    	return result.toJSONString();
+	    }
+	    
+	    @SuppressWarnings("unchecked")
+		@RequestMapping(value = "/company/return/update/{id}", method = RequestMethod.PUT, produces = {"application/json; charset=UTF-8"})
+	    public String updateCompanyReturnDepositeDate(@RequestBody String companyJson, @PathVariable("id") int companyId, HttpServletRequest request) {
+	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    	JSONObject result = new JSONObject();
+	    	
+	    	try {
+				JSONObject companyObj = (JSONObject) new JSONParser().parse(companyJson);
+				CompanyEntity companyEntity = companyService.findCompanyById(companyId);
+				if(companyEntity != null) {
+					companyEntity.setCompanyReturnDepositeDate(!companyObj.get("companyReturnDepositeDate").toString().isEmpty() ? sdf.parse(companyObj.get("companyReturnDepositeDate").toString()) : null);
+					companyEntity.setCompanyRemark("" != companyObj.get("companyRemark").toString() ? companyObj.get("companyRemark").toString() : companyEntity.getCompanyRemark());
+					
+					companyService.upd(companyEntity);
+					
+					result.put("status", "success");
+			    	result.put("message", "success");
+				}
+			} catch (ParseException e) {
+				e.printStackTrace();
+				result.put("status", "error");
+				result.put("message", e);
+			} catch (java.text.ParseException e) {
+				e.printStackTrace();
+				result.put("status", "error");
+				result.put("message", e);
+			}
+	    	
+	    	return result.toJSONString();
+	    }
 }
